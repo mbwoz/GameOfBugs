@@ -1,7 +1,8 @@
 public enum Color {
     BLACK, WHITE, NONE;
 
-    public Color getOpposite() {   // returning opposite color
+    // returning opposite color
+    public Color getOpposite() {
         switch(this) {
             case BLACK:
                 return Color.WHITE;

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Position {
     private int x;
     private int y;
@@ -58,7 +60,7 @@ public class Position {
     }
 
     public boolean equals(Object o) {
-        if(o == null || !(o instanceof Position))
+        if(!(o instanceof Position))
             return false;
         return x == ((Position)o).x && y == ((Position)o).y;
     }

@@ -1,52 +1,76 @@
 public abstract class TileModel {
-    private Color myColor;
-    private Position myPosition;
-    private TileModel tileAbove;
-    private TileModel tileBelow;
-    protected int tileCnt;
+    private Color color;
+    private Position position;
+    private TileModel above;
+    private TileModel below;
+    private int cnt;
 
-    public TileModel() { this(Color.NONE, new Position()); }
-
-    public TileModel(Color myColor) { this(myColor, new Position()); }
-
-    public TileModel(Position myPosition) { this(Color.NONE, myPosition); } //odpowiedni konstruktor do Placeholdera
-
-    public TileModel(Color myColor, Position myPosition) {
-        this.myColor = myColor;
-        this.myPosition = myPosition;
-        tileBelow = null;
-        tileAbove = null;
+    public TileModel(Position position, int cnt) {
+        this(Color.NONE, position, cnt);
     }
 
-    public Color getColor() { return myColor; }
-
-    public Position getPosition() { return myPosition; }
-
-    public void setPosition(Position pos){
-        myPosition = pos;
-        return;
+    public TileModel(Color color, Position position, int cnt) {
+        this.color = color;
+        this.position = position;
+        this.cnt = cnt;
+        below = null;
+        above = null;
     }
 
-    public abstract boolean[][] moveOption(int tab[][]); //to, co funkcja otrzymuje i zwraca ewentualnie do zmiany
-
-    public void addAbove(TileModel tile) {
-        tileAbove = tile;
-        return;
+    public Color getColor() {
+        return color;
     }
 
-    public void addBelow(TileModel tile) {
-        tileBelow = tile;
-        return;
+    public Position getPosition() {
+        return position;
     }
 
-    public TileModel getTileAbove(){ return tileAbove; }
+    public void setPosition(Position pos) {
+        position = pos;
+    }
 
-    public TileModel getTileBelow() { return tileBelow; }
+    public TileModel getAbove() {
+        return above;
+    }
 
-    public int cntIncrement() { return ++tileCnt; }
+    public TileModel getBelow() {
+        return below;
+    }
 
-    public int cntDecrement() { return --tileCnt; }
+    public TileModel getTop() {
+        TileModel tile = this;
+        while(tile.above != null)
+            tile = tile.above;
+        return tile;
+    }
 
-    public int getCnt() { return tileCnt; }
+    public void addTop(TileModel tile) {
+        TileModel topTile = getTop();
+        topTile.above = tile;
+        tile.below = topTile;
+    }
 
+    public void removeTop() {
+        TileModel topTile = getTop();
+        if(topTile.below == null)
+            return;
+
+        topTile.below.above = null;
+        topTile.below = null;
+    }
+
+    public int getCnt() {
+        return cnt;
+    }
+
+    public int IncrementAndGetCnt() {
+        return ++cnt;
+    }
+
+    public int decrementAndGetCnt() {
+        return --cnt;
+    }
+
+    //to, co funkcja zwraca ewentualnie do zmiany (jakaś kolekcja)
+    public abstract boolean[][] getMoveOptions(BoardModel board);
 }

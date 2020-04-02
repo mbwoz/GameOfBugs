@@ -1,6 +1,6 @@
-public class TilePlaceholder extends TileModel {
+public class TileHex extends TileModel {
 
-    public TilePlaceholder(Position pos) {
+    public TileHex(Position pos) {
         super(pos, 0);
     }
 

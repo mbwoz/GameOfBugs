@@ -1,7 +1,7 @@
 public class TilePlaceholder extends TileModel {
 
-    public TilePlaceholder(Position pos) {
-        super(pos, 0);
+    public TilePlaceholder(Position position) {
+        super(position, 0);
     }
 
     @Override

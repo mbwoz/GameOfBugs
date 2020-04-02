@@ -82,7 +82,7 @@ public class BoardModel {
 
     // TODO: rozspójnienie
 
-    // TODO: move utilities
+    // TODO: move utilities - occupied, toMove, hasNeighbors
 
     // TODO: move tile
 

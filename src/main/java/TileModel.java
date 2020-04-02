@@ -29,6 +29,16 @@ public abstract class TileModel {
         position = pos;
     }
 
+    public void setAllPosition(Position pos) {
+        TileModel tile = getTop();
+        tile.position = pos;
+
+        while(tile.below != null) {
+            tile = tile.below;
+            tile.position = pos;
+        }
+    }
+
     public TileModel getAbove() {
         return above;
     }
@@ -39,8 +49,10 @@ public abstract class TileModel {
 
     public TileModel getTop() {
         TileModel tile = this;
+
         while(tile.above != null)
             tile = tile.above;
+
         return tile;
     }
 

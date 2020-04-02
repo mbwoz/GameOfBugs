@@ -7,6 +7,10 @@ public class BoardModel {
     private final int boardSize = 30;
 
     public BoardModel() {
+        createNewEmptyBoard();
+    }
+
+    private void createNewEmptyBoard() {
         board = new TileModel[boardSize][boardSize];
 
         for(int row = 0; row < boardSize; row++) {
@@ -63,6 +67,9 @@ public class BoardModel {
         for(int row = 1; row < boardSize - 1; row++) {
             for(int col = 1; col < boardSize - 1; col++) {
                 Position pos = new Position(row, col);
+                if(!isEmpty(pos))
+                    continue;
+
                 ArrayList<Position> neighbors = pos.getNeighbors();
 
                 // remove empty hexes
@@ -80,11 +87,51 @@ public class BoardModel {
         addAllPlaceholders(toMark);
     }
 
-    // TODO: rozspójnienie
-
     // TODO: move utilities - occupied, toMove, hasNeighbors
 
     // TODO: move tile
 
-    // TODO: rebuild board
+    // TODO: connectivity
+
+    // Rebuild board
+    public boolean checkForRebuild() {
+        for(int row = 0; row < boardSize; row++) {
+            for(int col = 0; col < boardSize; col++) {
+                if(1 < row && row < boardSize - 1 && 1 < col && col < boardSize - 1)
+                    continue;
+
+                if(!isEmpty(new Position(row, col)))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void rebuildBoard() {
+        int spacesCnt = 0, rowSum = 0, colSum = 0;
+
+        for(int row = 0; row < boardSize; row++) {
+            for(int col = 0; col < boardSize; col++) {
+                if(!isEmpty(new Position(row, col))) {
+                    spacesCnt++;
+                    rowSum += row;
+                    colSum += col;
+                }
+            }
+        }
+
+        int rowDiff = (boardSize / 2) - (rowSum / spacesCnt);
+        int colDiff = (boardSize / 2) - (colSum / spacesCnt);
+
+        TileModel[][] boardToReplace = board;
+        createNewEmptyBoard();
+
+        for(int row = Math.max(0, rowDiff); row < Math.min(boardSize, boardSize + rowDiff); row++) {
+            for(int col = Math.max(0, colDiff); col < Math.min(boardSize, boardSize + colDiff); col++) {
+                board[row][col] = boardToReplace[row - rowDiff][col - colDiff];
+                board[row][col].setAllPosition(new Position(row, col));
+            }
+        }
+    }
 }

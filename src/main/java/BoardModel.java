@@ -30,6 +30,30 @@ public class BoardModel {
         return board[pos.getX()][pos.getY()].getTop().getColor() == color;
     }
 
+    // Accessibility
+    public boolean isAccessible(Position from, Position to) {
+        int fromSize = board[from.getX()][from.getY()].getStackSize();
+        int toSize = board[to.getX()][to.getY()].getStackSize();
+        ArrayList<Position> cList =  from.getConnectedToBoth(to);
+
+        // there should be exactly 2 positions
+        if(cList.size() != 2)
+            return false;
+
+        int blockOneSize = board[cList.get(0).getX()][cList.get(0).getY()].getStackSize();
+        int blockTwoSize = board[cList.get(1).getX()][cList.get(1).getY()].getStackSize();
+
+        return fromSize > blockOneSize || fromSize > blockTwoSize ||
+                toSize >= blockOneSize || toSize >= blockTwoSize;
+    }
+
+    public boolean hasNeighbor(Position pos) {
+        ArrayList<Position> neighborsList = pos.getNeighbors();
+        neighborsList.removeIf(this::isEmpty);
+
+        return !neighborsList.isEmpty();
+    }
+
     // Placeholders
     public void addPlaceholder(Position pos) {
         board[pos.getX()][pos.getY()].addTop(new TilePlaceholder(pos));
@@ -87,7 +111,10 @@ public class BoardModel {
         addAllPlaceholders(toMark);
     }
 
-    // TODO: move utilities - occupied, toMove, hasNeighbors
+    public void addNewTile(TileModel tile) {
+        Position pos = tile.getPosition();
+        board[pos.getX()][pos.getY()].addTop(tile);
+    }
 
     // TODO: move tile
 

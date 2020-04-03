@@ -27,34 +27,43 @@ public class SideboardModel {
         else return null; //throw exception?
     }
 
-    //zwraca true, jezeli krolowa zostala wyrzucona
+    // Metoda zwraca plytke wg. pozycji
+    public TileModel getTile(Position pos) {
+        ArrayList<TileModel> currList = chooseList(pos);
 
-    public boolean checkQueenInPlay(Color playerColor) {
-        if(playerColor == Color.WHITE) return !isAvailable(new Position(-1, 0));
-        else return !isAvailable(new Position(-2, 0));
-
+        for(TileModel element : currList) {
+            if(element.getPosition().equals(pos)) {
+                return element;
+            }
+        }
+        return null; //throw exception?
     }
 
-    //Funkcja sprawdza, czy dostepne sa jeszcze dane plytki.
+    //zwraca true, jezeli krolowa zostala wyrzucona
+    public boolean checkQueenInPlay(Color playerColor) {
+        if(playerColor == Color.WHITE)
+            return !isAvailable(new Position(-1, 0));
+        return !isAvailable(new Position(-2, 0));
+    }
 
+    //Metoda sprawdza, czy dostepne sa jeszcze dane plytki.
     public boolean isAvailable(Position pos) {
-        ArrayList<TileModel> current = chooseList(pos);
+        ArrayList<TileModel> currList = chooseList(pos);
 
-        for(TileModel element: current) {
+        for(TileModel element : currList) {
             if(element.getPosition().equals(pos)) {
-                if(element.getCnt() >= 1) return true;
-                else return false;
+                return element.getCnt() >= 1;
             }
         }
         return false;
     }
 
-    //Funkcja zwraca ile zostalo danych plytek. Jezeli nie ma takiej plytki w grze, zwraca -1
-
+    // Metoda zwraca ile zostalo danych plytek.
+    // Jezeli nie ma takiej plytki w grze, zwraca -1
     public int getTileCnt(Position pos) {
-        ArrayList<TileModel> current = chooseList(pos);
+        ArrayList<TileModel> currList = chooseList(pos);
 
-        for(TileModel element: current) {
+        for(TileModel element : currList) {
             if(element.getPosition().equals(pos)) {
                 return element.getCnt();
             }
@@ -62,12 +71,12 @@ public class SideboardModel {
         return -1; //throw exception?
     }
 
-    //Funckja zmniejsza ilosc danej plytki i zwraca aktualna wartosc. Jezeli nie ma plytki zwraca -1
-
+    // Metoda zmniejsza ilosc danej plytki i zwraca aktualna wartosc.
+    // Jezeli nie ma plytki zwraca -1
     public int decrementAndGetTileCnt(Position pos) {
-        ArrayList<TileModel> current = chooseList(pos);
+        ArrayList<TileModel> currList = chooseList(pos);
 
-        for(TileModel element: current) {
+        for(TileModel element : currList) {
             if(element.getPosition().equals(pos)) {
                 return element.decrementAndGetCnt();
             }
@@ -75,16 +84,6 @@ public class SideboardModel {
         return -1; //throw exception?
     }
 
-    //Funkcja zwraca plytke wg. pozycji
-    public TileModel getTile(Position pos) {
-        ArrayList<TileModel> current = chooseList(pos);
-
-        for(TileModel element: current) {
-            if(element.getPosition().equals(pos)) {
-                return element;
-            }
-        }
-        return null; //throw exception?
-    }
 }
+
 //TODO: rzucanie wyjatkow?

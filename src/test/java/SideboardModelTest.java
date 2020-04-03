@@ -31,9 +31,9 @@ public class SideboardModelTest {
         sideboard.decrementAndGetTileCnt(tileWhite.getPosition());
         assertEquals(0, sideboard.getTileCnt(tileWhite.getPosition()));
 
-        tileWhite = new TileGrasshopper(Color.WHITE, new Position(-1 ,2));
+        tileWhite = new TileGrasshopper(Color.WHITE, new Position(-1, 2));
         TileModel tileBlack = new TileGrasshopper(Color.BLACK, new Position(-2, 2));
-        for(int i = 3; i >= 0 ; i --) {
+        for(int i = 3; i >= 0; i--) {
             assertEquals(i, sideboard.getTileCnt(tileWhite.getPosition()));
             assertEquals(3, sideboard.getTileCnt(tileBlack.getPosition()));
             sideboard.decrementAndGetTileCnt(tileWhite.getPosition());
@@ -56,7 +56,7 @@ public class SideboardModelTest {
 
         TileModel blackGrasshopper = new TileGrasshopper(Color.BLACK, new Position(-2, 2));
         int cnt = 0;
-        while (sideboard.isAvailable(blackGrasshopper.getPosition())) {
+        while(sideboard.isAvailable(blackGrasshopper.getPosition())) {
             cnt++;
             sideboard.decrementAndGetTileCnt(blackGrasshopper.getPosition());
         }

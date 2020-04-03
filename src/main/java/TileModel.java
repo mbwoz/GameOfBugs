@@ -71,6 +71,18 @@ public abstract class TileModel {
         topTile.below = null;
     }
 
+    public int getStackSize() {
+        TileModel tile = getTop();
+        int stackSize = 0;
+
+        while(tile != null) {
+            stackSize++;
+            tile = tile.below;
+        }
+
+        return stackSize - 1;
+    }
+
     public int getCnt() {
         return cnt;
     }

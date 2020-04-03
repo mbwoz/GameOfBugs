@@ -90,7 +90,7 @@ public abstract class TileModel {
         return cnt;
     }
 
-    public int IncrementAndGetCnt() {
+    public int incrementAndGetCnt() {
         return ++cnt;
     }
 
@@ -98,6 +98,5 @@ public abstract class TileModel {
         return --cnt;
     }
 
-    //to, co funkcja zwraca ewentualnie do zmiany (jakaś kolekcja)
     public abstract Collection<Position> getMoveOptions(BoardModel board);
 }

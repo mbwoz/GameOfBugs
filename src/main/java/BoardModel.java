@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.*;
 
 public class BoardModel {
     private TileModel[][] board;
@@ -55,6 +53,10 @@ public class BoardModel {
     }
 
     // Placeholders
+    public boolean isPlaceholder(Position pos) {
+        return board[pos.getX()][pos.getY()].getTop() instanceof TilePlaceholder;
+    }
+
     public void addPlaceholder(Position pos) {
         board[pos.getX()][pos.getY()].addTop(new TilePlaceholder(pos));
     }
@@ -129,9 +131,68 @@ public class BoardModel {
         board[to.getX()][to.getY()].addTop(tile);
     }
 
-    // TODO: connectivity
+    // Connectivity
+    public boolean staysConnected(Position pos) {
+        if(board[pos.getX()][pos.getY()].getStackSize() > 1)
+            return true;
 
-    // TODO: end game condition
+        HashSet<Position> connected = new HashSet<>();
+        connected.add(pos);
+
+        ArrayList<Position> start = pos.getNeighbors();
+        start.removeIf(this::isEmpty);
+        // only tile (does not happen in a normal game)
+        if(start.isEmpty())
+            return true;
+
+        LinkedList<Position> toProcess = new LinkedList<>();
+        toProcess.add(start.get(0));
+        connected.add(start.get(0));
+
+        while(!toProcess.isEmpty()) {
+            Position currPos = toProcess.pollFirst();
+            ArrayList<Position> currNeighbors = currPos.getNeighbors();
+
+            currNeighbors.removeIf(this::isEmpty);
+            currNeighbors.removeIf(connected::contains);
+
+            connected.addAll(currNeighbors);
+            toProcess.addAll(currNeighbors);
+        }
+
+        for(int row = 0; row < boardSize; row++) {
+            for(int col = 0; col < boardSize; col++) {
+                Position currPos = new Position(row, col);
+                if(isEmpty(currPos))
+                    continue;
+
+                if(!connected.contains(currPos))
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
+    // End game condition
+    public boolean isQueenSurrounded(Color color) {
+        for(int row = 0; row < boardSize; row++) {
+            for(int col = 0; col < boardSize; col++) {
+                TileModel tile = board[row][col].getAbove();
+                if(tile == null)
+                    continue;
+
+                if(tile instanceof TileBee && tile.getColor() == color) {
+                    ArrayList<Position> neighbors = tile.getPosition().getNeighbors();
+                    neighbors.removeIf(p -> !isEmpty(p));
+                    if(neighbors.isEmpty())
+                        return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     // Rebuild board
     public boolean checkForRebuild() {

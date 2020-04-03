@@ -84,6 +84,7 @@ public class BoardModel {
         return false;
     }
 
+    // TODO: add first and second element
     // Add new element
     public void markHexesForNewTile(Color color) {
         HashSet<Position> toMark = new HashSet<>();
@@ -116,9 +117,21 @@ public class BoardModel {
         board[pos.getX()][pos.getY()].addTop(tile);
     }
 
-    // TODO: move tile
+    // Move tile
+    public void markHexesForTileMovement(TileModel tile) {
+        Collection<Position> toMark = tile.getMoveOptions(this);
+        addAllPlaceholders(toMark);
+    }
+
+    public void moveTile(Position from, Position to) {
+        TileModel tile = board[from.getX()][from.getY()].removeTop();
+        tile.setPosition(to);
+        board[to.getX()][to.getY()].addTop(tile);
+    }
 
     // TODO: connectivity
+
+    // TODO: end game condition
 
     // Rebuild board
     public boolean checkForRebuild() {

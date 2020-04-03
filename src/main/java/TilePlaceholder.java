@@ -1,3 +1,5 @@
+import java.util.Collection;
+
 public class TilePlaceholder extends TileModel {
 
     public TilePlaceholder(Position position) {
@@ -5,7 +7,7 @@ public class TilePlaceholder extends TileModel {
     }
 
     @Override
-    public boolean[][] getMoveOptions(BoardModel board) {
+    public Collection<Position> getMoveOptions(BoardModel board) {
         return null;
     }
 }

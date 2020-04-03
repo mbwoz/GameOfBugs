@@ -1,3 +1,5 @@
+import java.util.Collection;
+
 public class TileGrasshopper extends TileModel {
 
     public TileGrasshopper(Color color, Position position) {
@@ -5,7 +7,7 @@ public class TileGrasshopper extends TileModel {
     }
 
     @Override
-    public boolean[][] getMoveOptions(BoardModel board) {
+    public Collection<Position> getMoveOptions(BoardModel board) {
         return null;
     }
 }

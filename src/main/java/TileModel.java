@@ -1,3 +1,5 @@
+import java.util.Collection;
+
 public abstract class TileModel {
     private Color color;
     private Position position;
@@ -62,13 +64,14 @@ public abstract class TileModel {
         tile.below = topTile;
     }
 
-    public void removeTop() {
+    public TileModel removeTop() {
         TileModel topTile = getTop();
         if(topTile.below == null)
-            return;
+            return topTile;
 
         topTile.below.above = null;
         topTile.below = null;
+        return topTile;
     }
 
     public int getStackSize() {
@@ -96,5 +99,5 @@ public abstract class TileModel {
     }
 
     //to, co funkcja zwraca ewentualnie do zmiany (jakaś kolekcja)
-    public abstract boolean[][] getMoveOptions(BoardModel board);
+    public abstract Collection<Position> getMoveOptions(BoardModel board);
 }

@@ -27,3 +27,15 @@ Wszystkie płytki mogą poruszać się tylko wtedy, gdy nie są zablokowane. Je�
 **Królowa** _(komunikat - **OK**)_
 
 Najważniejszy element gry, ponieważ przez cały czas musimy uważać na jej sąsiadów. Królowa jednak nie może wykonywać spektakularnych ruchów - w danej turze gracz może przemieścić tę płytkę jedynie na pole będące jej sąsiadem. Mimo niewielkich możliwości, pojedynczy ruch królową jest w stanie zmniejszyć jej liczbę sąsiadów, a zatem może znacząco pokrzyżować plany przeciwnika.
+
+**Mrówka** _(komunikat - **ANS**)_
+
+Mrówka może poruszać się na dowolne miejsce wokół roju, do którego może dojść bez naruszania jego struktury _(patrz "Swoboda ruchu")_. Dzięki tak dużej mobilności jest to jedna z najbardziej wartościowych płytek w grze.
+
+**Konik polny** _(komunikat - **RTE**)_
+
+Konik polny nie porusza się w zwykły sposób, ale skacze ze swojej pozycji na pierwszą wolną pozycję, poruszając się wzdłuż płytek położonych w linii prostej. Dzięki temu może zapełniać miejsca otoczone przez inne płytki, ponieważ jego ruch nie narusza struktury roju. Należy jednak pamiętać o tym, że podczas ruchu konik polny musi przeskoczyć przynajmniej jedną płytkę.
+
+**Pająk** _(komunikat - **TLE**)_
+
+Pająk podczas jednej tury porusza się wokół roju o dokładnie trzy pola, dodatkowo nie może w tym samym ruchu wracać po swoich śladach. Pająk może się poruszać tylko naokoło płytek z którymi może się bezpośrednio zetknąć w każdej fazie swojego ruchu.

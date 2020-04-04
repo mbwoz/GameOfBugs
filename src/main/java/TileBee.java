@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class TileBee extends TileModel {
@@ -8,6 +9,23 @@ public class TileBee extends TileModel {
 
     @Override
     public HashSet<Position> getMoveOptions(BoardModel board) {
-        return null;
+        Position current = getPosition();
+        ArrayList<Position> neighbors = current.getNeighbors();
+        HashSet<Position> moveOptions = new HashSet<>();
+
+        for(Position next : neighbors) {
+            if(!board.isEmpty(next))
+                continue;
+
+            //check if hex has any neighbors excluding current one
+            if(!board.hasNeighbor(next, current))
+                continue;
+
+            if(!board.isAccessible(current, next))
+                continue;
+
+            moveOptions.add(next);
+        }
+        return moveOptions;
     }
 }

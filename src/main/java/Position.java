@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Position {
     private int x;
@@ -59,9 +60,15 @@ public class Position {
         return firstNeighbors;
     }
 
+    @Override
     public boolean equals(Object o) {
         if(!(o instanceof Position))
             return false;
         return x == ((Position)o).x && y == ((Position)o).y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

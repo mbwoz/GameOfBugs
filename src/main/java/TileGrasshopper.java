@@ -1,4 +1,4 @@
-import java.util.Collection;
+import java.util.HashSet;
 
 public class TileGrasshopper extends TileModel {
 
@@ -7,7 +7,7 @@ public class TileGrasshopper extends TileModel {
     }
 
     @Override
-    public Collection<Position> getMoveOptions(BoardModel board) {
+    public HashSet<Position> getMoveOptions(BoardModel board) {
         return null;
     }
 }

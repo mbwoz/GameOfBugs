@@ -1,4 +1,4 @@
-import java.util.Collection;
+import java.util.HashSet;
 
 public abstract class TileModel {
     private Color color;
@@ -98,5 +98,5 @@ public abstract class TileModel {
         return --cnt;
     }
 
-    public abstract Collection<Position> getMoveOptions(BoardModel board);
+    public abstract HashSet<Position> getMoveOptions(BoardModel board);
 }

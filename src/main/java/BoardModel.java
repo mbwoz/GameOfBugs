@@ -28,6 +28,11 @@ public class BoardModel {
         return board[pos.getX()][pos.getY()].getTop().getColor() == color;
     }
 
+    // Height
+    public int getStackSize(Position pos) {
+        return board[pos.getX()][pos.getY()].getStackSize();
+    }
+
     // Accessibility
     public boolean isAccessible(Position from, Position to) {
         int fromSize = board[from.getX()][from.getY()].getStackSize();
@@ -47,6 +52,21 @@ public class BoardModel {
 
     public boolean hasNeighbor(Position pos) {
         ArrayList<Position> neighborsList = pos.getNeighbors();
+        neighborsList.removeIf(this::isEmpty);
+
+        return !neighborsList.isEmpty();
+    }
+
+    public boolean hasNeighbor(Position pos, Position exclude) {
+        ArrayList<Position> neighborsList = pos.getNeighbors();
+        neighborsList.removeIf(this::isEmpty);
+        neighborsList.removeIf(p -> p.equals(exclude));
+
+        return !neighborsList.isEmpty();
+    }
+
+    public boolean hasCommonNeighbor(Position from, Position to) {
+        ArrayList<Position> neighborsList = from.getConnectedToBoth(to);
         neighborsList.removeIf(this::isEmpty);
 
         return !neighborsList.isEmpty();

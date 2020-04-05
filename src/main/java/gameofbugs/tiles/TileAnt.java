@@ -16,18 +16,17 @@ public class TileAnt extends TileModel {
 
     @Override
     public HashSet<Position> getMoveOptions(BoardModel board) {
-        Position currPos = getPosition();
         LinkedList<Position> toProcess = new LinkedList<>();
         HashSet<Position> moveOptions = new HashSet<>();
 
-        toProcess.add(currPos);
+        toProcess.add(position);
 
         while(!toProcess.isEmpty()) {
             Position processedPos = toProcess.pollFirst();
             ArrayList<Position> neighbors = processedPos.getNeighbors();
 
             neighbors.removeIf(p -> !board.isEmpty(p));
-            neighbors.removeIf(p -> !board.hasNeighbor(p, currPos));
+            neighbors.removeIf(p -> !board.hasNeighbor(p, position));
             neighbors.removeIf(p -> !board.isAccessible(processedPos, p));
             neighbors.removeIf(moveOptions::contains);
 

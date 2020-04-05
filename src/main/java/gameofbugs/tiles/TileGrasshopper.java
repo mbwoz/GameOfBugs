@@ -15,15 +15,14 @@ public class TileGrasshopper extends TileModel {
 
     @Override
     public HashSet<Position> getMoveOptions(BoardModel board) {
-        Position currPos = getPosition();
-        ArrayList<Position> neighbors = currPos.getNeighbors();
+        ArrayList<Position> neighbors = position.getNeighbors();
         HashSet<Position> moveOptions = new HashSet<>();
 
         for(Position next : neighbors) {
             if(board.isEmpty(next))
                 continue;
 
-            Position direction = new Position(next.getX() - currPos.getX(), next.getY() - currPos.getY());
+            Position direction = new Position(next.getX() - position.getX(), next.getY() - position.getY());
             Position finalPos = next;
 
             // moving to first empty hex in straight line
@@ -32,6 +31,7 @@ public class TileGrasshopper extends TileModel {
 
             moveOptions.add(finalPos);
         }
+
         return moveOptions;
     }
 }

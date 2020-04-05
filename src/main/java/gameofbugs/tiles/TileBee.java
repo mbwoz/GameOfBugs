@@ -15,8 +15,7 @@ public class TileBee extends TileModel {
 
     @Override
     public HashSet<Position> getMoveOptions(BoardModel board) {
-        Position currPos = getPosition();
-        ArrayList<Position> neighbors = currPos.getNeighbors();
+        ArrayList<Position> neighbors = position.getNeighbors();
         HashSet<Position> moveOptions = new HashSet<>();
 
         for(Position next : neighbors) {
@@ -24,14 +23,15 @@ public class TileBee extends TileModel {
                 continue;
 
             // check if hex has any neighbors excluding current position
-            if(!board.hasNeighbor(next, currPos))
+            if(!board.hasNeighbor(next, position))
                 continue;
 
-            if(!board.isAccessible(currPos, next))
+            if(!board.isAccessible(position, next))
                 continue;
 
             moveOptions.add(next);
         }
+
         return moveOptions;
     }
 }

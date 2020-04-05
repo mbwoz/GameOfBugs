@@ -7,11 +7,11 @@ import gameofbugs.Position;
 import java.util.HashSet;
 
 public abstract class TileModel {
-    private Color color;
-    private Position position;
-    private TileModel above;
-    private TileModel below;
-    private int cnt;
+    protected Color color;
+    protected Position position;
+    protected TileModel above;
+    protected TileModel below;
+    protected int cnt;
 
     public TileModel(Position position, int cnt) {
         this(Color.NONE, position, cnt);

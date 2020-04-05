@@ -57,6 +57,24 @@ public class BoardModel {
                 toSize >= blockOneSize || toSize >= blockTwoSize;
     }
 
+    public boolean isAccessible(Position from, Position to, Position excludeTop) {
+        int fromSize = board[from.getX()][from.getY()].getStackSize();
+        int toSize = board[to.getX()][to.getY()].getStackSize();
+        ArrayList<Position> cList =  from.getConnectedToBoth(to);
+
+        // there should be exactly 2 positions
+        if(cList.size() != 2)
+            return false;
+
+        int blockOneSize = board[cList.get(0).getX()][cList.get(0).getY()].getStackSize();
+        if(cList.get(0).equals(excludeTop)) blockOneSize--;
+        int blockTwoSize = board[cList.get(1).getX()][cList.get(1).getY()].getStackSize();
+        if(cList.get(1).equals(excludeTop)) blockTwoSize--;
+
+        return fromSize > blockOneSize || fromSize > blockTwoSize ||
+                toSize >= blockOneSize || toSize >= blockTwoSize;
+    }
+
     public boolean hasNeighbor(Position pos) {
         ArrayList<Position> neighborsList = pos.getNeighbors();
         neighborsList.removeIf(this::isEmpty);
@@ -64,10 +82,12 @@ public class BoardModel {
         return !neighborsList.isEmpty();
     }
 
-    public boolean hasNeighbor(Position pos, Position exclude) {
+    public boolean hasNeighbor(Position pos, Position excludeTop) {
         ArrayList<Position> neighborsList = pos.getNeighbors();
         neighborsList.removeIf(this::isEmpty);
-        neighborsList.removeIf(p -> p.equals(exclude));
+
+        if(board[excludeTop.getX()][excludeTop.getY()].getStackSize() < 2)
+            neighborsList.removeIf(p -> p.equals(excludeTop));
 
         return !neighborsList.isEmpty();
     }
@@ -75,6 +95,16 @@ public class BoardModel {
     public boolean hasCommonNeighbor(Position from, Position to) {
         ArrayList<Position> neighborsList = from.getConnectedToBoth(to);
         neighborsList.removeIf(this::isEmpty);
+
+        return !neighborsList.isEmpty();
+    }
+
+    public boolean hasCommonNeighbor(Position from, Position to, Position excludeTop) {
+        ArrayList<Position> neighborsList = from.getConnectedToBoth(to);
+        neighborsList.removeIf(this::isEmpty);
+
+        if(board[excludeTop.getX()][excludeTop.getY()].getStackSize() < 2)
+            neighborsList.removeIf(p -> p.equals(excludeTop));
 
         return !neighborsList.isEmpty();
     }

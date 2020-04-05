@@ -56,14 +56,39 @@ public class BoardModelTest {
         assertTrue(board.hasNeighbor(new Position(14, 15)));
         assertFalse(board.hasNeighbor(new Position(14, 17)));
 
-        assertTrue(board.hasNeighbor(new Position(16, 14), new Position(15, 15)));
-        assertTrue(board.hasNeighbor(new Position(14, 16), new Position(15, 15)));
-        assertFalse(board.hasNeighbor(new Position(14, 15), new Position(15, 15)));
-
         board.addNewTile(new TileAnt(Color.WHITE, new Position(14, 14)));
 
         assertTrue(board.hasCommonNeighbor(new Position(16, 13), new Position(15, 14)));
         assertFalse(board.hasCommonNeighbor(new Position(16, 13), new Position(15, 13)));
+    }
+
+    @Test
+    public void excludeAccessibilityTest() {
+        BoardModel board = new BoardModel();
+        board.addNewTile(new TileBee(Color.WHITE, new Position(15, 15)));
+        board.addNewTile(new TileAnt(Color.WHITE, new Position(14, 15)));
+        board.addNewTile(new TileGrasshopper(Color.WHITE, new Position(16, 15)));
+        board.addNewTile(new TileSpider(Color.WHITE, new Position(16, 14)));
+
+        assertTrue(board.isAccessible(new Position(15, 15), new Position(15, 14), new Position(16, 14)));
+        assertFalse(board.isAccessible(new Position(15, 15), new Position(15, 14), new Position(16, 15)));
+
+        assertTrue(board.hasNeighbor(new Position(16, 14), new Position(15, 15)));
+        assertTrue(board.hasNeighbor(new Position(14, 16), new Position(15, 15)));
+        assertFalse(board.hasNeighbor(new Position(14, 15), new Position(15, 15)));
+
+        board.addNewTile(new TileBee(Color.BLACK, new Position(16, 14)));
+        board.addNewTile(new TileAnt(Color.BLACK, new Position(17, 14)));
+
+        assertFalse(board.isAccessible(new Position(15, 15), new Position(15, 14), new Position(16, 14)));
+        assertTrue(board.isAccessible(new Position(16, 14), new Position(16, 15), new Position(14, 15)));
+        assertTrue(board.isAccessible(new Position(16, 15), new Position(16, 14), new Position(14, 15)));
+
+        assertTrue(board.hasNeighbor(new Position(16, 13), new Position(16, 14)));
+        assertFalse(board.hasNeighbor(new Position(16, 16), new Position(16, 15)));
+
+        assertTrue(board.hasCommonNeighbor(new Position(17, 14), new Position(17, 13), new Position(16, 14)));
+        assertFalse(board.hasCommonNeighbor(new Position(14, 15), new Position(14, 16), new Position(15, 15)));
     }
 
     @Test
@@ -192,21 +217,21 @@ public class BoardModelTest {
     @Test
     public void basicRebuildTest() {
         BoardModel board = new BoardModel();
-        board.addNewTile(new TileAnt(Color.WHITE, new Position(15, 15)));
+        board.addNewTile(new TileAnt(Color.WHITE, new Position(16, 16)));
 
         assertFalse(board.checkForRebuild());
 
-        board.addNewTile(new TileAnt(Color.WHITE, new Position(15, 15)));
-        board.addNewTile(new TileAnt(Color.WHITE, new Position(1, 1)));
+        board.addNewTile(new TileAnt(Color.WHITE, new Position(16, 16)));
+        board.addNewTile(new TileAnt(Color.WHITE, new Position(2, 2)));
 
         assertTrue(board.checkForRebuild());
 
         board.rebuildBoard();
 
         assertFalse(board.checkForRebuild());
-        assertFalse(board.isEmpty(new Position(8, 8)));
-        assertFalse(board.isEmpty(new Position(22, 22)));
-        assertTrue(board.isEmpty(new Position(1, 1)));
-        assertTrue(board.isEmpty(new Position(15, 15)));
+        assertFalse(board.isEmpty(new Position(9, 9)));
+        assertFalse(board.isEmpty(new Position(23, 23)));
+        assertTrue(board.isEmpty(new Position(2, 2)));
+        assertTrue(board.isEmpty(new Position(16, 16)));
     }
 }

@@ -9,7 +9,7 @@ import java.util.*;
 
 public class BoardModel {
     private TileModel[][] board;
-    private final int boardSize = 30;
+    private final int boardSize = 32;
 
     public BoardModel() {
         createNewEmptyBoard();
@@ -256,7 +256,7 @@ public class BoardModel {
     public boolean checkForRebuild() {
         for(int row = 0; row < boardSize; row++) {
             for(int col = 0; col < boardSize; col++) {
-                if(1 < row && row < boardSize - 1 && 1 < col && col < boardSize - 1)
+                if(2 < row && row < boardSize - 2 && 2 < col && col < boardSize - 2)
                     continue;
 
                 if(!isEmpty(new Position(row, col)))

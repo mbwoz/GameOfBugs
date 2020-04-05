@@ -9,19 +9,19 @@ public class TileBee extends TileModel {
 
     @Override
     public HashSet<Position> getMoveOptions(BoardModel board) {
-        Position current = getPosition();
-        ArrayList<Position> neighbors = current.getNeighbors();
+        Position currPos = getPosition();
+        ArrayList<Position> neighbors = currPos.getNeighbors();
         HashSet<Position> moveOptions = new HashSet<>();
 
         for(Position next : neighbors) {
             if(!board.isEmpty(next))
                 continue;
 
-            //check if hex has any neighbors excluding current one
-            if(!board.hasNeighbor(next, current))
+            // check if hex has any neighbors excluding current position
+            if(!board.hasNeighbor(next, currPos))
                 continue;
 
-            if(!board.isAccessible(current, next))
+            if(!board.isAccessible(currPos, next))
                 continue;
 
             moveOptions.add(next);

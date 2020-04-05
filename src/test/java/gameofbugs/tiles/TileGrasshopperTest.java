@@ -16,7 +16,7 @@ public class TileGrasshopperTest {
     @Test
     public void noNeighborsTest() {
         BoardModel board = new BoardModel();
-        TileGrasshopper hopper = new TileGrasshopper(Color.WHITE, new Position(10,10));
+        TileGrasshopper hopper = new TileGrasshopper(Color.WHITE, new Position(10, 10));
         board.addNewTile(hopper);
         HashSet<Position> moveOptions = hopper.getMoveOptions(board);
 
@@ -26,19 +26,19 @@ public class TileGrasshopperTest {
     @Test
     public void oneNeighborTest() {
         BoardModel board = new BoardModel();
-        TileGrasshopper hopper = new TileGrasshopper(Color.WHITE, new Position(10,10));
+        TileGrasshopper hopper = new TileGrasshopper(Color.WHITE, new Position(10, 10));
         board.addNewTile(hopper);
         board.addNewTile(new TileBee(Color.WHITE, new Position(10, 11)));
         HashSet<Position> moveOptions = hopper.getMoveOptions(board);
 
-        assertEquals(moveOptions.size(), 1);
-        assertTrue(moveOptions.contains(new Position(10,12)));
+        assertEquals(1, moveOptions.size());
+        assertTrue(moveOptions.contains(new Position(10, 12)));
     }
 
     @Test
     public void manyNeighborsTest() {
         BoardModel board = new BoardModel();
-        TileGrasshopper hopper = new TileGrasshopper(Color.WHITE, new Position(10,10));
+        TileGrasshopper hopper = new TileGrasshopper(Color.WHITE, new Position(10, 10));
         board.addNewTile(hopper);
         board.addNewTile(new TileBee(Color.WHITE, new Position(10, 11)));
         board.addNewTile(new TileBee(Color.WHITE, new Position(10, 12)));
@@ -50,16 +50,16 @@ public class TileGrasshopperTest {
         board.addNewTile(new TileBee(Color.WHITE, new Position(12, 8)));
         HashSet<Position> moveOptions = hopper.getMoveOptions(board);
 
-        assertEquals(moveOptions.size(), 3);
-        assertTrue(moveOptions.contains(new Position(10,14)));
-        assertTrue(moveOptions.contains(new Position(7,13)));
-        assertTrue(moveOptions.contains(new Position(8,10)));
+        assertEquals(3, moveOptions.size());
+        assertTrue(moveOptions.contains(new Position(10, 14)));
+        assertTrue(moveOptions.contains(new Position(7, 13)));
+        assertTrue(moveOptions.contains(new Position(8, 10)));
     }
 
     @Test
     public void fromInstructionTest() {
         BoardModel board = new BoardModel();
-        TileGrasshopper hopper = new TileGrasshopper(Color.WHITE, new Position(6,4));
+        TileGrasshopper hopper = new TileGrasshopper(Color.WHITE, new Position(6, 4));
         board.addNewTile(hopper);
         board.addNewTile(new TileBee(Color.BLACK, new Position(5, 5)));
         board.addNewTile(new TileAnt(Color.BLACK, new Position(5, 6)));
@@ -74,10 +74,10 @@ public class TileGrasshopperTest {
         board.addNewTile(new TileSpider(Color.WHITE, new Position(10, 4)));
         HashSet<Position> moveOptions = hopper.getMoveOptions(board);
 
-        assertEquals(moveOptions.size(), 3);
-        assertTrue(moveOptions.contains(new Position(4,6)));
-        assertTrue(moveOptions.contains(new Position(8,2)));
-        assertTrue(moveOptions.contains(new Position(9,4)));
-        assertFalse(moveOptions.contains(new Position(6,7)));
+        assertEquals(3, moveOptions.size());
+        assertTrue(moveOptions.contains(new Position(4, 6)));
+        assertTrue(moveOptions.contains(new Position(8, 2)));
+        assertTrue(moveOptions.contains(new Position(9, 4)));
+        assertFalse(moveOptions.contains(new Position(6, 7)));
     }
 }

@@ -147,7 +147,8 @@ public class BoardModel {
     }
 
     // Move tile
-    public void markHexesForTileMovement(TileModel tile) {
+    public void markHexesForTileMovement(Position pos) {
+        TileModel tile = board[pos.getX()][pos.getY()].getTop();
         Collection<Position> toMark = tile.getMoveOptions(this);
         addAllPlaceholders(toMark);
     }

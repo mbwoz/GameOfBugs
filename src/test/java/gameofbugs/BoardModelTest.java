@@ -1,3 +1,10 @@
+package gameofbugs;
+
+import gameofbugs.tiles.TileAnt;
+import gameofbugs.tiles.TileBee;
+import gameofbugs.tiles.TileGrasshopper;
+import gameofbugs.tiles.TileSpider;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -27,9 +34,9 @@ public class BoardModelTest {
 
         assertTrue(board.checkColor(new Position(15, 15), Color.BLACK));
 
-        assertEquals(2, board.getStackSize(new Position(15, 15)));
-        assertEquals(1, board.getStackSize(new Position(14, 15)));
-        assertEquals(0, board.getStackSize(new Position(15, 14)));
+        Assert.assertEquals(2, board.getStackSize(new Position(15, 15)));
+        Assert.assertEquals(1, board.getStackSize(new Position(14, 15)));
+        Assert.assertEquals(0, board.getStackSize(new Position(15, 14)));
     }
 
     @Test
@@ -124,12 +131,12 @@ public class BoardModelTest {
 
         board.moveTile(new Position(15, 16), new Position(15, 15));
 
-        assertEquals(2, board.getStackSize(new Position(15, 15)));
+        Assert.assertEquals(2, board.getStackSize(new Position(15, 15)));
         assertTrue(board.isEmpty(new Position(15, 16)));
 
         board.moveTile(new Position(15, 15), new Position(15, 14));
-        assertEquals(1, board.getStackSize(new Position(15, 15)));
-        assertEquals(1, board.getStackSize(new Position(15, 14)));
+        Assert.assertEquals(1, board.getStackSize(new Position(15, 15)));
+        Assert.assertEquals(1, board.getStackSize(new Position(15, 14)));
     }
 
     @Test

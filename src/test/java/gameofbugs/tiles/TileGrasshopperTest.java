@@ -1,3 +1,8 @@
+package gameofbugs.tiles;
+
+import gameofbugs.BoardModel;
+import gameofbugs.Color;
+import gameofbugs.Position;
 import org.junit.Test;
 
 import java.util.HashSet;

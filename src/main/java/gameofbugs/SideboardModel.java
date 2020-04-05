@@ -1,3 +1,7 @@
+package gameofbugs;
+
+import gameofbugs.tiles.*;
+
 import java.util.ArrayList;
 
 public class SideboardModel {

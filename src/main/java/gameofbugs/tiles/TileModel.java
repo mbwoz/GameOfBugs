@@ -1,3 +1,9 @@
+package gameofbugs.tiles;
+
+import gameofbugs.BoardModel;
+import gameofbugs.Color;
+import gameofbugs.Position;
+
 import java.util.HashSet;
 
 public abstract class TileModel {

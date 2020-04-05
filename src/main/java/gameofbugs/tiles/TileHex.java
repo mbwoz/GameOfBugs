@@ -1,8 +1,13 @@
+package gameofbugs.tiles;
+
+import gameofbugs.BoardModel;
+import gameofbugs.Position;
+
 import java.util.HashSet;
 
-public class TilePlaceholder extends TileModel {
+public class TileHex extends TileModel {
 
-    public TilePlaceholder(Position position) {
+    public TileHex(Position position) {
         super(position, 0);
     }
 

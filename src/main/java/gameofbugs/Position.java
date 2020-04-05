@@ -1,3 +1,5 @@
+package gameofbugs;
+
 import java.util.ArrayList;
 import java.util.Objects;
 

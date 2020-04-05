@@ -1,3 +1,10 @@
+package gameofbugs;
+
+import gameofbugs.tiles.TileBee;
+import gameofbugs.tiles.TileHex;
+import gameofbugs.tiles.TileModel;
+import gameofbugs.tiles.TilePlaceholder;
+
 import java.util.*;
 
 public class BoardModel {

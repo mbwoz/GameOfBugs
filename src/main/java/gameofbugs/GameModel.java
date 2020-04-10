@@ -1,19 +1,21 @@
 package gameofbugs;
 import gameofbugs.tiles.*;
 
+import java.util.ArrayList;
+
 
 public class GameModel {
     BoardModel myBoard;
     SideboardModel mySideboard;
     Color currentPlayer;
     int turns;
-    TileModel lastTile;
+    Position lastPosition;
 
     public GameModel() {
         myBoard = new BoardModel();
         mySideboard = new SideboardModel();
         currentPlayer = Color.WHITE; //White player starts game
-        lastTile = null;
+        lastPosition = null;
         turns = 1;  // starting with first turn
     }
 
@@ -29,14 +31,16 @@ public class GameModel {
         else return 0; //No one lost
     }
 
-    public void changeColor() { currentPlayer = currentPlayer.getOpposite(); }
+    public void nextTurn() {
+        currentPlayer = currentPlayer.getOpposite();
+        turns++;
+    }
 
     public boolean action(Position pos) { //false if failed action, turns++ only when second action succeeds
         if(myBoard.containsPlaceholders()) return actionWithPlaceholders(pos);
         else{
-            boolean flag = false;
-            flag = actionWithoutPlaceholders(pos);
-            if(flag) turns++;  //TODO: Give new Board to update
+            boolean flag = actionWithoutPlaceholders(pos);
+            if(flag) nextTurn();                            //TODO: Give new Board to update
             else myBoard.cleanPlaceholders();
             return flag;
         }
@@ -45,18 +49,18 @@ public class GameModel {
     private boolean actionWithPlaceholders(Position pos) {
         if(!myBoard.isPlaceholder(pos)) return false;
         myBoard.cleanPlaceholders();
-        if(lastTile.getPosition().getX() == -1 || lastTile.getPosition().getX() == -2) {
-            TileModel currentTile = getNew(lastTile.getPosition(), currentPlayer);
+        if(lastPosition.getX() == -1 || lastPosition.getX() == -2) {
+            TileModel currentTile = getNew(lastPosition, currentPlayer);
             myBoard.addNewTile(currentTile);
-            mySideboard.decrementAndGetTileCnt(pos);  //TODO: Give new cnt to update
+            mySideboard.decrementAndGetTileCnt(pos);           //TODO: Give new cnt to update
         }
         else {
-            myBoard.moveTile(lastTile.getPosition(), pos);
+            myBoard.moveTile(lastPosition, pos);
         }
         return true;
     }
 
-    //returning new Tile
+    //returning new tile from sideboard
     private TileModel getNew(Position pos, Color col) {
         if(pos.getY() == 0) return new TileBee(col, pos);
         if(pos.getY() == 1) return new TileAnt(col, pos);
@@ -65,21 +69,28 @@ public class GameModel {
         return null;
     }
 
-    //sets lastTile
+    //sets lastPosition and placeholders
     private boolean actionWithoutPlaceholders(Position pos) {
         if(pos.getX() == -1 || pos.getX() == -2) {
-            TileModel choosenTile = mySideboard.getTile(pos);
-
-            if(choosenTile.getColor() != currentPlayer) return false;
+            if(mySideboard.getColor(pos) != currentPlayer) return false;
             if(!mySideboard.isAvailable(pos)) return false;
             if(turns > 6 && !mySideboard.checkQueenInPlay(currentPlayer) && pos.getY() != 0) return false;
-
-            lastTile = choosenTile;
+            lastPosition = pos;
             myBoard.markHexesForNewTile(currentPlayer);
-            return true;
         }
         else {
-            //TODO: Chosed tile from board
+            if(!mySideboard.checkQueenInPlay(currentPlayer)) return false;
+            if(!myBoard.checkColor(pos, currentPlayer)) return false;
+            if(!myBoard.staysConnected(pos)) return false;
+
+            //check if position is "locked"
+            ArrayList<Position> neighborsList = pos.getNeighbors();
+            for(Position p: neighborsList) if(myBoard.isEmpty(p)) neighborsList.remove(p);
+            if(neighborsList.size()>5) return false;
+
+            myBoard.markHexesForTileMovement(pos);
+            if(!myBoard.containsPlaceholders()) return false;
+            lastPosition = pos;                                 //TODO: Give Placeholders to update
         }
         return true;
     }

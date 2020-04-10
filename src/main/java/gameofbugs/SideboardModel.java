@@ -31,26 +31,21 @@ public class SideboardModel {
         else return null; //throw exception?
     }
 
-    // Metoda zwraca plytke wg. pozycji
-    public TileModel getTile(Position pos) {
-        ArrayList<TileModel> currList = chooseList(pos);
 
-        for(TileModel element : currList) {
-            if(element.getPosition().equals(pos)) {
-                return element;
-            }
-        }
-        return null; //throw exception?
+    //returns color from position
+    public Color getColor(Position pos) {
+        if(pos.getX() == -1) return Color.WHITE;
+        else return Color.BLACK;
     }
 
-    //zwraca true, jezeli krolowa zostala wyrzucona
+    //returns true when Queen is in the game
     public boolean checkQueenInPlay(Color playerColor) {
         if(playerColor == Color.WHITE)
             return !isAvailable(new Position(-1, 0));
         return !isAvailable(new Position(-2, 0));
     }
 
-    //Metoda sprawdza, czy dostepne sa jeszcze dane plytki.
+    //checks if Tiles are available
     public boolean isAvailable(Position pos) {
         ArrayList<TileModel> currList = chooseList(pos);
 
@@ -62,8 +57,7 @@ public class SideboardModel {
         return false;
     }
 
-    // Metoda zwraca ile zostalo danych plytek.
-    // Jezeli nie ma takiej plytki w grze, zwraca -1
+    //returns number of tiles
     public int getTileCnt(Position pos) {
         ArrayList<TileModel> currList = chooseList(pos);
 
@@ -75,8 +69,7 @@ public class SideboardModel {
         return -1; //throw exception?
     }
 
-    // Metoda zmniejsza ilosc danej plytki i zwraca aktualna wartosc.
-    // Jezeli nie ma plytki zwraca -1
+    //decrements tilecnt
     public int decrementAndGetTileCnt(Position pos) {
         ArrayList<TileModel> currList = chooseList(pos);
 

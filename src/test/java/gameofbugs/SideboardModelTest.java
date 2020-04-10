@@ -93,9 +93,9 @@ public class SideboardModelTest {
         SideboardModel sideboard = new SideboardModel();
 
         TileModel tileBee = new TileBee(Color.WHITE, new Position(-1, 0));
-        TileModel tileAnt = new TileAnt(Color.WHITE, new Position(-1, 1));
+        TileModel tileAnt = new TileAnt(Color.BLACK, new Position(-2, 1));
 
-        assertTrue(tileAnt.getClass() == sideboard.getTile(tileAnt.getPosition()).getClass());
-        assertTrue(tileBee.getClass() == sideboard.getTile(tileBee.getPosition()).getClass());
+        assertTrue(Color.WHITE == sideboard.getColor(tileBee.getPosition()));
+        assertTrue(Color.BLACK == sideboard.getColor(tileAnt.getPosition()));
     }
 }

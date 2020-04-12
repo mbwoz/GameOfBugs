@@ -25,23 +25,37 @@ public class BoardModel {
         }
     }
 
+    private boolean inBoundaries(Position pos) {
+        return 0 <= pos.getX() && pos.getX() < boardSize &&
+                0 <= pos.getY() && pos.getY() < boardSize; // ?exception
+    }
+
     // Empty
     public boolean isEmpty(Position pos) {
+        if(!inBoundaries(pos))
+            return false;
         return board[pos.getX()][pos.getY()].getTop() instanceof TileHex;
     }
 
     // Color
     public boolean checkColor(Position pos, Color color) {
+        if(!inBoundaries(pos))
+            return false;
         return board[pos.getX()][pos.getY()].getTop().getColor() == color;
     }
 
     // Height
     public int getStackSize(Position pos) {
+        if(!inBoundaries(pos))
+            return 0;
         return board[pos.getX()][pos.getY()].getStackSize();
     }
 
     // Accessibility
     public boolean isAccessible(Position from, Position to) {
+        if(!inBoundaries(from) || !inBoundaries(to))
+            return false;
+
         int fromSize = board[from.getX()][from.getY()].getStackSize();
         int toSize = board[to.getX()][to.getY()].getStackSize();
         ArrayList<Position> cList =  from.getConnectedToBoth(to);
@@ -58,6 +72,9 @@ public class BoardModel {
     }
 
     public boolean isAccessible(Position from, Position to, Position excludeTop) {
+        if(!inBoundaries(from) || !inBoundaries(to))
+            return false;
+
         int fromSize = board[from.getX()][from.getY()].getStackSize();
         int toSize = board[to.getX()][to.getY()].getStackSize();
         ArrayList<Position> cList =  from.getConnectedToBoth(to);
@@ -76,6 +93,9 @@ public class BoardModel {
     }
 
     public boolean hasNeighbor(Position pos) {
+        if(!inBoundaries(pos))
+            return false;
+
         ArrayList<Position> neighborsList = pos.getNeighbors();
         neighborsList.removeIf(this::isEmpty);
 
@@ -83,6 +103,9 @@ public class BoardModel {
     }
 
     public boolean hasNeighbor(Position pos, Position excludeTop) {
+        if(!inBoundaries(pos) || !inBoundaries(pos))
+            return false;
+
         ArrayList<Position> neighborsList = pos.getNeighbors();
         neighborsList.removeIf(this::isEmpty);
 
@@ -93,6 +116,9 @@ public class BoardModel {
     }
 
     public boolean hasCommonNeighbor(Position from, Position to) {
+        if(!inBoundaries(from) || !inBoundaries(to))
+            return false;
+
         ArrayList<Position> neighborsList = from.getConnectedToBoth(to);
         neighborsList.removeIf(this::isEmpty);
 
@@ -100,6 +126,9 @@ public class BoardModel {
     }
 
     public boolean hasCommonNeighbor(Position from, Position to, Position excludeTop) {
+        if(!inBoundaries(from) || !inBoundaries(to) || !inBoundaries(excludeTop))
+            return false;
+
         ArrayList<Position> neighborsList = from.getConnectedToBoth(to);
         neighborsList.removeIf(this::isEmpty);
 
@@ -111,10 +140,16 @@ public class BoardModel {
 
     // Placeholders
     public boolean isPlaceholder(Position pos) {
+        if(!inBoundaries(pos))
+            return false;
+
         return board[pos.getX()][pos.getY()].getTop() instanceof TilePlaceholder;
     }
 
     public void addPlaceholder(Position pos) {
+        if(!inBoundaries(pos))
+            return;
+
         board[pos.getX()][pos.getY()].addTop(new TilePlaceholder(pos));
     }
 
@@ -143,8 +178,16 @@ public class BoardModel {
         return false;
     }
 
-    // TODO: add first and second element
     // Add new element
+    public void markHexesForFirstTile(Color color) {
+        Position center = new Position(boardSize/2, boardSize/2);
+
+        if(color == Color.WHITE)
+            addPlaceholder(center);
+        else if(color == Color.BLACK)
+            addAllPlaceholders(center.getNeighbors());
+    }
+
     public void markHexesForNewTile(Color color) {
         HashSet<Position> toMark = new HashSet<>();
 
@@ -173,17 +216,26 @@ public class BoardModel {
 
     public void addNewTile(TileModel tile) {
         Position pos = tile.getPosition();
+        if(!inBoundaries(pos))
+            return;
+
         board[pos.getX()][pos.getY()].addTop(tile);
     }
 
     // Move tile
     public void markHexesForTileMovement(Position pos) {
+        if(!inBoundaries(pos))
+            return;
+
         TileModel tile = board[pos.getX()][pos.getY()].getTop();
         Collection<Position> toMark = tile.getMoveOptions(this);
         addAllPlaceholders(toMark);
     }
 
     public void moveTile(Position from, Position to) {
+        if(!inBoundaries(from) || !inBoundaries(to))
+            return;
+
         TileModel tile = board[from.getX()][from.getY()].removeTop();
         tile.setPosition(to);
         board[to.getX()][to.getY()].addTop(tile);
@@ -191,6 +243,9 @@ public class BoardModel {
 
     // Connectivity
     public boolean staysConnected(Position pos) {
+        if(!inBoundaries(pos))
+            return false;
+
         if(board[pos.getX()][pos.getY()].getStackSize() > 1)
             return true;
 

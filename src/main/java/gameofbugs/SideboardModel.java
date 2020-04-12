@@ -28,14 +28,30 @@ public class SideboardModel {
     private ArrayList<TileModel> chooseList(Position pos) {
         if(pos.getX() == -1) return whiteList;
         else if(pos.getX() == -2) return blackList;
-        else return null; //throw exception?
-    }
 
+        return null; //throw exception?
+    }
 
     //returns color from position
     public Color getColor(Position pos) {
         if(pos.getX() == -1) return Color.WHITE;
-        else return Color.BLACK;
+        else if(pos.getX() == -2) return Color.BLACK;
+
+        return Color.NONE;
+    }
+
+    public TileModel getTile(Position pos) {
+        ArrayList<TileModel> currList = chooseList(pos);
+
+        if(currList == null)
+            return null;
+
+        for(TileModel element : currList) {
+            if(element.getPosition().equals(pos))
+                return element;
+        }
+
+        return null;
     }
 
     //returns true when Queen is in the game
@@ -47,40 +63,39 @@ public class SideboardModel {
 
     //checks if Tiles are available
     public boolean isAvailable(Position pos) {
-        ArrayList<TileModel> currList = chooseList(pos);
-
-        for(TileModel element : currList) {
-            if(element.getPosition().equals(pos)) {
-                return element.getCnt() >= 1;
-            }
-        }
-        return false;
+        return getTileCnt(pos) > 0;
     }
 
     //returns number of tiles
     public int getTileCnt(Position pos) {
         ArrayList<TileModel> currList = chooseList(pos);
 
+        if(currList == null)
+            return 0;
+
         for(TileModel element : currList) {
             if(element.getPosition().equals(pos)) {
                 return element.getCnt();
             }
         }
-        return -1; //throw exception?
+
+        return 0; //throw exception?
     }
 
     //decrements tilecnt
     public int decrementAndGetTileCnt(Position pos) {
         ArrayList<TileModel> currList = chooseList(pos);
 
+        if(currList == null)
+            return 0;
+
         for(TileModel element : currList) {
             if(element.getPosition().equals(pos)) {
                 return element.decrementAndGetCnt();
             }
         }
-        return -1; //throw exception?
+
+        return 0; //throw exception?
     }
 
 }
-
-//TODO: rzucanie wyjatkow?

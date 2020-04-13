@@ -51,6 +51,13 @@ public class BoardModel {
         return board[pos.getX()][pos.getY()].getStackSize();
     }
 
+    // Top
+    public TileModel getTopTile(Position pos) {
+        if(!inBoundaries(pos))
+            return null;
+        return board[pos.getX()][pos.getY()].getTop();
+    }
+
     // Accessibility
     public boolean isAccessible(Position from, Position to) {
         if(!inBoundaries(from) || !inBoundaries(to))

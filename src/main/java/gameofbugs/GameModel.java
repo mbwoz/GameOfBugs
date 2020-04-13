@@ -2,18 +2,22 @@ package gameofbugs;
 import gameofbugs.tiles.*;
 
 public class GameModel {
+    GameView gameView;
     BoardModel board;
     SideboardModel sideboard;
     Color currentPlayer;
     Position lastPosition;
     int turn;
 
-    public GameModel() {
+    public GameModel(GameView gameView) {
+        this.gameView = gameView;
         board = new BoardModel();
         sideboard = new SideboardModel();
         currentPlayer = Color.WHITE;
         lastPosition = null;
         turn = 1;
+
+        //TODO: probably update view to start
     }
 
     public void takeAction(Position pos) {

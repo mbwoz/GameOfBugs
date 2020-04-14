@@ -1,126 +1,118 @@
 package gameofbugs;
 
 import gameofbugs.tiles.TileModel;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+
+import java.util.ArrayList;
 
 public class GameView {
+    private HBox root;
+    private ScrollPane boardMap;
+    private GameController gameController;
 
-    public Scene getBoardView(BoardModel boardModel) {
-        ScrollPane boardMap = new ScrollPane();
+    private final double BOARD_SIDE_LENGTH = 50;
+    private final double h = Math.sqrt(BOARD_SIDE_LENGTH * BOARD_SIDE_LENGTH * 0.75);
+
+    public GameView(HBox root) {
+        this.root = root;
+
+        this.boardMap = new ScrollPane();
+        boardMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        boardMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        boardMap.setHvalue(0.5);
+        boardMap.setVvalue(0.5);
+
+        HBox.setHgrow(boardMap, Priority.ALWAYS);
+    }
+
+    public void addController(GameController gameController) {
+        this.gameController = gameController;
+    }
+
+    public void updateGame(BoardModel boardModel, SideboardModel sideboardModel) {
+        ArrayList<Node> boardCollection = updateBoardView(boardModel, sideboardModel);
+
+        root.getChildren().clear();
+        root.getChildren().addAll(boardCollection);
+    }
+
+    private ArrayList<Node> updateBoardView(BoardModel boardModel, SideboardModel sideboardModel) {
+        ArrayList<Node> boardCollection = new ArrayList<>();
+
+        VBox whiteSideboard = drawSideboard(sideboardModel, Color.WHITE);
+        drawBoard(boardModel);
+        VBox blackSideboard = drawSideboard(sideboardModel, Color.BLACK);
+
+        boardCollection.add(whiteSideboard);
+        boardCollection.add(boardMap);
+        boardCollection.add(blackSideboard);
+
+        return boardCollection;
+    }
+
+    private void drawBoard(BoardModel boardModel) {
         AnchorPane tileMap = new AnchorPane();
-        boardMap.setContent(tileMap);
 
-        Scene content = new Scene(boardMap, 800, 600);
+        boardMap.setContent(tileMap);
 
         int tilesPerCol = 32; // how many rows of tiles should be created
         int tilesPerRow = 32; // the amount of tiles that are contained in each row
 
-        int firstRow = -1, firstCol = -1;
+        tileMap.setMinSize(tilesPerRow * 2 * h + tilesPerCol * h,
+                2 * BOARD_SIDE_LENGTH + (tilesPerCol - 1) * Math.sqrt(h * h * 3));
 
-        for (int row = 0; row < tilesPerRow; row++) {
-            for (int col = 0; col < tilesPerCol; col++) {
-                if(!boardModel.isEmpty(new Position(row, col))) {
-                    firstRow = row;
-                    break;
-                }
-            }
-            if(firstRow != -1)
-                break;
-        }
-
-
-        for (int col = 0; col < tilesPerCol; col++) {
-            for (int row = 0; row < tilesPerRow; row++) {
-                if(!boardModel.isEmpty(new Position(row, col))) {
-                    firstCol = col;
-                    break;
-                }
-            }
-            if(firstCol != -1)
-                break;
-        }
-
-        //System.out.println(firstRow + " " + firstCol);
-
-        for (int row = 0; row < tilesPerRow; row++) {
-            for (int col = 0; col < tilesPerCol; col++) {
+        for (int row = 0; row < tilesPerCol; row++) {
+            for (int col = 0; col < tilesPerRow; col++) {
                 Position pos = new Position(row, col);
                 if(boardModel.isEmpty(pos))
                     continue;
 
-                Tile tile = new Tile(pos, boardModel.getTopTile(pos), firstRow, firstCol);
+                double centerX = h + pos.getY() * 2 * h + pos.getX() * h;
+                double centerY = BOARD_SIDE_LENGTH + pos.getX() * Math.sqrt(h * h * 3);
+
+                TileView tileView = new TileView(boardModel.getTopTile(pos), centerX, centerY, BOARD_SIDE_LENGTH);
+                Polygon hex = tileView.getHex();
+                hex.setOnMouseClicked(e -> gameController.tileClickedEvent(pos));
 
                 Group fullTile = new Group();
-                fullTile.getChildren().addAll(tile.getHex(), tile.getDesc());
+                fullTile.getChildren().addAll(hex, tileView.getDesc());
                 tileMap.getChildren().add(fullTile);
             }
         }
-
-        return content;
     }
 
-    private class Tile {
-        private Position position;
-        private TileModel tile;
-        private final double a = 50;
-        private final double h = Math.sqrt(a * a * 0.75);
-        private final double spacing = 0;
-        private final double gap = 2 * h + spacing;
-        private double centerC;
-        private double centerR;
+    private VBox drawSideboard(SideboardModel sideboardModel, Color color) {
+        VBox vb = new VBox();
+        ArrayList<TileModel> sideboardList = sideboardModel.getList(color);
 
-        Tile(Position position, TileModel tile, int firstRow, int firstCol) {
-            this.position = position;
-            this.tile = tile;
+        for(TileModel tile : sideboardList) {
+            HBox hb = new HBox();
+            hb.setMinSize(300, 200);
+            hb.setAlignment(Pos.CENTER);
+            hb.setSpacing(50);
 
-            this.centerC = h + (position.getY() - firstCol) * gap + (position.getX() - firstRow) * (gap / 2);
-            this.centerR = a + (position.getX() - firstRow) * Math.sqrt(gap * gap * 0.75);
+            TileView tileView = new TileView(tile, 100, 100, 50);
+            Polygon hex = tileView.getHex();
+            hex.setOnMouseClicked(e -> gameController.tileClickedEvent(tile.getPosition()));
+
+            Group fullTile = new Group();
+            fullTile.getChildren().addAll(hex, tileView.getDesc());
+
+            Label label = new Label(String.valueOf(tile.getCnt()));
+
+            hb.getChildren().addAll(fullTile, label);
+            vb.getChildren().add(hb);
         }
 
-        public Polygon getHex() {
-            Polygon hex = new Polygon();
-
-            // creates the polygon using the corner coordinates
-            hex.getPoints().addAll(
-                    centerC, centerR - a,
-                    centerC - h, centerR - a / 2,
-                    centerC - h, centerR + a / 2,
-                    centerC, centerR + a,
-                    centerC + h, centerR + a / 2,
-                    centerC + h, centerR - a / 2
-            );
-
-            if(tile.getColor() == gameofbugs.Color.WHITE)
-                hex.setFill(Color.WHITE);
-            else
-                hex.setFill(Color.BLACK);
-
-            hex.setStrokeWidth(3);
-            hex.setStroke(Color.BLACK);
-            hex.setOnMouseClicked(e ->
-                    System.out.println("Clicked: " + this.position.getX() + " " + this.position.getY()));
-
-            return hex;
-        }
-
-        public Text getDesc() {
-            Text t = new Text(centerC - h, centerR, tile.getClass().getSimpleName());
-
-            if(tile.getColor() == gameofbugs.Color.WHITE)
-                t.setFill(Color.BLACK);
-            else
-                t.setFill(Color.WHITE);
-
-            t.setTextAlignment(TextAlignment.CENTER);
-            return t;
-        }
+        return vb;
     }
 }

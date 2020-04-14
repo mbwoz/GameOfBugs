@@ -25,9 +25,16 @@ public class SideboardModel {
         blackList.add(new TileSpider(Color.BLACK, new Position(-2, 3)));
     }
 
-    private ArrayList<TileModel> chooseList(Position pos) {
+    private ArrayList<TileModel> getList(Position pos) {
         if(pos.getX() == -1) return whiteList;
         else if(pos.getX() == -2) return blackList;
+
+        return null; //throw exception?
+    }
+
+    public ArrayList<TileModel> getList(Color color) {
+        if(color == Color.WHITE) return whiteList;
+        else if(color == Color.BLACK) return blackList;
 
         return null; //throw exception?
     }
@@ -40,16 +47,12 @@ public class SideboardModel {
         return Color.NONE;
     }
 
+    // Create new tile
     public TileModel getTile(Position pos) {
-        ArrayList<TileModel> currList = chooseList(pos);
-
-        if(currList == null)
-            return null;
-
-        for(TileModel element : currList) {
-            if(element.getPosition().equals(pos))
-                return element;
-        }
+        if(pos.getY() == 0) return new TileBee(getColor(pos), pos);
+        if(pos.getY() == 1) return new TileAnt(getColor(pos), pos);
+        if(pos.getY() == 2) return new TileGrasshopper(getColor(pos), pos);
+        if(pos.getY() == 3) return new TileSpider(getColor(pos), pos);
 
         return null;
     }
@@ -68,7 +71,7 @@ public class SideboardModel {
 
     //returns number of tiles
     public int getTileCnt(Position pos) {
-        ArrayList<TileModel> currList = chooseList(pos);
+        ArrayList<TileModel> currList = getList(pos);
 
         if(currList == null)
             return 0;
@@ -82,9 +85,9 @@ public class SideboardModel {
         return 0; //throw exception?
     }
 
-    //decrements tilecnt
+    //decrements tileCnt
     public int decrementAndGetTileCnt(Position pos) {
-        ArrayList<TileModel> currList = chooseList(pos);
+        ArrayList<TileModel> currList = getList(pos);
 
         if(currList == null)
             return 0;
@@ -97,5 +100,4 @@ public class SideboardModel {
 
         return 0; //throw exception?
     }
-
 }

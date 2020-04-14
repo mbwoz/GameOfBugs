@@ -16,8 +16,10 @@ public class GameModel {
         currentPlayer = Color.WHITE;
         lastPosition = null;
         turn = 1;
+    }
 
-        //TODO: probably update view to start
+    public void updateBoardState() {
+        gameView.updateGame(board, sideboard);
     }
 
     public void takeAction(Position pos) {
@@ -50,14 +52,18 @@ public class GameModel {
             if(!board.containsPlaceholders()) return;
 
             lastPosition = pos;
-            //TODO: Update view with placeholders
         }
+        //TODO: Update view with placeholders
+
+        updateBoardState();
     }
 
     private void runSecondPhase(Position pos) {
         if(!board.isPlaceholder(pos)) {
             board.cleanPlaceholders();
             lastPosition = null;
+
+            updateBoardState();
             return;
         }
 
@@ -67,7 +73,7 @@ public class GameModel {
             TileModel currentTile = sideboard.getTile(lastPosition);
             currentTile.setPosition(pos);
             board.addNewTile(currentTile);
-            sideboard.decrementAndGetTileCnt(pos);
+            sideboard.decrementAndGetTileCnt(lastPosition);
         } else {
             board.moveTile(lastPosition, pos);
         }
@@ -79,6 +85,7 @@ public class GameModel {
         //TODO: Check end game condition
 
         //TODO: Update view: sideboard and board
+        updateBoardState();
     }
 
     private void nextTurn() {

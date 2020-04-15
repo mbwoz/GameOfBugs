@@ -79,34 +79,40 @@ public class GameModel {
         }
 
         lastPosition = null;
-
-        nextTurn();
-
-        //TODO: Check end game condition
-
-        //TODO: Update view: sideboard and board
-        updateBoardState();
-    }
-
-    private void nextTurn() {
         if(board.checkForRebuild())
             board.rebuildBoard();
 
+        //TODO: Check end game condition
+        //TODO: Update view: sideboard and board
+
+        updateBoardState();
+
+        endGameCondition();
+        nextTurn();
+    }
+
+    private void nextTurn() {
         currentPlayer = currentPlayer.getOpposite();
 
         if(currentPlayer == Color.WHITE)
             turn++;
     }
 
-    public int endGameCondition(){
-        boolean flagWhite = false;
-        boolean flagBlack = false;
-        if(board.isQueenSurrounded(Color.WHITE)) flagWhite = true;
-        if(board.isQueenSurrounded(Color.BLACK)) flagBlack = true;
+    public void endGameCondition(){
+        boolean whiteLost = false;
+        boolean blackLost = false;
+        if(board.isQueenSurrounded(Color.WHITE)) whiteLost = true;
+        if(board.isQueenSurrounded(Color.BLACK)) blackLost = true;
 
-        if(flagBlack && flagWhite) return -1; //Both lost
-        else if(flagBlack) return 2;  //Black lost
-        else if(flagWhite) return 1;  //White lost
-        else return 0; //No one lost
+        if(blackLost && whiteLost) {
+            System.out.println("Tie");
+            gameView.triggerGameEnd(Color.NONE);
+        } else if(blackLost) {
+            System.out.println("White wins");
+            gameView.triggerGameEnd(Color.WHITE);
+        } else if(whiteLost) {
+            System.out.println("Black wins");
+            gameView.triggerGameEnd(Color.BLACK);
+        }
     }
 }

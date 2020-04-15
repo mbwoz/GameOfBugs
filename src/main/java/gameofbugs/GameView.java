@@ -38,6 +38,7 @@ public class GameView {
         this.gameController = gameController;
     }
 
+    // Update board state
     public void updateGame(BoardModel boardModel, SideboardModel sideboardModel) {
         ArrayList<Node> boardCollection = updateBoardView(boardModel, sideboardModel);
 
@@ -115,4 +116,14 @@ public class GameView {
 
         return vb;
     }
+
+    // End game trigger
+    public void triggerGameEnd(Color winner) {
+        Label label = new Label(winner.toString() + " wins!");
+
+        root.getChildren().clear();
+        root.getChildren().add(label);
+        root.setAlignment(Pos.CENTER);
+    }
+
 }

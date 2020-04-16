@@ -10,12 +10,8 @@ public class GameOfBugsApplication extends Application {
     private static HBox root = new HBox();
 
     public static void main(String[] args) {
-        GameView gameView = new GameView(root);
-        GameModel gameModel = new GameModel(gameView);
-        GameController gameController = new GameController(gameModel);
-
-        gameView.addController(gameController);
-        gameModel.updateBoardState();
+        Driver driver = new Driver(root);
+        driver.launchGame();
 
         launch(args);
     }

@@ -15,9 +15,10 @@ import javafx.scene.shape.Polygon;
 import java.util.ArrayList;
 
 public class GameView {
+    private GameController gameController;
+
     private HBox root;
     private ScrollPane boardMap;
-    private GameController gameController;
 
     private final double BOARD_SIDE_LENGTH = 50;
     private final double h = Math.sqrt(BOARD_SIDE_LENGTH * BOARD_SIDE_LENGTH * 0.75);
@@ -82,7 +83,7 @@ public class GameView {
 
                 TileView tileView = new TileView(boardModel.getTopTile(pos), centerX, centerY, BOARD_SIDE_LENGTH);
                 Polygon hex = tileView.getHex();
-                hex.setOnMouseClicked(e -> gameController.tileClickedEvent(pos));
+                hex.setOnMouseClicked(e -> gameController.triggerBoardAction(pos));
 
                 Group fullTile = new Group();
                 fullTile.getChildren().addAll(hex, tileView.getDesc());
@@ -103,7 +104,7 @@ public class GameView {
 
             TileView tileView = new TileView(tile, 100, 100, 50);
             Polygon hex = tileView.getHex();
-            hex.setOnMouseClicked(e -> gameController.tileClickedEvent(tile.getPosition()));
+            hex.setOnMouseClicked(e -> gameController.triggerBoardAction(tile.getPosition()));
 
             Group fullTile = new Group();
             fullTile.getChildren().addAll(hex, tileView.getDesc());
@@ -119,11 +120,6 @@ public class GameView {
 
     // End game trigger
     public void triggerGameEnd(Color winner) {
-        Label label = new Label(winner.toString() + " wins!");
-
-        root.getChildren().clear();
-        root.getChildren().add(label);
-        root.setAlignment(Pos.CENTER);
+        gameController.triggerGameEnd(winner);
     }
-
 }

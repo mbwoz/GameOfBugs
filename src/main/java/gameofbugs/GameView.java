@@ -40,25 +40,13 @@ public class GameView {
     }
 
     // Update board state
-    public void updateGame(BoardModel boardModel, SideboardModel sideboardModel) {
-        ArrayList<Node> boardCollection = updateBoardView(boardModel, sideboardModel);
-
-        root.getChildren().clear();
-        root.getChildren().addAll(boardCollection);
-    }
-
-    private ArrayList<Node> updateBoardView(BoardModel boardModel, SideboardModel sideboardModel) {
-        ArrayList<Node> boardCollection = new ArrayList<>();
-
+    public void updateBoardState(BoardModel boardModel, SideboardModel sideboardModel) {
         VBox whiteSideboard = drawSideboard(sideboardModel, Color.WHITE);
         drawBoard(boardModel);
         VBox blackSideboard = drawSideboard(sideboardModel, Color.BLACK);
 
-        boardCollection.add(whiteSideboard);
-        boardCollection.add(boardMap);
-        boardCollection.add(blackSideboard);
-
-        return boardCollection;
+        root.getChildren().clear();
+        root.getChildren().addAll(whiteSideboard, boardMap, blackSideboard);
     }
 
     private void drawBoard(BoardModel boardModel) {
@@ -66,8 +54,8 @@ public class GameView {
 
         boardMap.setContent(tileMap);
 
-        int tilesPerCol = 32; // how many rows of tiles should be created
-        int tilesPerRow = 32; // the amount of tiles that are contained in each row
+        int tilesPerCol = boardModel.getBoardSize(); // how many rows of tiles should be created
+        int tilesPerRow = boardModel.getBoardSize(); // the amount of tiles that are contained in each row
 
         tileMap.setMinSize(tilesPerRow * 2 * h + tilesPerCol * h,
                 2 * BOARD_SIDE_LENGTH + (tilesPerCol - 1) * Math.sqrt(h * h * 3));
@@ -102,7 +90,7 @@ public class GameView {
             hb.setAlignment(Pos.CENTER);
             hb.setSpacing(50);
 
-            TileView tileView = new TileView(tile, 100, 100, 50);
+            TileView tileView = new TileView(tile, 100, 100, 60);
             Polygon hex = tileView.getHex();
             hex.setOnMouseClicked(e -> gameController.triggerBoardAction(tile.getPosition()));
 

@@ -25,6 +25,10 @@ public class BoardModel {
         }
     }
 
+    public int getBoardSize() {
+        return boardSize;
+    }
+
     private boolean inBoundaries(Position pos) {
         return 0 <= pos.getX() && pos.getX() < boardSize &&
                 0 <= pos.getY() && pos.getY() < boardSize; // ?exception

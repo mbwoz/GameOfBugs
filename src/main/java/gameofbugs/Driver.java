@@ -1,14 +1,21 @@
 package gameofbugs;
 
+import gameofbugs.controller.GameController;
+import gameofbugs.controller.SceneController;
+import gameofbugs.model.Color;
+import gameofbugs.model.GameModel;
+import gameofbugs.view.EndGameView;
+import gameofbugs.view.GameView;
+import gameofbugs.view.InstructionView;
+import gameofbugs.view.MenuView;
 import javafx.scene.layout.HBox;
-
 
 public class Driver {
     private HBox root;
     private SceneController sceneController;
 
-    public Driver(HBox rootStart) {
-        this.root = rootStart;
+    public Driver(HBox root) {
+        this.root = root;
         this.sceneController = new SceneController(this);
     }
 
@@ -25,7 +32,7 @@ public class Driver {
     public void launchGame() {
         GameView gameView = new GameView(root);
         GameModel gameModel = new GameModel(gameView);
-        GameController gameController = new GameController(gameModel, this);
+        GameController gameController = new GameController(gameModel);
         gameView.addController(gameController, sceneController);
 
         gameModel.updateBoardState();

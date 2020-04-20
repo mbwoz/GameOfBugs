@@ -1,6 +1,6 @@
-package gameofbugs;
+package gameofbugs.model;
 
-import gameofbugs.tiles.*;
+import gameofbugs.model.tiles.*;
 
 import java.util.ArrayList;
 

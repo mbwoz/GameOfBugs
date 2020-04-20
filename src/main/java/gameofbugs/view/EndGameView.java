@@ -1,5 +1,7 @@
-package gameofbugs;
+package gameofbugs.view;
 
+import gameofbugs.model.Color;
+import gameofbugs.controller.SceneController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -7,8 +9,8 @@ import javafx.scene.layout.HBox;
 
 public class EndGameView {
     private HBox root;
-    private Color winner;
     private SceneController sceneController;
+    private Color winner;
 
     public EndGameView(HBox root, Color winner, SceneController sceneController) {
         this.root = root;
@@ -20,19 +22,13 @@ public class EndGameView {
         Label label = new Label(winner.toString() + " wins!");
 
         Button newGameButton = new Button("Play Again!");
-        newGameButton.setOnMouseClicked(ActionEvent -> {
-            sceneController.triggerGameStart();
-        });
+        newGameButton.setOnMouseClicked(event -> sceneController.triggerGameStart());
 
         Button mainMenuButton = new Button("Back to menu");
-        mainMenuButton.setOnMouseClicked(ActionEvent -> {
-            sceneController.triggerMenu();
-        });
+        mainMenuButton.setOnMouseClicked(event -> sceneController.triggerMenu());
 
         Button exitGameButton = new Button("Exit");
-        exitGameButton.setOnMouseClicked(ActionEvent -> {
-            System.exit(0);
-        });
+        exitGameButton.setOnMouseClicked(event -> System.exit(0));
 
         root.getChildren().clear();
         root.getChildren().addAll(label, newGameButton, mainMenuButton, exitGameButton);

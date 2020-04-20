@@ -1,8 +1,8 @@
-package gameofbugs.tiles;
+package gameofbugs.model.tiles;
 
-import gameofbugs.BoardModel;
-import gameofbugs.Color;
-import gameofbugs.Position;
+import gameofbugs.model.BoardModel;
+import gameofbugs.model.Color;
+import gameofbugs.model.Position;
 
 import java.util.ArrayList;
 import java.util.HashSet;

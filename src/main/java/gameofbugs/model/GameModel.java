@@ -1,5 +1,6 @@
-package gameofbugs;
-import gameofbugs.tiles.*;
+package gameofbugs.model;
+import gameofbugs.model.tiles.*;
+import gameofbugs.view.GameView;
 
 public class GameModel {
     GameView gameView;

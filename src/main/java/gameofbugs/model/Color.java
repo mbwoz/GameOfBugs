@@ -1,4 +1,4 @@
-package gameofbugs;
+package gameofbugs.model;
 
 public enum Color {
     BLACK, WHITE, NONE;

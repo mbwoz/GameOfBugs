@@ -1,5 +1,6 @@
-package gameofbugs;
+package gameofbugs.view;
 
+import gameofbugs.controller.SceneController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,13 +19,10 @@ public class InstructionView {
         Label label = new Label("Work in progress");
 
         Button backToMenuButton = new Button("Back to menu");
-        backToMenuButton.setOnMouseClicked(ActionEvent -> {
-            sceneController.triggerMenu();
-        });
+        backToMenuButton.setOnMouseClicked(event -> sceneController.triggerMenu());
 
         root.getChildren().clear();
         root.getChildren().addAll(label, backToMenuButton);
         root.setAlignment(Pos.CENTER);
-
     }
 }

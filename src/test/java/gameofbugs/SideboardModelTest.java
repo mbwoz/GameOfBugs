@@ -1,6 +1,9 @@
 package gameofbugs;
 
-import gameofbugs.tiles.*;
+import gameofbugs.model.Color;
+import gameofbugs.model.Position;
+import gameofbugs.model.SideboardModel;
+import gameofbugs.model.tiles.*;
 import org.junit.Assert;
 import org.junit.Test;
 

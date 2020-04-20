@@ -1,7 +1,9 @@
-package gameofbugs;
+package gameofbugs.view;
 
-import gameofbugs.tiles.TileModel;
-import gameofbugs.tiles.TilePlaceholder;
+import gameofbugs.model.Color;
+import gameofbugs.model.Position;
+import gameofbugs.model.tiles.TileModel;
+import gameofbugs.model.tiles.TilePlaceholder;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;

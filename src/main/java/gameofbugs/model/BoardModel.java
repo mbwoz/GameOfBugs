@@ -1,9 +1,9 @@
-package gameofbugs;
+package gameofbugs.model;
 
-import gameofbugs.tiles.TileBee;
-import gameofbugs.tiles.TileHex;
-import gameofbugs.tiles.TileModel;
-import gameofbugs.tiles.TilePlaceholder;
+import gameofbugs.model.tiles.TileBee;
+import gameofbugs.model.tiles.TileHex;
+import gameofbugs.model.tiles.TileModel;
+import gameofbugs.model.tiles.TilePlaceholder;
 
 import java.util.*;
 

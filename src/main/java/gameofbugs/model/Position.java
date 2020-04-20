@@ -1,4 +1,4 @@
-package gameofbugs;
+package gameofbugs.model;
 
 import java.util.ArrayList;
 import java.util.Objects;

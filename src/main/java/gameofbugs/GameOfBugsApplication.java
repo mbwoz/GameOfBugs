@@ -8,11 +8,9 @@ import javafx.stage.Stage;
 public class GameOfBugsApplication extends Application {
 
     private static HBox root = new HBox();
-    private static Driver driver;
-
 
     public static void main(String[] args) {
-        driver = new Driver(root);
+        Driver driver = new Driver(root);
         driver.launchMenu();
         launch(args);
     }

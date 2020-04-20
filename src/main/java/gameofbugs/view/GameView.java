@@ -1,9 +1,14 @@
-package gameofbugs;
+package gameofbugs.view;
 
-import gameofbugs.tiles.TileModel;
+import gameofbugs.controller.GameController;
+import gameofbugs.controller.SceneController;
+import gameofbugs.model.BoardModel;
+import gameofbugs.model.Color;
+import gameofbugs.model.Position;
+import gameofbugs.model.SideboardModel;
+import gameofbugs.model.tiles.TileModel;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -73,7 +78,7 @@ public class GameView {
 
                 TileView tileView = new TileView(boardModel.getTopTile(pos), centerX, centerY, BOARD_SIDE_LENGTH);
                 Polygon hex = tileView.getHex();
-                hex.setOnMouseClicked(e -> gameController.triggerBoardAction(pos));
+                hex.setOnMouseClicked(event -> gameController.triggerBoardAction(pos));
 
                 Group fullTile = new Group();
                 fullTile.getChildren().addAll(hex, tileView.getDesc());
@@ -94,7 +99,7 @@ public class GameView {
 
             TileView tileView = new TileView(tile, 100, 100, 60);
             Polygon hex = tileView.getHex();
-            hex.setOnMouseClicked(e -> gameController.triggerBoardAction(tile.getPosition()));
+            hex.setOnMouseClicked(event -> gameController.triggerBoardAction(tile.getPosition()));
 
             Group fullTile = new Group();
             fullTile.getChildren().addAll(hex, tileView.getDesc());

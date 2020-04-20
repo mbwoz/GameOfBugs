@@ -1,12 +1,13 @@
-package gameofbugs;
+package gameofbugs.controller;
+
+import gameofbugs.model.GameModel;
+import gameofbugs.model.Position;
 
 public class GameController {
-    private Driver driver;
     private GameModel gameModel;
 
-    public GameController(GameModel gameModel, Driver driver) {
+    public GameController(GameModel gameModel) {
         this.gameModel = gameModel;
-        this.driver = driver;
     }
 
     public void triggerBoardAction(Position pos) {

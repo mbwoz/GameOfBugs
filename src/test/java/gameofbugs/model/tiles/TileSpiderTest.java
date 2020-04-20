@@ -1,8 +1,8 @@
-package gameofbugs.tiles;
+package gameofbugs.model.tiles;
 
-import gameofbugs.BoardModel;
-import gameofbugs.Color;
-import gameofbugs.Position;
+import gameofbugs.model.BoardModel;
+import gameofbugs.model.Color;
+import gameofbugs.model.Position;
 import org.junit.Test;
 
 import java.util.HashSet;

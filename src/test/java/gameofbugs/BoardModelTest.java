@@ -1,9 +1,12 @@
 package gameofbugs;
 
-import gameofbugs.tiles.TileAnt;
-import gameofbugs.tiles.TileBee;
-import gameofbugs.tiles.TileGrasshopper;
-import gameofbugs.tiles.TileSpider;
+import gameofbugs.model.BoardModel;
+import gameofbugs.model.Color;
+import gameofbugs.model.Position;
+import gameofbugs.model.tiles.TileAnt;
+import gameofbugs.model.tiles.TileBee;
+import gameofbugs.model.tiles.TileGrasshopper;
+import gameofbugs.model.tiles.TileSpider;
 import org.junit.Assert;
 import org.junit.Test;
 

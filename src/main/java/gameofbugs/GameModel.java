@@ -19,7 +19,7 @@ public class GameModel {
     }
 
     public void updateBoardState() {
-        gameView.updateGame(board, sideboard);
+        gameView.updateBoardState(board, sideboard);
     }
 
     public void takeAction(Position pos) {
@@ -53,7 +53,6 @@ public class GameModel {
 
             lastPosition = pos;
         }
-        //TODO: Update view with placeholders
 
         updateBoardState();
     }
@@ -82,13 +81,12 @@ public class GameModel {
         if(board.checkForRebuild())
             board.rebuildBoard();
 
-        //TODO: Check end game condition
-        //TODO: Update view: sideboard and board
-
         updateBoardState();
 
         endGameCondition();
         nextTurn();
+
+        // TODO: check if player can move
     }
 
     private void nextTurn() {

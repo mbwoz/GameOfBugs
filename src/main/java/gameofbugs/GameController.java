@@ -14,8 +14,4 @@ public class GameController {
         gameModel.takeAction(pos);
     }
 
-    public void triggerGameEnd(Color winner) {
-        driver.launchGameEnd(winner);
-    }
-
 }

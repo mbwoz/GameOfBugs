@@ -1,22 +1,19 @@
 package gameofbugs;
 
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
-import java.awt.event.ActionEvent;
-
 public class EndGameView {
     private HBox root;
     private Color winner;
-    private Driver driver;
+    private SceneController sceneController;
 
-    public EndGameView(HBox root, Color winner, Driver driver) {
+    public EndGameView(HBox root, Color winner, SceneController sceneController) {
         this.root = root;
         this.winner = winner;
-        this.driver = driver;
+        this.sceneController = sceneController;
     }
 
     public void displayGameEnd() {
@@ -24,22 +21,12 @@ public class EndGameView {
 
         Button newGameButton = new Button("Play Again!");
         newGameButton.setOnMouseClicked(ActionEvent -> {
-            root.getChildren().clear();
-            Platform.runLater(new Thread(){
-                public void run(){
-                    driver.launchGame();
-                }
-            });
+            sceneController.triggerGameStart();
         });
 
         Button mainMenuButton = new Button("Back to menu");
         mainMenuButton.setOnMouseClicked(ActionEvent -> {
-            root.getChildren().clear();
-            Platform.runLater(new Thread(){
-                public void run(){
-                    driver.launchMenu();
-                }
-            });
+            sceneController.triggerMenu();
         });
 
         Button exitGameButton = new Button("Exit");

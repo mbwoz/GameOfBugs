@@ -12,7 +12,6 @@ public class GameOfBugsApplication extends Application {
 
 
     public static void main(String[] args) {
-        System.out.println("Main");
         driver = new Driver(root);
         driver.launchMenu();
         launch(args);
@@ -20,7 +19,6 @@ public class GameOfBugsApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        System.out.println("Start");
         primaryStage.setTitle("Game of Bugs");
         Scene scene = new Scene(root, 1400, 900);
         primaryStage.setScene(scene);

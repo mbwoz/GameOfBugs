@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class GameView {
     private GameController gameController;
+    private SceneController sceneController;
 
     private HBox root;
     private ScrollPane boardMap;
@@ -35,8 +36,9 @@ public class GameView {
         HBox.setHgrow(boardMap, Priority.ALWAYS);
     }
 
-    public void addController(GameController gameController) {
+    public void addController(GameController gameController, SceneController sceneController) {
         this.gameController = gameController;
+        this.sceneController = sceneController;
     }
 
     // Update board state
@@ -108,6 +110,6 @@ public class GameView {
 
     // End game trigger
     public void triggerGameEnd(Color winner) {
-        gameController.triggerGameEnd(winner);
+        sceneController.triggerGameEnd(winner);
     }
 }

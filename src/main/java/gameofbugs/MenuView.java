@@ -1,31 +1,25 @@
 package gameofbugs;
 
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
-import java.awt.event.ActionEvent;
 
 public class MenuView {
     private HBox root;
-    private Driver driver;
+    private SceneController sceneController;
 
-    public MenuView(HBox root, Driver driver) {
+    public MenuView(HBox root, SceneController sceneController) {
         this.root = root;
-        this.driver = driver;
+        this.sceneController = sceneController;
     }
+
 
     public void displayGameStart() {
         Button startGameButton = new Button("Start Game");
         startGameButton.setOnMouseClicked(ActionEvent -> {
-            root.getChildren().clear();
-            Platform.runLater(new Thread(){
-                public void run(){
-                    driver.launchGame();
-                }
-            });
-        } );
+           sceneController.triggerGameStart();
+        });
 
         Button launchInstructionButton = new Button("Instruction");
 
@@ -34,8 +28,8 @@ public class MenuView {
             System.exit(0);
         });
 
+        root.getChildren().clear();
         root.getChildren().addAll(startGameButton, launchInstructionButton, exitGameButton);
         root.setAlignment(Pos.CENTER);
-
     }
 }

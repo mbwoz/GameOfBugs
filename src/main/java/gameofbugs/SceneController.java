@@ -18,6 +18,14 @@ public class SceneController {
         });
     }
 
+    public void triggerInstruction() {
+        Platform.runLater(new Thread(){
+            public void run(){
+                driver.launchInstruction();
+            }
+        });
+    }
+
     public void triggerGameStart() {
         Platform.runLater(new Thread(){
             public void run(){

@@ -17,6 +17,11 @@ public class Driver {
         menuView.displayGameStart();
     }
 
+    public void launchInstruction() {
+        InstructionView instructionView = new InstructionView(root, sceneController);
+        instructionView.displayInstruction();
+    }
+
     public void launchGame() {
         GameView gameView = new GameView(root);
         GameModel gameModel = new GameModel(gameView);

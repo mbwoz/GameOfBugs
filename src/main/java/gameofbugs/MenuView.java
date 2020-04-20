@@ -22,6 +22,9 @@ public class MenuView {
         });
 
         Button launchInstructionButton = new Button("Instruction");
+        launchInstructionButton.setOnMouseClicked(ActionEvent -> {
+            sceneController.triggerInstruction();
+        });
 
         Button exitGameButton = new Button("Exit");
         exitGameButton.setOnMouseClicked(ActionEvent -> {

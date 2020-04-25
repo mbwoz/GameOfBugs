@@ -1,4 +1,5 @@
 package gameofbugs.model;
+
 import gameofbugs.model.tiles.*;
 import gameofbugs.view.GameView;
 
@@ -40,22 +41,19 @@ public class GameModel {
 
             if(turn == 1) board.markHexesForFirstTile(currentPlayer);
             else board.markHexesForNewTile(currentPlayer);
-
-            if(!board.containsPlaceholders()) return;
-
-            lastPosition = pos;
         } else {
             if(!sideboard.checkQueenInPlay(currentPlayer)) return;
             if(!board.checkColor(pos, currentPlayer)) return;
             if(!board.staysConnected(pos)) return;
 
             board.markHexesForTileMovement(pos);
-            if(!board.containsPlaceholders()) return;
-
-            lastPosition = pos;
         }
 
-        updateBoardState();
+        if(!board.containsPlaceholders()) return;
+        lastPosition = pos;
+
+        // Update board
+        gameView.updateBoardState(board);
     }
 
     private void runSecondPhase(Position pos) {
@@ -63,7 +61,8 @@ public class GameModel {
             board.cleanPlaceholders();
             lastPosition = null;
 
-            updateBoardState();
+            // Update board
+            gameView.updateBoardState(board);
             return;
         }
 
@@ -74,15 +73,21 @@ public class GameModel {
             currentTile.setPosition(pos);
             board.addNewTile(currentTile);
             sideboard.decrementAndGetTileCnt(lastPosition);
+
+            // Update full
+            gameView.updateBoardState(board, sideboard, currentPlayer);
         } else {
             board.moveTile(lastPosition, pos);
+
+            // Update board
+            gameView.updateBoardState(board);
         }
 
         lastPosition = null;
-        if(board.checkForRebuild())
+        if(board.checkForRebuild()) {
             board.rebuildBoard();
-
-        updateBoardState();
+            gameView.updateBoardState(board);
+        }
 
         endGameCondition();
         nextTurn();
@@ -125,6 +130,4 @@ public class GameModel {
             gameView.triggerGameEnd(Color.BLACK);
         }
     }
-
-
 }

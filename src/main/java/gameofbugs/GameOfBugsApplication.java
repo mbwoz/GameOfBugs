@@ -18,7 +18,7 @@ public class GameOfBugsApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Game of Bugs");
-        Scene scene = new Scene(root, 1400, 900);
+        Scene scene = new Scene(root, 1600, 1000);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

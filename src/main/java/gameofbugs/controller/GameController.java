@@ -2,6 +2,8 @@ package gameofbugs.controller;
 
 import gameofbugs.model.GameModel;
 import gameofbugs.model.Position;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 
 public class GameController {
     private GameModel gameModel;
@@ -10,9 +12,12 @@ public class GameController {
         this.gameModel = gameModel;
     }
 
-    public void triggerBoardAction(Position pos) {
+    public void triggerBoardAction(Position pos, MouseEvent event) {
         System.out.println(pos.getX() + " " + pos.getY());
-        gameModel.takeAction(pos);
+
+        if(event.getButton() == MouseButton.PRIMARY)
+            gameModel.takeAction(pos);
+        gameModel.showStack(pos);
     }
 
 }

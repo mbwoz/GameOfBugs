@@ -6,6 +6,7 @@ import gameofbugs.model.BoardModel;
 import gameofbugs.model.Color;
 import gameofbugs.model.Position;
 import gameofbugs.model.SideboardModel;
+import gameofbugs.model.tiles.TileHex;
 import gameofbugs.model.tiles.TileModel;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -35,6 +36,7 @@ public class GameView {
     private VBox blackSideboard;
     private VBox boardArea;
     private ScrollPane boardMap;
+    private ScrollPane stackLayout;
 
     public GameView(HBox root) {
         this.root = root;
@@ -49,6 +51,8 @@ public class GameView {
         boardMap.setHvalue(0.5);
         boardMap.setVvalue(0.5);
         boardMap.setFitToWidth(true);
+
+        this.stackLayout = new ScrollPane();
     }
 
     public void addController(GameController gameController, SceneController sceneController) {
@@ -64,32 +68,41 @@ public class GameView {
     }
 
     public void updateBoardState(BoardModel boardModel) {
-        boardArea = drawBoardArea(boardModel);
+        boardArea = drawBoardArea(boardModel, null);
         updateBoardState();
     }
 
     public void updateBoardState(BoardModel boardModel, SideboardModel sideboardModel) {
-        boardArea = drawBoardArea(boardModel);
+        boardArea = drawBoardArea(boardModel, null);
         whiteSideboard = drawSideboard(sideboardModel, Color.WHITE);
         blackSideboard = drawSideboard(sideboardModel, Color.BLACK);
         updateBoardState();
     }
 
     public void updateBoardState(BoardModel boardModel, SideboardModel sideboardModel, Color color) {
-        boardArea = drawBoardArea(boardModel);
+        boardArea = drawBoardArea(boardModel, null);
         if(color == Color.WHITE) whiteSideboard = drawSideboard(sideboardModel, Color.WHITE);
         else blackSideboard = drawSideboard(sideboardModel, Color.BLACK);
         updateBoardState();
     }
 
+    public void updateBoardState(TileModel topTile) {
+        boardArea = drawBoardArea(null, topTile);
+        updateBoardState();
+    }
+
     // Draw parts
-    private VBox drawBoardArea(BoardModel boardModel) {
+    private VBox drawBoardArea(BoardModel boardModel, TileModel tileModel) {
         VBox vb = new VBox();
 
-        drawBoard(boardModel);
-        vb.getChildren().add(boardMap);
+        if(boardModel != null) drawBoard(boardModel);
+        if(tileModel != null) drawStack(tileModel);
+
+        vb.getChildren().addAll(boardMap, stackLayout);
 
         VBox.setVgrow(boardMap, Priority.ALWAYS);
+        stackLayout.setMinViewportHeight(150);
+
         return vb;
     }
 
@@ -114,7 +127,7 @@ public class GameView {
 
                 TileView tileView = new TileView(boardModel.getTopTile(pos), centerX, centerY, side);
                 Polygon hex = tileView.getHex();
-                hex.setOnMouseClicked(event -> gameController.triggerBoardAction(pos));
+                hex.setOnMouseClicked(event -> gameController.triggerBoardAction(pos, event));
 
                 Group fullTile = new Group();
                 fullTile.getChildren().addAll(hex, tileView.getDescription());
@@ -124,6 +137,28 @@ public class GameView {
         }
 
         boardMap.setContent(tileMap);
+    }
+
+    private void drawStack(TileModel tileModel) {
+        final double side = 50;
+        double shift = 80;
+
+        AnchorPane tileStack = new AnchorPane();
+
+        while(tileModel != null && !(tileModel instanceof TileHex)) {
+            System.out.println(tileModel.getClass().toString());
+
+            TileView tileView = new TileView(tileModel, shift, 80, side);
+            Group fullTile = new Group();
+            fullTile.getChildren().addAll(tileView.getHex(), tileView.getDescription());
+
+            tileStack.getChildren().add(fullTile);
+            shift += 2.5 * side;
+
+            tileModel = tileModel.getBelow();
+        }
+
+        stackLayout.setContent(tileStack);
     }
 
     private VBox drawSideboard(SideboardModel sideboardModel, Color color) {
@@ -140,7 +175,7 @@ public class GameView {
 
             TileView tileView = new TileView(tile, 100, 100, side);
             Polygon hex = tileView.getHex();
-            hex.setOnMouseClicked(event -> gameController.triggerBoardAction(tile.getPosition()));
+            hex.setOnMouseClicked(event -> gameController.triggerBoardAction(tile.getPosition(), event));
 
             Group fullTile = new Group();
             fullTile.getChildren().addAll(hex, tileView.getDescription());

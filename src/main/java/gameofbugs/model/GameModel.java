@@ -22,6 +22,7 @@ public class GameModel {
 
     public void updateBoardState() {
         gameView.updateBoardState(board, sideboard);
+        gameView.updateBoardState(new TileHex(new Position(0, 0)));
     }
 
     public void takeAction(Position pos) {
@@ -129,5 +130,9 @@ public class GameModel {
             System.out.println("Black wins");
             gameView.triggerGameEnd(Color.BLACK);
         }
+    }
+
+    public void showStack(Position pos) {
+        gameView.updateBoardState(board.getTopTile(pos));
     }
 }

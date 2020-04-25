@@ -23,6 +23,9 @@ public class SideboardModel {
         /*Adding Spider*/
         whiteList.add(new TileSpider(Color.WHITE, new Position(-1, 3)));
         blackList.add(new TileSpider(Color.BLACK, new Position(-2, 3)));
+        /*Adding Beetle*/
+        whiteList.add(new TileBeetle(Color.WHITE, new Position(-1, 4)));
+        blackList.add(new TileBeetle(Color.BLACK, new Position(-2, 4)));
     }
 
     private ArrayList<TileModel> getList(Position pos) {
@@ -53,6 +56,7 @@ public class SideboardModel {
         if(pos.getY() == 1) return new TileAnt(getColor(pos), pos);
         if(pos.getY() == 2) return new TileGrasshopper(getColor(pos), pos);
         if(pos.getY() == 3) return new TileSpider(getColor(pos), pos);
+        if(pos.getY() == 4) return new TileBeetle(getColor(pos), pos);
 
         return null;
     }

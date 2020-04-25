@@ -318,6 +318,34 @@ public class BoardModel {
         return false;
     }
 
+    // Checks if we can move any tile in given color
+    public boolean isAnyMovementPossible(Color color) {
+        for(int row = 0; row < boardSize; row++) {
+            for(int col = 0; col < boardSize; col++) {
+                TileModel tile = board[row][col].getTop();
+                if(tile.getColor() != color)
+                    continue;
+                if(!staysConnected(tile.getPosition()))
+                    continue;
+
+                Collection<Position> toMark = tile.getMoveOptions(this);
+                if(!toMark.isEmpty())
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Checks if we can place any tile in given color
+    public boolean isAnyPlacingPossible(Color color) {
+        markHexesForNewTile(color);
+        boolean answer = containsPlaceholders();
+        cleanPlaceholders();
+
+        return answer;
+    }
+
     // Rebuild board
     public boolean checkForRebuild() {
         for(int row = 0; row < boardSize; row++) {

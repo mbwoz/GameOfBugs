@@ -100,4 +100,15 @@ public class SideboardModel {
 
         return 0; //throw exception?
     }
+
+    public boolean isAnyTileLeft(Color color) {
+        ArrayList<TileModel> currList = getList(color);
+
+        for(TileModel element : currList) {
+            if(element.getCnt() > 0)
+                return true;
+        }
+
+        return false;
+    }
 }

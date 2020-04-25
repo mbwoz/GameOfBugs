@@ -86,8 +86,6 @@ public class GameModel {
 
         endGameCondition();
         nextTurn();
-
-        // TODO: check if player can move
     }
 
     private void nextTurn() {
@@ -97,11 +95,24 @@ public class GameModel {
             turn++;
     }
 
+    private boolean isPlayerBlocked(Color color) {
+        if(turn == 1)
+            return false;
+        if(sideboard.checkQueenInPlay(color) && board.isAnyMovementPossible(color))
+            return false;
+        if(!sideboard.isAnyTileLeft(color))
+            return true;
+
+        return !board.isAnyPlacingPossible(color);
+    }
+
     public void endGameCondition(){
         boolean whiteLost = false;
         boolean blackLost = false;
         if(board.isQueenSurrounded(Color.WHITE)) whiteLost = true;
         if(board.isQueenSurrounded(Color.BLACK)) blackLost = true;
+        if(isPlayerBlocked(Color.WHITE)) whiteLost = true;
+        if(isPlayerBlocked(Color.BLACK)) blackLost = true;
 
         if(blackLost && whiteLost) {
             System.out.println("Tie");
@@ -114,4 +125,6 @@ public class GameModel {
             gameView.triggerGameEnd(Color.BLACK);
         }
     }
+
+
 }

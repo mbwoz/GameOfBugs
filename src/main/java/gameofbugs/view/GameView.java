@@ -20,39 +20,39 @@ import javafx.scene.shape.Polygon;
 
 import java.util.ArrayList;
 
-/*
-TODO:
-    add stack (left, right click)
-    add current player color
-    css graphics
- */
-
 public class GameView {
     private GameController gameController;
     private SceneController sceneController;
 
-    private HBox root;
-    private VBox whiteSideboard;
-    private VBox blackSideboard;
-    private VBox boardArea;
-    private ScrollPane boardMap;
+    private ScrollPane whiteSideboard;
+    private ScrollPane blackSideboard;
+    private ScrollPane boardLayout;
     private ScrollPane stackLayout;
 
     public GameView(HBox root) {
-        this.root = root;
+        this.whiteSideboard = new ScrollPane();
+        this.blackSideboard = new ScrollPane();
+        whiteSideboard.setMinViewportWidth(300);
+        blackSideboard.setMinViewportWidth(300);
+        whiteSideboard.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        blackSideboard.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-        this.whiteSideboard = new VBox();
-        this.blackSideboard = new VBox();
-        this.boardArea = new VBox();
-
-        this.boardMap = new ScrollPane();
-        boardMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        boardMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        boardMap.setHvalue(0.5);
-        boardMap.setVvalue(0.5);
-        boardMap.setFitToWidth(true);
+        this.boardLayout = new ScrollPane();
+        boardLayout.setHvalue(0.5);
+        boardLayout.setVvalue(0.5);
+        boardLayout.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        boardLayout.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
         this.stackLayout = new ScrollPane();
+        stackLayout.setMinViewportHeight(150);
+
+        VBox boardArea = new VBox();
+        boardArea.getChildren().addAll(boardLayout, stackLayout);
+        VBox.setVgrow(boardLayout, Priority.ALWAYS);
+
+        root.getChildren().clear();
+        root.getChildren().addAll(whiteSideboard, boardArea, blackSideboard);
+        HBox.setHgrow(boardArea, Priority.ALWAYS);
     }
 
     public void addController(GameController gameController, SceneController sceneController) {
@@ -60,52 +60,26 @@ public class GameView {
         this.sceneController = sceneController;
     }
 
-    // Update board state
-    public void updateBoardState() {
-        HBox.setHgrow(boardArea, Priority.ALWAYS);
-        root.getChildren().clear();
-        root.getChildren().addAll(whiteSideboard, boardArea, blackSideboard);
-    }
-
     public void updateBoardState(BoardModel boardModel) {
-        boardArea = drawBoardArea(boardModel, null);
-        updateBoardState();
+        drawBoard(boardModel);
     }
 
     public void updateBoardState(BoardModel boardModel, SideboardModel sideboardModel) {
-        boardArea = drawBoardArea(boardModel, null);
-        whiteSideboard = drawSideboard(sideboardModel, Color.WHITE);
-        blackSideboard = drawSideboard(sideboardModel, Color.BLACK);
-        updateBoardState();
+        drawBoard(boardModel);
+        drawSideboard(sideboardModel, Color.WHITE);
+        drawSideboard(sideboardModel, Color.BLACK);
     }
 
     public void updateBoardState(BoardModel boardModel, SideboardModel sideboardModel, Color color) {
-        boardArea = drawBoardArea(boardModel, null);
-        if(color == Color.WHITE) whiteSideboard = drawSideboard(sideboardModel, Color.WHITE);
-        else blackSideboard = drawSideboard(sideboardModel, Color.BLACK);
-        updateBoardState();
+        drawBoard(boardModel);
+        drawSideboard(sideboardModel, color);
     }
 
-    public void updateBoardState(TileModel topTile) {
-        boardArea = drawBoardArea(null, topTile);
-        updateBoardState();
+    public void updateBoardState(TileModel tileModel) {
+        drawStack(tileModel);
     }
 
-    // Draw parts
-    private VBox drawBoardArea(BoardModel boardModel, TileModel tileModel) {
-        VBox vb = new VBox();
-
-        if(boardModel != null) drawBoard(boardModel);
-        if(tileModel != null) drawStack(tileModel);
-
-        vb.getChildren().addAll(boardMap, stackLayout);
-
-        VBox.setVgrow(boardMap, Priority.ALWAYS);
-        stackLayout.setMinViewportHeight(150);
-
-        return vb;
-    }
-
+    // Draw parts of view
     private void drawBoard(BoardModel boardModel) {
         final double side = 50;
         final double height = Math.sqrt(side * side * 0.75);
@@ -136,12 +110,12 @@ public class GameView {
             }
         }
 
-        boardMap.setContent(tileMap);
+        boardLayout.setContent(tileMap);
     }
 
     private void drawStack(TileModel tileModel) {
-        final double side = 50;
-        double shift = 80;
+        final double side = 55;
+        double shift = 85;
 
         AnchorPane tileStack = new AnchorPane();
 
@@ -161,7 +135,7 @@ public class GameView {
         stackLayout.setContent(tileStack);
     }
 
-    private VBox drawSideboard(SideboardModel sideboardModel, Color color) {
+    private void drawSideboard(SideboardModel sideboardModel, Color color) {
         final double side = 60;
 
         VBox vb = new VBox();
@@ -169,7 +143,7 @@ public class GameView {
 
         for(TileModel tile : sideboardList) {
             HBox hb = new HBox();
-            hb.setMinSize(300, 200);
+            hb.setMinSize(300, 180);
             hb.setAlignment(Pos.CENTER);
             hb.setSpacing(50);
 
@@ -186,7 +160,10 @@ public class GameView {
             vb.getChildren().add(hb);
         }
 
-        return vb;
+        if(color == Color.WHITE)
+            whiteSideboard.setContent(vb);
+        else if(color == Color.BLACK)
+            blackSideboard.setContent(vb);
     }
 
     // End game trigger

@@ -8,6 +8,7 @@ import gameofbugs.model.Position;
 import gameofbugs.model.SideboardModel;
 import gameofbugs.model.tiles.TileHex;
 import gameofbugs.model.tiles.TileModel;
+import gameofbugs.model.tiles.TilePlaceholder;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -16,8 +17,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Polygon;
 
+import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 
 public class GameView {
@@ -99,12 +100,17 @@ public class GameView {
                 double centerX = height + pos.getY() * 2 * height + pos.getX() * height;
                 double centerY = side + pos.getX() * Math.sqrt(height * height * 3);
 
-                TileView tileView = new TileView(boardModel.getTopTile(pos), centerX, centerY, side);
-                Polygon hex = tileView.getHex();
+                TileView tileView = new TileView(boardModel.getTopTile(pos), centerX, centerY, side, boardModel.getStackSize(pos));
+                ImageView hex = tileView.getHex();
                 hex.setOnMouseClicked(event -> gameController.triggerBoardAction(pos, event));
 
                 Group fullTile = new Group();
-                fullTile.getChildren().addAll(hex, tileView.getDescription());
+                if(boardModel.getTopTile(pos) instanceof TilePlaceholder && boardModel.getStackSize(pos) > 1) {
+                    TileView tileViewBelow = new TileView(boardModel.getTopTile(pos).getBelow(), centerX, centerY, side, boardModel.getStackSize(pos)-1);
+                    ImageView hexBelow = tileViewBelow.getHex();
+                    fullTile.getChildren().add(hexBelow);
+                }
+                fullTile.getChildren().add(hex);
 
                 tileMap.getChildren().add(fullTile);
             }
@@ -116,19 +122,32 @@ public class GameView {
     private void drawStack(TileModel tileModel) {
         final double side = 55;
         double shift = 85;
+        int stackSize;
+
+        try {
+            stackSize = tileModel.getStackSize();
+        } catch(NullPointerException e) {
+            //tile from sideboard
+            stackSize = 1;
+        }
 
         AnchorPane tileStack = new AnchorPane();
 
         while(tileModel != null && !(tileModel instanceof TileHex)) {
-            System.out.println(tileModel.getClass().toString());
+            if(tileModel instanceof TilePlaceholder) {
+                stackSize--;
+                tileModel = tileModel.getBelow();
+                continue;
+            }
 
-            TileView tileView = new TileView(tileModel, shift, 80, side);
+            TileView tileView = new TileView(tileModel, shift, 80, side, stackSize);
             Group fullTile = new Group();
-            fullTile.getChildren().addAll(tileView.getHex(), tileView.getDescription());
+            fullTile.getChildren().addAll(tileView.getHex());
 
             tileStack.getChildren().add(fullTile);
             shift += 2.5 * side;
 
+            stackSize--;
             tileModel = tileModel.getBelow();
         }
 
@@ -147,12 +166,12 @@ public class GameView {
             hb.setAlignment(Pos.CENTER);
             hb.setSpacing(50);
 
-            TileView tileView = new TileView(tile, 100, 100, side);
-            Polygon hex = tileView.getHex();
+            TileView tileView = new TileView(tile, 100, 100, side, 1);
+            ImageView hex = tileView.getHex();
             hex.setOnMouseClicked(event -> gameController.triggerBoardAction(tile.getPosition(), event));
 
             Group fullTile = new Group();
-            fullTile.getChildren().addAll(hex, tileView.getDescription());
+            fullTile.getChildren().add(hex);
 
             Label label = new Label(String.valueOf(tile.getCnt()));
 

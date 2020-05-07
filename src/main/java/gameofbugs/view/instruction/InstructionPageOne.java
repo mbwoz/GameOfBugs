@@ -36,6 +36,6 @@ public class InstructionPageOne extends InstructionView {
     }
 
     protected void setBoard() {
-        instructionController.setColor();
+        instructionController.setColorAndStopPreparation();
     }
 }

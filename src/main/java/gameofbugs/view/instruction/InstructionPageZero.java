@@ -63,7 +63,8 @@ public class InstructionPageZero extends InstructionView {
         instructionController.triggerAction(new Position(13, 17));
         instructionController.triggerAction(new Position(16, 14));
         instructionController.triggerAction(new Position(15, 16));
-        instructionController.setColor();
+
+        instructionController.setColorAndStopPreparation();
 
         //instructionController.triggerAction(new Position(16,17));
     }

@@ -11,9 +11,11 @@ public class InstructionModel {
     Position lastPosition;
     int turn;
     boolean changePlayer;
+    boolean preparation;
 
     public InstructionModel(InstructionView instructionView) {
         changePlayer = true;
+        preparation = true;
         this.instructionView = instructionView;
         board = new BoardModel();
         sideboard = new SideboardModel();
@@ -27,8 +29,10 @@ public class InstructionModel {
         instructionView.updateBoardState(new TileHex(new Position(0, 0)));
     }
 
-    public void setWhiteColor() {
+    public void setColorAndStopPreparation() {
+        preparation = false;
         changePlayer = false;
+        instructionView.updateBoardState(board);
     }
 
     public void takeAction(Position pos) {
@@ -63,7 +67,7 @@ public class InstructionModel {
         lastPosition = pos;
 
         // Update board
-        instructionView.updateBoardState(board);
+        if(!preparation) instructionView.updateBoardState(board);
     }
 
     private void runSecondPhase(Position pos) {
@@ -72,7 +76,7 @@ public class InstructionModel {
             lastPosition = null;
 
             // Update board
-            instructionView.updateBoardState(board);
+            if(!preparation) instructionView.updateBoardState(board);
             return;
         }
 
@@ -85,18 +89,18 @@ public class InstructionModel {
             sideboard.decrementAndGetTileCnt(lastPosition);
 
             // Update full
-            instructionView.updateBoardState(board, sideboard, currentPlayer);
+            if(!preparation) instructionView.updateBoardState(board, sideboard, currentPlayer);
         } else {
             board.moveTile(lastPosition, pos);
 
             // Update board
-            instructionView.updateBoardState(board);
+            if(!preparation) instructionView.updateBoardState(board);
         }
 
         lastPosition = null;
         if(board.checkForRebuild()) {
             board.rebuildBoard();
-            instructionView.updateBoardState(board);
+            if(!preparation) instructionView.updateBoardState(board);
         }
 
         nextTurn();

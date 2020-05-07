@@ -26,6 +26,9 @@ public class InstructionController {
         instructionModel.takeAction(pos);
     }
 
-    public void setColor() { instructionModel.setWhiteColor(); }
+    public void setColorAndStopPreparation() {
+        System.out.println("Set");
+        instructionModel.setColorAndStopPreparation();
+    }
 
 }

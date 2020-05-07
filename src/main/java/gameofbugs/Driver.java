@@ -1,13 +1,12 @@
 package gameofbugs;
 
 import gameofbugs.controller.GameController;
+import gameofbugs.controller.InstructionController;
 import gameofbugs.controller.SceneController;
 import gameofbugs.model.Color;
 import gameofbugs.model.GameModel;
-import gameofbugs.view.EndGameView;
-import gameofbugs.view.GameView;
-import gameofbugs.view.InstructionView;
-import gameofbugs.view.MenuView;
+import gameofbugs.model.InstructionModel;
+import gameofbugs.view.*;
 import javafx.scene.layout.HBox;
 
 public class Driver {
@@ -25,8 +24,8 @@ public class Driver {
     }
 
     public void launchInstruction() {
-        InstructionView instructionView = new InstructionView(root, sceneController);
-        instructionView.displayInstruction();
+        InstructionDriver instructionDriver = new InstructionDriver(root, sceneController);
+        instructionDriver.launchPage(0);
     }
 
     public void launchGame() {

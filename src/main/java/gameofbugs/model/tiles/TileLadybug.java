@@ -8,37 +8,45 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-public class TileSpider extends TileModel {
+public class TileLadybug extends TileModel {
 
-    public TileSpider(Color color, Position position) {
-        super(color, position, 2);
+    public TileLadybug(Color color, Position position) {
+        super(color, position, 1);
     }
 
     @Override
     public HashSet<Position> getMoveOptions(BoardModel board) {
         LinkedList<Position> toProcess = new LinkedList<>();
-        HashSet<Position> processed = new HashSet<>();
         toProcess.add(position);
 
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i < 2; i++) {
             LinkedList<Position> nextProcess = new LinkedList<>();
 
             while(!toProcess.isEmpty()) {
                 Position processedPos = toProcess.pollFirst();
                 ArrayList<Position> neighbors = processedPos.getNeighbors();
 
-                neighbors.removeIf(p -> !board.isEmpty(p));
-                neighbors.removeIf(p -> !board.hasCommonNeighbor(processedPos, p, position));
+                neighbors.removeIf(board::isEmpty);
+                neighbors.removeIf(p -> p.equals(position));
                 neighbors.removeIf(p -> !board.isAccessible(processedPos, p, position));
-                neighbors.removeIf(processed::contains);
 
-                processed.addAll(neighbors);
                 nextProcess.addAll(neighbors);
             }
 
             toProcess = nextProcess;
         }
 
-        return new HashSet<>(toProcess);
+        HashSet<Position> moveOptions = new HashSet<>();
+
+        while(!toProcess.isEmpty()) {
+            Position processedPos = toProcess.pollFirst();
+            ArrayList<Position> neighbors = processedPos.getNeighbors();
+
+            neighbors.removeIf(p -> !board.isEmpty(p));
+
+            moveOptions.addAll(neighbors);
+        }
+
+        return moveOptions;
     }
 }

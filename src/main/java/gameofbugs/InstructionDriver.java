@@ -5,9 +5,7 @@ import gameofbugs.controller.InstructionSceneController;
 import gameofbugs.controller.SceneController;
 import gameofbugs.model.InstructionModel;
 import gameofbugs.view.*;
-import gameofbugs.view.instruction.InstructionPageOne;
-import gameofbugs.view.instruction.InstructionPageZero;
-import gameofbugs.view.instruction.InstructionView;
+import gameofbugs.view.instruction.*;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
@@ -25,8 +23,17 @@ public class InstructionDriver {
 
         //Pages to add!
         instructionPages = new ArrayList<>();
-        instructionPages.add(InstructionPageZero.class);
-        instructionPages.add(InstructionPageOne.class);
+        instructionPages.add(InstructionPage00.class);
+        instructionPages.add(InstructionPage01.class);
+        instructionPages.add(InstructionPage02.class);
+        instructionPages.add(InstructionPage03.class);
+        instructionPages.add(InstructionPage04.class);
+        instructionPages.add(InstructionPage05.class);
+        instructionPages.add(InstructionPage06.class);
+        instructionPages.add(InstructionPage07.class);
+        instructionPages.add(InstructionPage08.class);
+        instructionPages.add(InstructionPage09.class);
+        instructionPages.add(InstructionPage10.class);
     }
 
     public void launchMenu() {

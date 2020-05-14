@@ -7,29 +7,36 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class InstructionPageZero extends InstructionView {
-    public InstructionPageZero(HBox root) { super(root); }
+public class InstructionPage01 extends InstructionView {
+    public InstructionPage01(HBox root) { super(root); }
 
     protected VBox setRightBox() {
         VBox controlArea = new VBox();
         Button nextPageButton = new Button("Next page");
-        nextPageButton.setOnMouseClicked(event -> instructionSceneController.triggerPageOne());
+        nextPageButton.setOnMouseClicked(event -> instructionSceneController.triggerPage(2));
+
+        Button prevPageButton = new Button("Previous page");
+        prevPageButton.setOnMouseClicked(event -> instructionSceneController.triggerPage(0));
 
         Button backToMenuButton = new Button("Back to menu");
         backToMenuButton.setOnMouseClicked(event -> instructionSceneController.triggerMenu());
 
-        controlArea.getChildren().addAll(textPane, nextPageButton, backToMenuButton);
+        controlArea.getChildren().addAll(textPane, nextPageButton, prevPageButton, backToMenuButton);
 
         return controlArea;
     }
 
     protected void drawText () {
         Text text = new Text();
-        text.setText("GameOfBugs is about bugs. Player controls hive of different kinds of bugs (in our version: with different kinds of our beloved Satori status). The game object is to totally surround opponent`s Queen Bee (OK status). Once Queen is surrounded, game ends. Look at the board: Black Queen is surrounded so White Player wins!");
+        text.setText("What about interface?\n" +
+                "\n" +
+                "The game itself looks very similar to the instruction. You will be able to see four boxes: Board, Sideboards (for both players) and Stack Bar. \n" +
+                "Board – Here you will see all pieces used in the game\n" +
+                "Sideboard – Here are your pieces that haven`t been placed yet\n" +
+                "Stack Bar – You can see here all pieces placed on one position (we will discuss it later)\n");
         text.setFont(new Font(24));
-        text.setWrappingWidth(300);
+        text.setWrappingWidth(400);
         textPane.setContent(text);
-
     }
 
     protected void setBoard() {
@@ -63,10 +70,5 @@ public class InstructionPageZero extends InstructionView {
         instructionController.triggerAction(new Position(13, 17));
         instructionController.triggerAction(new Position(16, 14));
         instructionController.triggerAction(new Position(15, 16));
-
-        instructionController.setColorAndStopPreparation();
-
-        //instructionController.triggerAction(new Position(16,17));
     }
-
 }

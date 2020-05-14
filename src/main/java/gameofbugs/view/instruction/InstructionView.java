@@ -1,9 +1,7 @@
 package gameofbugs.view.instruction;
 
-import gameofbugs.controller.GameController;
 import gameofbugs.controller.InstructionController;
 import gameofbugs.controller.InstructionSceneController;
-import gameofbugs.controller.SceneController;
 import gameofbugs.model.BoardModel;
 import gameofbugs.model.Color;
 import gameofbugs.model.Position;
@@ -14,14 +12,10 @@ import gameofbugs.model.tiles.TilePlaceholder;
 import gameofbugs.view.TileView;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Polygon;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
@@ -38,7 +32,7 @@ public abstract class InstructionView {
         this.whiteSideboard = new ScrollPane();
         this.textPane = new ScrollPane();
         whiteSideboard.setMinViewportWidth(300);
-        textPane.setMinViewportWidth(300);
+        textPane.setMinViewportWidth(400);
         whiteSideboard.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         textPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
@@ -68,6 +62,7 @@ public abstract class InstructionView {
         this.instructionController = instructionController;
         this.instructionSceneController = instructionSceneController;
         setBoard();
+        instructionController.setColorAndStopPreparation();
     }
 
     public void updateBoardState(BoardModel boardModel) {

@@ -32,6 +32,7 @@ public class InstructionModel {
     public void setColorAndStopPreparation() {
         preparation = false;
         changePlayer = false;
+        currentPlayer = Color.WHITE;
         instructionView.updateBoardState(board);
     }
 
@@ -47,7 +48,7 @@ public class InstructionModel {
         System.out.println("First Phase with:" + pos.getX() + "  " + pos.getY());
         if(pos.getX() == -1 || pos.getX() == -2) {
 
-            //if(sideboard.getColor(pos) != currentPlayer) return;
+            if(sideboard.getColor(pos) != currentPlayer) return;
             if(!sideboard.isAvailable(pos)) return;
             if(turn > 3 && !sideboard.checkQueenInPlay(currentPlayer) &&
                     !(sideboard.getTile(pos) instanceof TileBee)) return;

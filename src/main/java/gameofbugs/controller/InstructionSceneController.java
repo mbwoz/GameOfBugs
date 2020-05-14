@@ -16,8 +16,6 @@ public class InstructionSceneController {
         Platform.runLater(new Thread(() -> instructionDriver.launchMenu()));
     }
 
-    public void triggerPageZero() { Platform.runLater(new Thread(() -> instructionDriver.launchPage(0))); }
-
-    public void triggerPageOne() { Platform.runLater(new Thread(() -> instructionDriver.launchPage(1)));}
+    public void triggerPage(int pageNumber) { Platform.runLater(new Thread(() -> instructionDriver.launchPage(pageNumber))); }
 
 }

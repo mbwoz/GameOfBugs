@@ -22,7 +22,7 @@ public class InstructionPage04 extends InstructionView {
                 "Rule no. 2: You cannot move any of your pieces before placing the OK.\n\n" +
                 "Rule no. 3: If a piece you want to move is the only connection between two parts of Hive, you cannot move it.\n" +
                 "\n" +
-                "Try to move or place a piece. It`s not possible, because this is the last turn to place OK");
+                "Try to move or place a piece. It`s not possible, because this is the last turn to place OK\n");
         text.setFont(new Font(24));
         text.setWrappingWidth(400);
         textPane.setContent(text);

@@ -39,3 +39,11 @@ Konik polny nie porusza się w zwykły sposób, ale skacze ze swojej pozycji na 
 **Pająk** _(komunikat - **TLE**)_
 
 Pająk podczas jednej tury porusza się wokół roju o dokładnie trzy pola, dodatkowo nie może w tym samym ruchu wracać po swoich śladach. Pająk może się poruszać tylko naokoło płytek z którymi może się bezpośrednio zetknąć w każdej fazie swojego ruchu.
+
+**Żuk** _(komunikat - **MEM**)_
+
+Żuk, podobnie jak królowa, może poruszać się tylko o jedno pole podczas tury. Jednak w przeciwieństwie do pozostałych owadów może wspinać się na rój. Owad, na którym znajduje się żuk, jest unieruchomiony. Podczas dokładania nowych płytek przyjmuje się, że stos jest w kolorze żuka znajdującego się na jego szczycie. Żuk posiada umiejętność wchodzenia w miejsca otoczone ze wszystkich stron, jednak w dalszym ciągu obowiązuje go reguła swobody ruchu. Żuka znajdującego się na górze roju można zablokować stawiając na nim innego żuka, w szczególności wszystkie cztery żuki mogą być ustawione jeden na drugim. Do gry jest on wprowadzany tak samo jak pozostałe owady.
+
+**Biedronka** _(komunikat - **CME**)_
+
+Biedronka jest dodawana do gry tak samo jak pozostałe płytki. Podczas ruchu biedronka porusza się o trzy pola - dwa na górze roju oraz jedno w dół (ostatni etap ruchu to zejście z roju). Dzięki temu może wchodzić w miejsca otoczone ze wszystkich stron.

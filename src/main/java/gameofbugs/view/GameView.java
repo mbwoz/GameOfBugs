@@ -27,6 +27,7 @@ public class GameView {
 
     private ScrollPane whiteSideboard;
     private ScrollPane blackSideboard;
+    private HBox topBarLayout;
     private ScrollPane boardLayout;
     private ScrollPane stackLayout;
 
@@ -38,6 +39,9 @@ public class GameView {
         whiteSideboard.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         blackSideboard.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
+        this.topBarLayout = new HBox();
+        topBarLayout.setMinHeight(50);
+
         this.boardLayout = new ScrollPane();
         boardLayout.setHvalue(0.5);
         boardLayout.setVvalue(0.5);
@@ -48,7 +52,7 @@ public class GameView {
         stackLayout.setMinViewportHeight(150);
 
         VBox boardArea = new VBox();
-        boardArea.getChildren().addAll(boardLayout, stackLayout);
+        boardArea.getChildren().addAll(topBarLayout, boardLayout, stackLayout);
         VBox.setVgrow(boardLayout, Priority.ALWAYS);
 
         root.getChildren().clear();
@@ -78,6 +82,25 @@ public class GameView {
 
     public void updateBoardState(TileModel tileModel) {
         drawStack(tileModel);
+    }
+
+    public void updateBoardState(Color currentPlayer, int turn, boolean isQueenInPlay) {
+        String turnInfo = "Turn " + turn;
+
+        if(currentPlayer == Color.WHITE)
+            turnInfo += " - White moves";
+        else
+            turnInfo += " - Black moves";
+
+        if(turn == 4 && !isQueenInPlay)
+            turnInfo += " - Place OK on board";
+
+        Label labelInfo = new Label(turnInfo);
+
+        topBarLayout.getChildren().clear();
+        topBarLayout.getChildren().addAll(labelInfo);
+        topBarLayout.setAlignment(Pos.CENTER);
+        HBox.setHgrow(labelInfo, Priority.ALWAYS);
     }
 
     // Draw parts of view

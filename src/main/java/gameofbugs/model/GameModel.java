@@ -23,6 +23,7 @@ public class GameModel {
     public void updateBoardState() {
         gameView.updateBoardState(board, sideboard);
         gameView.updateBoardState(new TileHex(new Position(0, 0)));
+        gameView.updateBoardState(currentPlayer, turn, sideboard.checkQueenInPlay(currentPlayer));
     }
 
     public void takeAction(Position pos) {
@@ -99,6 +100,8 @@ public class GameModel {
 
         if(currentPlayer == Color.WHITE)
             turn++;
+
+        gameView.updateBoardState(currentPlayer, turn, sideboard.checkQueenInPlay(currentPlayer));
     }
 
     private boolean isPlayerBlocked(Color color) {

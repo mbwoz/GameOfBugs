@@ -29,6 +29,9 @@ public class SideboardModel {
         /*Adding Ladybug*/
         whiteList.add(new TileLadybug(Color.WHITE, new Position(-1, 5)));
         blackList.add(new TileLadybug(Color.BLACK, new Position(-2, 5)));
+        /*Adding Mosquito*/
+        whiteList.add(new TileMosquito(Color.WHITE, new Position(-1, 6)));
+        blackList.add(new TileMosquito(Color.BLACK, new Position(-2, 6)));
     }
 
     private ArrayList<TileModel> getList(Position pos) {
@@ -61,6 +64,7 @@ public class SideboardModel {
         if(pos.getY() == 3) return new TileSpider(getColor(pos), pos);
         if(pos.getY() == 4) return new TileBeetle(getColor(pos), pos);
         if(pos.getY() == 5) return new TileLadybug(getColor(pos), pos);
+        if(pos.getY() == 6) return new TileMosquito(getColor(pos), pos);
 
         return null;
     }

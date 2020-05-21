@@ -41,4 +41,9 @@ public class Driver {
         EndGameView endGameView = new EndGameView(root, winner, sceneController);
         endGameView.displayGameEnd();
     }
+
+    public void launchSettings() {
+        SettingsView settingsView = new SettingsView(root, sceneController);
+        settingsView.displaySettings();
+    }
 }

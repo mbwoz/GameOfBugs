@@ -21,11 +21,14 @@ public class MenuView {
         Button launchInstructionButton = new Button("Instruction");
         launchInstructionButton.setOnMouseClicked(event -> sceneController.triggerInstruction());
 
+        Button launchSettingsButton = new Button("Settings");
+        launchSettingsButton.setOnMouseClicked(event -> sceneController.triggerSettings());
+
         Button exitGameButton = new Button("Exit");
         exitGameButton.setOnMouseClicked(event -> System.exit(0));
 
         root.getChildren().clear();
-        root.getChildren().addAll(startGameButton, launchInstructionButton, exitGameButton);
+        root.getChildren().addAll(startGameButton, launchInstructionButton, launchSettingsButton, exitGameButton);
         root.setAlignment(Pos.CENTER);
     }
 }

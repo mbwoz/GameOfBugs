@@ -7,8 +7,10 @@ import java.util.ArrayList;
 public class SideboardModel {
     private ArrayList<TileModel> whiteList; //(-1, y)
     private ArrayList<TileModel> blackList; //(-2, y)
+    private Settings settings;
 
     public SideboardModel(){
+        settings = new Settings();
         whiteList = new ArrayList<>();
         blackList = new ArrayList<>();
         /*Adding Bee*/
@@ -27,11 +29,15 @@ public class SideboardModel {
         whiteList.add(new TileBeetle(Color.WHITE, new Position(-1, 4)));
         blackList.add(new TileBeetle(Color.BLACK, new Position(-2, 4)));
         /*Adding Ladybug*/
-        whiteList.add(new TileLadybug(Color.WHITE, new Position(-1, 5)));
-        blackList.add(new TileLadybug(Color.BLACK, new Position(-2, 5)));
+        if(settings.isCME) {
+            whiteList.add(new TileLadybug(Color.WHITE, new Position(-1, 5)));
+            blackList.add(new TileLadybug(Color.BLACK, new Position(-2, 5)));
+        }
         /*Adding Mosquito*/
-        whiteList.add(new TileMosquito(Color.WHITE, new Position(-1, 6)));
-        blackList.add(new TileMosquito(Color.BLACK, new Position(-2, 6)));
+        if(settings.isQUE) {
+            whiteList.add(new TileMosquito(Color.WHITE, new Position(-1, 6)));
+            blackList.add(new TileMosquito(Color.BLACK, new Position(-2, 6)));
+        }
     }
 
     private ArrayList<TileModel> getList(Position pos) {

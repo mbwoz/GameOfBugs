@@ -4,6 +4,7 @@ import gameofbugs.controller.InstructionController;
 import gameofbugs.controller.InstructionSceneController;
 import gameofbugs.controller.SceneController;
 import gameofbugs.model.InstructionModel;
+import gameofbugs.model.Settings;
 import gameofbugs.view.*;
 import gameofbugs.view.instruction.*;
 import javafx.scene.layout.HBox;
@@ -15,11 +16,20 @@ public class InstructionDriver {
     private InstructionSceneController instructionSceneController;
     private SceneController sceneController;
     private ArrayList<Class> instructionPages;
+    private Settings settings;
+    boolean queBefore;
+    boolean cmeBefore;
 
     public InstructionDriver(HBox root, SceneController sceneController) {
         this.root = root;
         this.instructionSceneController = new InstructionSceneController(this);
         this.sceneController = sceneController;
+        this.settings = new Settings();
+        queBefore = settings.isQUE;
+        cmeBefore = settings.isCME;
+
+        settings.isCME = true;
+        settings.isQUE = true;
 
         //Pages to add!
         instructionPages = new ArrayList<>();
@@ -37,6 +47,9 @@ public class InstructionDriver {
     }
 
     public void launchMenu() {
+        settings.isCME = cmeBefore;
+        settings.isQUE = queBefore;
+
         MenuView menuView = new MenuView(root, sceneController);
         menuView.displayGameStart();
     }

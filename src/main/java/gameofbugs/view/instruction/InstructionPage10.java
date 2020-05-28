@@ -28,6 +28,8 @@ public class InstructionPage10 extends InstructionView {
     @Override
     protected VBox setRightBox() {
         VBox controlArea = new VBox();
+        Button nextPageButton = new Button("Next page");
+        nextPageButton.setOnMouseClicked(event -> instructionSceneController.triggerPage(11));
 
         Button prevPageButton = new Button("Previous page");
         prevPageButton.setOnMouseClicked(event -> instructionSceneController.triggerPage(9));
@@ -35,7 +37,7 @@ public class InstructionPage10 extends InstructionView {
         Button backToMenuButton = new Button("Back to menu");
         backToMenuButton.setOnMouseClicked(event -> instructionSceneController.triggerMenu());
 
-        controlArea.getChildren().addAll(textPane, prevPageButton, backToMenuButton);
+        controlArea.getChildren().addAll(textPane, nextPageButton, prevPageButton, backToMenuButton);
 
         return controlArea;
     }

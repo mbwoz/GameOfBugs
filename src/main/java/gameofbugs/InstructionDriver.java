@@ -44,6 +44,7 @@ public class InstructionDriver {
         instructionPages.add(InstructionPage08.class);
         instructionPages.add(InstructionPage09.class);
         instructionPages.add(InstructionPage10.class);
+        instructionPages.add(InstructionPage11.class);
     }
 
     public void launchMenu() {

@@ -11,12 +11,8 @@ import gameofbugs.model.tiles.TileModel;
 import gameofbugs.model.tiles.TilePlaceholder;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 
 import javafx.scene.image.ImageView;
 import java.util.ArrayList;
@@ -28,6 +24,7 @@ public class GameView {
     private ScrollPane whiteSideboard;
     private ScrollPane blackSideboard;
     private HBox topBarLayout;
+    private StackPane topBarExitPane;
     private ScrollPane boardLayout;
     private ScrollPane stackLayout;
 
@@ -41,6 +38,7 @@ public class GameView {
 
         this.topBarLayout = new HBox();
         topBarLayout.setMinHeight(50);
+        createExit();
 
         this.boardLayout = new ScrollPane();
         boardLayout.setHvalue(0.5);
@@ -96,11 +94,32 @@ public class GameView {
             turnInfo += " - Place OK on board";
 
         Label labelInfo = new Label(turnInfo);
+        StackPane infoPane = new StackPane(labelInfo);
+        infoPane.setAlignment(Pos.CENTER);
+
+        StackPane emptyPane = new StackPane();
+        emptyPane.setMinWidth(70);
 
         topBarLayout.getChildren().clear();
-        topBarLayout.getChildren().addAll(labelInfo);
-        topBarLayout.setAlignment(Pos.CENTER);
-        HBox.setHgrow(labelInfo, Priority.ALWAYS);
+        topBarLayout.getChildren().addAll(emptyPane, infoPane, topBarExitPane);
+        HBox.setHgrow(infoPane, Priority.ALWAYS);
+    }
+
+    void createExit() {
+        Button topBarExitButton = new Button("Exit");
+        topBarExitButton.setOnMouseClicked(event -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit the game?", ButtonType.YES, ButtonType.NO);
+            alert.setHeaderText("Back to menu");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+            alert.showAndWait();
+            if(alert.getResult() == ButtonType.YES)
+                sceneController.triggerMenu();
+        });
+
+        topBarExitPane = new StackPane(topBarExitButton);
+        topBarExitPane.setMinWidth(70);
+        topBarExitPane.setAlignment(Pos.CENTER);
     }
 
     // Draw parts of view

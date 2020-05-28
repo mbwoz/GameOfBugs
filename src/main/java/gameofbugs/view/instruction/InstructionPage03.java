@@ -39,7 +39,21 @@ public class InstructionPage03 extends InstructionView {
         Button backToMenuButton = new Button("Back to menu");
         backToMenuButton.setOnMouseClicked(event -> instructionSceneController.triggerMenu());
 
-        controlArea.getChildren().addAll(textPane, nextPageButton, prevPageButton, backToMenuButton);
+        VBox buttons = new VBox();
+        VBox text = new VBox();
+        text.getChildren().addAll(textPane);
+
+        nextPageButton.setMinWidth(100);
+        prevPageButton.setMinWidth(100);
+        backToMenuButton.setMinWidth(100);
+
+        buttons.getChildren().addAll(nextPageButton, prevPageButton, backToMenuButton);
+
+        text.setMinHeight(600);
+        buttons.setMaxHeight(150);
+        buttons.setAlignment(Pos.CENTER);
+        controlArea.getChildren().addAll(text, buttons);
+        controlArea.setAlignment(Pos.TOP_CENTER);
 
         return controlArea;
     }

@@ -31,13 +31,32 @@ public class InstructionPage11 extends InstructionView {
     protected VBox setRightBox() {
         VBox controlArea = new VBox();
 
+        Button nextPageButton = new Button("Next Page");
+        nextPageButton.setDisable(true);
+
+
+
         Button prevPageButton = new Button("Previous page");
         prevPageButton.setOnMouseClicked(event -> instructionSceneController.triggerPage(10));
 
         Button backToMenuButton = new Button("Back to menu");
         backToMenuButton.setOnMouseClicked(event -> instructionSceneController.triggerMenu());
 
-        controlArea.getChildren().addAll(textPane, prevPageButton, backToMenuButton);
+        nextPageButton.setMinWidth(100);
+        prevPageButton.setMinWidth(100);
+        backToMenuButton.setMinWidth(100);
+        
+        VBox buttons = new VBox();
+        VBox text = new VBox();
+        text.getChildren().addAll(textPane);
+
+        buttons.getChildren().addAll(nextPageButton, prevPageButton, backToMenuButton);
+
+        text.setMinHeight(600);
+        buttons.setMaxHeight(150);
+        buttons.setAlignment(Pos.CENTER);
+        controlArea.getChildren().addAll(text, buttons);
+        controlArea.setAlignment(Pos.TOP_CENTER);
 
         return controlArea;
     }

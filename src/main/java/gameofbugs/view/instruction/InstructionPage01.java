@@ -1,8 +1,11 @@
 package gameofbugs.view.instruction;
 
 import gameofbugs.model.Position;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -26,16 +29,26 @@ public class InstructionPage01 extends InstructionView {
         return controlArea;
     }
 
+    @Override
+    protected HBox setTopBar() {
+        HBox topBar = new HBox();
+        Label text = new Label("Interface");
+        topBar.getChildren().clear();
+        topBar.getChildren().addAll(text);
+        topBar.setAlignment(Pos.CENTER);
+        HBox.setHgrow(text, Priority.ALWAYS);
+        return topBar;
+    }
+
     protected void drawText () {
         Text text = new Text();
-        text.setText("What about interface?\n" +
-                "\n" +
+        text.setText(
                 "The game itself looks very similar to the instruction. You will be able to see four boxes: Board, Sideboards (for both players) and Stack Bar. \n" +
                 "Board – Here you will see all pieces used in the game\n" +
                 "Sideboard – Here are your pieces that haven`t been placed yet\n" +
                 "Stack Bar – You can see here all pieces placed on one position (we will discuss it later)\n");
         text.setFont(new Font(24));
-        text.setWrappingWidth(400);
+        text.setWrappingWidth(350);
         textPane.setContent(text);
     }
 

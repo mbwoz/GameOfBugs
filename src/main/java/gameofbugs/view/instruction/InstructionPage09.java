@@ -1,8 +1,11 @@
 package gameofbugs.view.instruction;
 
 import gameofbugs.model.Position;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -15,13 +18,12 @@ public class InstructionPage09 extends InstructionView {
     @Override
     protected void drawText() {
         Text text = new Text();
-        text.setText("MEM Status\n" +
-                "\n" +
+        text.setText(
                 "MEM is a very powerful piece. It moves one space per turn, but it can get onto the Hive. It means it can cover other piece. That`s why we have a Stack Bar. You can check here, if there are  some pieces covered by MEM. What’s important, a spot shows the same color as its top piece.\n" +
                 "\n" +
                 "Try to cover some pieces!\n");
         text.setFont(new Font(24));
-        text.setWrappingWidth(400);
+        text.setWrappingWidth(350);
         textPane.setContent(text);
     }
 
@@ -40,6 +42,17 @@ public class InstructionPage09 extends InstructionView {
         controlArea.getChildren().addAll(textPane, nextPageButton, prevPageButton, backToMenuButton);
 
         return controlArea;
+    }
+
+    @Override
+    protected HBox setTopBar() {
+        HBox topBar = new HBox();
+        Label text = new Label("MEM Status");
+        topBar.getChildren().clear();
+        topBar.getChildren().addAll(text);
+        topBar.setAlignment(Pos.CENTER);
+        HBox.setHgrow(text, Priority.ALWAYS);
+        return topBar;
     }
 
     @Override

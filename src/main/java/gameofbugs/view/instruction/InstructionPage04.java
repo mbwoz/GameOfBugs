@@ -1,8 +1,11 @@
 package gameofbugs.view.instruction;
 
 import gameofbugs.model.Position;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -15,8 +18,7 @@ public class InstructionPage04 extends InstructionView {
     @Override
     protected void drawText() {
         Text text = new Text();
-        text.setText("Important Rules\n" +
-                "\n" +
+        text.setText(
                 "During placing or moving you have to remember about three important rules.\n\n" +
                 "Rule no. 1: You have to place your OK in 4. turn at the latest.\n\n" +
                 "Rule no. 2: You cannot move any of your pieces before placing the OK.\n\n" +
@@ -24,7 +26,7 @@ public class InstructionPage04 extends InstructionView {
                 "\n" +
                 "Try to move or place a piece. It`s not possible, because this is the last turn to place OK\n");
         text.setFont(new Font(24));
-        text.setWrappingWidth(400);
+        text.setWrappingWidth(350);
         textPane.setContent(text);
     }
 
@@ -43,6 +45,17 @@ public class InstructionPage04 extends InstructionView {
         controlArea.getChildren().addAll(textPane, nextPageButton, prevPageButton, backToMenuButton);
 
         return controlArea;
+    }
+
+    @Override
+    protected HBox setTopBar() {
+        HBox topBar = new HBox();
+        Label text = new Label("Important Rules");
+        topBar.getChildren().clear();
+        topBar.getChildren().addAll(text);
+        topBar.setAlignment(Pos.CENTER);
+        HBox.setHgrow(text, Priority.ALWAYS);
+        return topBar;
     }
 
     @Override

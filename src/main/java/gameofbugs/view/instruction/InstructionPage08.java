@@ -1,8 +1,11 @@
 package gameofbugs.view.instruction;
 
 import gameofbugs.model.Position;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -15,13 +18,12 @@ public class InstructionPage08 extends InstructionView {
     @Override
     protected void drawText() {
         Text text = new Text();
-        text.setText("TLE Status\n" +
-                "\n" +
+        text.setText(
                 "TLE moves three spaces – no more, no less. It moves like OK, but goes far too long. \n" +
                 "\n" +
                 "Check TLE moves!\n");
         text.setFont(new Font(24));
-        text.setWrappingWidth(400);
+        text.setWrappingWidth(350);
         textPane.setContent(text);
     }
 
@@ -40,6 +42,17 @@ public class InstructionPage08 extends InstructionView {
         controlArea.getChildren().addAll(textPane, nextPageButton, prevPageButton, backToMenuButton);
 
         return controlArea;
+    }
+
+    @Override
+    protected HBox setTopBar() {
+        HBox topBar = new HBox();
+        Label text = new Label("TLE Status");
+        topBar.getChildren().clear();
+        topBar.getChildren().addAll(text);
+        topBar.setAlignment(Pos.CENTER);
+        HBox.setHgrow(text, Priority.ALWAYS);
+        return topBar;
     }
 
     @Override

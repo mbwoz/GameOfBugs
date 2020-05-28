@@ -1,8 +1,11 @@
 package gameofbugs.view.instruction;
 
 import gameofbugs.model.Position;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -15,13 +18,12 @@ public class InstructionPage03 extends InstructionView {
     @Override
     protected void drawText() {
         Text text = new Text();
-        text.setText("Moving pieces\n" +
-                "\n" +
+        text.setText(
                 "Instead of putting out a new piece, the Player can decide to move one of his pieces on the Board. Each piece has a different move options – we will discuss it on the next pages.\n" +
                 "\n" +
                 "Try to move some of your pieces. Click on one of your piece and then choose one of the spotted places on the Board.\n");
         text.setFont(new Font(24));
-        text.setWrappingWidth(400);
+        text.setWrappingWidth(350);
         textPane.setContent(text);
     }
 
@@ -40,6 +42,17 @@ public class InstructionPage03 extends InstructionView {
         controlArea.getChildren().addAll(textPane, nextPageButton, prevPageButton, backToMenuButton);
 
         return controlArea;
+    }
+
+    @Override
+    protected HBox setTopBar() {
+        HBox topBar = new HBox();
+        Label text = new Label("Moving pieces");
+        topBar.getChildren().clear();
+        topBar.getChildren().addAll(text);
+        topBar.setAlignment(Pos.CENTER);
+        HBox.setHgrow(text, Priority.ALWAYS);
+        return topBar;
     }
 
     @Override

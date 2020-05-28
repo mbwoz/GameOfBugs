@@ -1,8 +1,11 @@
 package gameofbugs.view.instruction;
 
 import gameofbugs.model.Position;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -15,13 +18,12 @@ public class InstructionPage11 extends InstructionView {
     @Override
     protected void drawText() {
         Text text = new Text();
-        text.setText("QUE Status\n" +
-                "\n" +
+        text.setText(
                 "QUE doesn`t have its own moves. It copies moves from his neighbors. Additionally, when QUE is on top, it can move only like MEM and when the only neighbor of QUE is QUE it can`t move anywhere.\n" +
                 "\n" +
                 "Check how it works!\n");
         text.setFont(new Font(24));
-        text.setWrappingWidth(400);
+        text.setWrappingWidth(350);
         textPane.setContent(text);
     }
 
@@ -38,6 +40,17 @@ public class InstructionPage11 extends InstructionView {
         controlArea.getChildren().addAll(textPane, prevPageButton, backToMenuButton);
 
         return controlArea;
+    }
+
+    @Override
+    protected HBox setTopBar() {
+        HBox topBar = new HBox();
+        Label text = new Label("QUE Status");
+        topBar.getChildren().clear();
+        topBar.getChildren().addAll(text);
+        topBar.setAlignment(Pos.CENTER);
+        HBox.setHgrow(text, Priority.ALWAYS);
+        return topBar;
     }
 
     @Override

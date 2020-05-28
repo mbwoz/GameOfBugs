@@ -27,12 +27,13 @@ public abstract class InstructionView {
     protected ScrollPane textPane;
     private ScrollPane boardLayout;
     private ScrollPane stackLayout;
+    private HBox topBarLayout;
 
     public InstructionView(HBox root) {
         this.whiteSideboard = new ScrollPane();
         this.textPane = new ScrollPane();
         whiteSideboard.setMinViewportWidth(300);
-        textPane.setMinViewportWidth(400);
+        textPane.setMinViewportWidth(350);
         whiteSideboard.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         textPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
@@ -45,8 +46,11 @@ public abstract class InstructionView {
         this.stackLayout = new ScrollPane();
         stackLayout.setMinViewportHeight(150);
 
+        this.topBarLayout = setTopBar();
+        topBarLayout.setMinHeight(50);
+
         VBox boardArea = new VBox();
-        boardArea.getChildren().addAll(boardLayout, stackLayout);
+        boardArea.getChildren().addAll(topBarLayout, boardLayout, stackLayout);
         VBox.setVgrow(boardLayout, Priority.ALWAYS);
 
         VBox controlArea = setRightBox();
@@ -192,5 +196,7 @@ public abstract class InstructionView {
     protected abstract VBox setRightBox();
 
     protected abstract void setBoard();
+
+    protected abstract HBox setTopBar();
 
 }

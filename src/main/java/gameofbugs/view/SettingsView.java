@@ -2,12 +2,15 @@ package gameofbugs.view;
 
 import gameofbugs.controller.SceneController;
 import gameofbugs.model.Settings;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
+import javafx.scene.Cursor;
+import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SettingsView {
     private HBox root;
@@ -21,30 +24,108 @@ public class SettingsView {
     }
 
     public void displaySettings() {
+        Group group = new Group();
 
-        boolean isCme = settings.isCME;
-        boolean isQue = settings.isQUE;
+        AtomicBoolean isCme = new AtomicBoolean(settings.isCME);
+        AtomicBoolean isQue = new AtomicBoolean(settings.isQUE);
 
-        CheckBox QueBox = new CheckBox();
-        QueBox.setSelected(isQue);
-        CheckBox CmeBox = new CheckBox();
-        CmeBox.setSelected(isCme);
+        Image background = null;
+        Image backButton = null;
+        Image que0Button = null;
+        Image que1Button = null;
+        Image cme0Button = null;
+        Image cme1Button = null;
 
-        Button exitGameButton = new Button("Menu");
-        exitGameButton.setOnMouseClicked(event -> {
+        try {
+            background = new Image(new FileInputStream("src/main/resources/SettingsBackground.png"));
+            backButton = new Image(new FileInputStream("src/main/resources/SettingsBack.png"));
+            que0Button = new Image(new FileInputStream("src/main/resources/SettingsQue0.png"));
+            que1Button = new Image(new FileInputStream("src/main/resources/SettingsQue1.png"));
+            cme0Button = new Image(new FileInputStream("src/main/resources/SettingsCme0.png"));
+            cme1Button = new Image(new FileInputStream("src/main/resources/SettingsCme1.png"));
+        } catch(FileNotFoundException e) {
+            System.out.println("File not found!");
+            e.printStackTrace();
+        }
 
-            if(QueBox.isSelected()) settings.isQUE = true;
+        ImageView backgroundView = new ImageView(background);
+        ImageView backButtonView = new ImageView(backButton);
+        ImageView que0ButtonView = new ImageView(que0Button);
+        ImageView que1ButtonView = new ImageView(que1Button);
+        ImageView cme0ButtonView = new ImageView(cme0Button);
+        ImageView cme1ButtonView = new ImageView(cme1Button);
+
+
+        backButtonView.setOnMouseClicked(event -> {
+
+            if(isQue.get()) settings.isQUE = true;
             else settings.isQUE = false;
-            if(CmeBox.isSelected()) settings.isCME = true;
+            if(isCme.get()) settings.isCME = true;
             else settings.isCME = false;
 
             sceneController.triggerMenu();
         }
         );
+        backButtonView.setCursor(Cursor.HAND);
 
+        que0ButtonView.setOnMouseClicked(event -> {
+
+            isQue.set(true);
+            group.getChildren().remove(que0ButtonView);
+            group.getChildren().add(que1ButtonView);
+            root.getChildren().clear();
+            root.getChildren().add(group);
+        }
+        );
+        que0ButtonView.setCursor(Cursor.HAND);
+
+        que1ButtonView.setOnMouseClicked(event -> {
+
+                    isQue.set(false);
+                    group.getChildren().remove(que1ButtonView);
+                    group.getChildren().add(que0ButtonView);
+                    root.getChildren().clear();
+                    root.getChildren().add(group);
+                }
+        );
+        que1ButtonView.setCursor(Cursor.HAND);
+
+        cme0ButtonView.setOnMouseClicked(event -> {
+
+                    isCme.set(true);
+                    group.getChildren().remove(cme0ButtonView);
+                    group.getChildren().add(cme1ButtonView);
+                    root.getChildren().clear();
+                    root.getChildren().add(group);
+                }
+        );
+        cme0ButtonView.setCursor(Cursor.HAND);
+
+        cme1ButtonView.setOnMouseClicked(event -> {
+
+                    isCme.set(false);
+                    group.getChildren().remove(cme1ButtonView);
+                    group.getChildren().add(cme0ButtonView);
+                    root.getChildren().clear();
+                    root.getChildren().add(group);
+                }
+        );
+        cme1ButtonView.setCursor(Cursor.HAND);
+
+
+        group.getChildren().addAll(backgroundView, backButtonView);
+
+        if(isCme.get())
+            group.getChildren().add(cme1ButtonView);
+        else
+            group.getChildren().add(cme0ButtonView);
+
+        if(isQue.get())
+            group.getChildren().add(que1ButtonView);
+        else
+            group.getChildren().add(que0ButtonView);
 
         root.getChildren().clear();
-        root.getChildren().addAll(QueBox, new Label("  Play with QUE  "), CmeBox, new Label("  Play with CME  "), exitGameButton);
-        root.setAlignment(Pos.CENTER);
+        root.getChildren().add(group);
     }
 }

@@ -2,8 +2,14 @@ package gameofbugs.view;
 
 import gameofbugs.controller.SceneController;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class MenuView {
     private HBox root;
@@ -15,6 +21,44 @@ public class MenuView {
     }
 
     public void displayGameStart() {
+        Image background = null;
+        Image startButton = null;
+        Image tutorialButton = null;
+        Image optionsButton = null;
+        Image exitButton = null;
+
+        ImageView backgroundView = null;
+        ImageView startButtonView = null;
+        ImageView tutorialButtonView = null;
+        ImageView optionsButtonView = null;
+        ImageView exitButtonView = null;
+
+        try {
+            background = new Image(new FileInputStream("src/main/resources/MenuBackground.png"));
+            startButton = new Image(new FileInputStream("src/main/resources/MenuStart.png"));
+            tutorialButton = new Image(new FileInputStream("src/main/resources/MenuTutorial.png"));
+            optionsButton = new Image(new FileInputStream("src/main/resources/MenuOptions.png"));
+            exitButton = new Image(new FileInputStream("src/main/resources/MenuExit.png"));
+        } catch(FileNotFoundException e) {
+            System.out.println("File not found!");
+            e.printStackTrace();
+        }
+
+        backgroundView = new ImageView(background);
+
+        startButtonView = new ImageView(startButton);
+        startButtonView.setOnMouseClicked(event -> sceneController.triggerGameStart());
+
+        tutorialButtonView = new ImageView(tutorialButton);
+        tutorialButtonView.setOnMouseClicked(event -> sceneController.triggerInstruction());
+
+        optionsButtonView = new ImageView(optionsButton);
+        optionsButtonView.setOnMouseClicked(event -> sceneController.triggerSettings());
+
+        exitButtonView = new ImageView(exitButton);
+        exitButtonView.setOnMouseClicked(event -> System.exit(0));
+
+
         Button startGameButton = new Button("Start Game");
         startGameButton.setOnMouseClicked(event -> sceneController.triggerGameStart());
 
@@ -27,8 +71,10 @@ public class MenuView {
         Button exitGameButton = new Button("Exit");
         exitGameButton.setOnMouseClicked(event -> System.exit(0));
 
+
+        Group group = new Group(backgroundView, startButtonView, tutorialButtonView, optionsButtonView, exitButtonView);
+
         root.getChildren().clear();
-        root.getChildren().addAll(startGameButton, launchInstructionButton, launchSettingsButton, exitGameButton);
-        root.setAlignment(Pos.CENTER);
+        root.getChildren().add(group);
     }
 }

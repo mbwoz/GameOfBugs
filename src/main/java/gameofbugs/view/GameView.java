@@ -10,6 +10,7 @@ import gameofbugs.model.tiles.TileHex;
 import gameofbugs.model.tiles.TileModel;
 import gameofbugs.model.tiles.TilePlaceholder;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -107,6 +108,7 @@ public class GameView {
 
     void createExit() {
         Button topBarExitButton = new Button("Exit");
+        topBarExitButton.setCursor(Cursor.HAND);
         topBarExitButton.setOnMouseClicked(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit the game?", ButtonType.YES, ButtonType.NO);
             alert.setHeaderText("Back to menu");
@@ -145,6 +147,7 @@ public class GameView {
                 TileView tileView = new TileView(boardModel.getTopTile(pos), centerX, centerY, side, boardModel.getStackSize(pos));
                 ImageView hex = tileView.getHex();
                 hex.setOnMouseClicked(event -> gameController.triggerBoardAction(pos, event));
+                hex.setCursor(Cursor.HAND);
 
                 Group fullTile = new Group();
                 if(boardModel.getTopTile(pos) instanceof TilePlaceholder && boardModel.getStackSize(pos) > 1) {
@@ -211,6 +214,7 @@ public class GameView {
             TileView tileView = new TileView(tile, 100, 100, side, 1);
             ImageView hex = tileView.getHex();
             hex.setOnMouseClicked(event -> gameController.triggerBoardAction(tile.getPosition(), event));
+            hex.setCursor(Cursor.HAND);
 
             Group fullTile = new Group();
             fullTile.getChildren().add(hex);

@@ -2,6 +2,7 @@ package gameofbugs.view;
 
 import gameofbugs.controller.SceneController;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -48,15 +49,19 @@ public class MenuView {
 
         startButtonView = new ImageView(startButton);
         startButtonView.setOnMouseClicked(event -> sceneController.triggerGameStart());
+        startButtonView.setCursor(Cursor.HAND);
 
         tutorialButtonView = new ImageView(tutorialButton);
         tutorialButtonView.setOnMouseClicked(event -> sceneController.triggerInstruction());
+        tutorialButtonView.setCursor(Cursor.HAND);
 
         optionsButtonView = new ImageView(optionsButton);
         optionsButtonView.setOnMouseClicked(event -> sceneController.triggerSettings());
+        optionsButtonView.setCursor(Cursor.HAND);
 
         exitButtonView = new ImageView(exitButton);
         exitButtonView.setOnMouseClicked(event -> System.exit(0));
+        exitButtonView.setCursor(Cursor.HAND);
 
 
         Button startGameButton = new Button("Start Game");

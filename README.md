@@ -47,3 +47,7 @@ Pająk podczas jednej tury porusza się wokół roju o dokładnie trzy pola, dod
 **Biedronka** _(komunikat - **CME**)_
 
 Biedronka jest dodawana do gry tak samo jak pozostałe płytki. Podczas ruchu biedronka porusza się o trzy pola - dwa na górze roju oraz jedno w dół (ostatni etap ruchu to zejście z roju). Dzięki temu może wchodzić w miejsca otoczone ze wszystkich stron.
+
+**Komar** _(komunikat - **QUE**)_
+
+Komar jako jedyny owad nie posiada własnego sposobu poruszania. Zamiast tego za każdym razem przejmuje zdolność ruchu jednego ze swoich sąsiadów (jednak gdy jest na górze roju, porusza się jak żuk). Należy pamiętać, że komar sam w sobie nie posiada żadnego sposobu poruszania, zatem gdy jego jedynym sąsiadem jest inny komar, to nie może wykonać ruchu. 

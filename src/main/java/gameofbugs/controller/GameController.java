@@ -13,8 +13,6 @@ public class GameController {
     }
 
     public void triggerBoardAction(Position pos, MouseEvent event) {
-        System.out.println("instructionController.triggerAction(new Position("+pos.getX()+", "+pos.getY()+"));");
-
         if(event.getButton() == MouseButton.PRIMARY)
             gameModel.takeAction(pos);
         gameModel.showStack(pos);

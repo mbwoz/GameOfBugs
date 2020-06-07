@@ -50,15 +50,24 @@ public abstract class InstructionView {
         textPane.setMinWidth(350);
         whiteSideboard.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         VBox.setMargin(textPane, new Insets(10, 10, 10, 10));
+        whiteSideboard.setStyle("-fx-background-color: lightgrey, -fx-control-inner-background; " +
+                "-fx-background-insets: 0, 1; " +
+                "-fx-padding: 1;");
 
         this.boardLayout = new ScrollPane();
         boardLayout.setHvalue(0.5);
         boardLayout.setVvalue(0.5);
         boardLayout.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         boardLayout.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        boardLayout.setStyle("-fx-background-color: lightgrey, -fx-control-inner-background; " +
+                "-fx-background-insets: 0, 1; " +
+                "-fx-padding: 1;");
 
         this.stackLayout = new ScrollPane();
         stackLayout.setMinViewportHeight(150);
+        stackLayout.setStyle("-fx-background-color: lightgrey, -fx-control-inner-background; " +
+                "-fx-background-insets: 0, 1; " +
+                "-fx-padding: 1;");
 
         this.topBarLayout = setTopBar();
         topBarLayout.setMinHeight(50);

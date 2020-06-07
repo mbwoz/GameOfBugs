@@ -42,6 +42,12 @@ public class GameView {
         blackSideboard.setMinViewportWidth(300);
         whiteSideboard.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         blackSideboard.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        whiteSideboard.setStyle("-fx-background-color: lightgrey, -fx-control-inner-background; " +
+                "-fx-background-insets: 0, 1; " +
+                "-fx-padding: 1;");
+        blackSideboard.setStyle("-fx-background-color: lightgrey, -fx-control-inner-background; " +
+                "-fx-background-insets: 0, 1; " +
+                "-fx-padding: 1;");
 
         this.topBarLayout = new HBox();
         topBarLayout.setMinHeight(50);
@@ -52,9 +58,15 @@ public class GameView {
         boardLayout.setVvalue(0.5);
         boardLayout.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         boardLayout.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        boardLayout.setStyle("-fx-background-color: lightgrey, -fx-control-inner-background; " +
+                "-fx-background-insets: 0, 1; " +
+                "-fx-padding: 1;");
 
         this.stackLayout = new ScrollPane();
         stackLayout.setMinViewportHeight(150);
+        stackLayout.setStyle("-fx-background-color: lightgrey, -fx-control-inner-background; " +
+                "-fx-background-insets: 0, 1; " +
+                "-fx-padding: 1;");
 
         VBox boardArea = new VBox();
         boardArea.getChildren().addAll(topBarLayout, boardLayout, stackLayout);

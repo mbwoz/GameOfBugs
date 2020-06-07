@@ -12,13 +12,17 @@ import gameofbugs.model.tiles.TilePlaceholder;
 import gameofbugs.view.TileView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -28,10 +32,16 @@ public abstract class InstructionView {
     protected InstructionSceneController instructionSceneController;
 
     private ScrollPane whiteSideboard;
-    protected VBox textPane;
+    private VBox textPane;
     private ScrollPane boardLayout;
     private ScrollPane stackLayout;
     private HBox topBarLayout;
+
+    protected ImageView backButton;
+    protected ImageView nextButton;
+    protected ImageView prevButton;
+
+    protected Text instructionText;
 
     public InstructionView(HBox root) {
         this.whiteSideboard = new ScrollPane();
@@ -58,12 +68,13 @@ public abstract class InstructionView {
         VBox.setVgrow(boardLayout, Priority.ALWAYS);
 
         VBox controlArea = setRightBox();
+        setButtons();
 
         root.getChildren().clear();
         root.getChildren().addAll(whiteSideboard, boardArea, controlArea);
         HBox.setHgrow(boardArea, Priority.ALWAYS);
 
-        drawText();
+        setTextPane();
     }
 
     public void addController(InstructionController instructionController, InstructionSceneController instructionSceneController) {
@@ -205,12 +216,91 @@ public abstract class InstructionView {
             whiteSideboard.setContent(vb);
     }
 
-    protected abstract void drawText ();
+    protected  VBox setRightBox() {
+        VBox controlArea = new VBox();
+        Image image = null;
+        try {
+            image = new Image(new FileInputStream("src/main/resources/InstructionNextButton.png"));
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        nextButton = new ImageView(image);
+        nextButton.setTranslateY(-40);
+        nextButton.setCursor(Cursor.HAND);
 
-    protected abstract VBox setRightBox();
+        try {
+            image = new Image(new FileInputStream("src/main/resources/InstructionPrevButton.png"));
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        prevButton = new ImageView(image);
+        prevButton.setTranslateY(-130);
+        prevButton.setCursor(Cursor.HAND);
+
+        try {
+            image = new Image(new FileInputStream("src/main/resources/InstructionBackButton.png"));
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        backButton = new ImageView(image);
+        backButton.setTranslateY(-220);
+        backButton.setCursor(Cursor.HAND);
+
+
+        backButton.setOnMouseClicked(event -> instructionSceneController.triggerMenu());
+
+        VBox buttons = new VBox();
+        VBox text = new VBox();
+        text.getChildren().addAll(textPane);
+
+
+        buttons.getChildren().addAll(nextButton, prevButton, backButton);
+
+        text.setMinHeight(650);
+        buttons.setMaxHeight(150);
+        buttons.setAlignment(Pos.CENTER);
+        controlArea.getChildren().addAll(text, buttons);
+        controlArea.setAlignment(Pos.TOP_CENTER);
+
+        return controlArea;
+    }
+
+    public void setTextPane() {
+        Font f = null;
+        try {
+            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 24);
+        }
+        catch (FileNotFoundException e) {e.printStackTrace();}
+        instructionText = new Text();
+        setInstructionText();
+
+        instructionText.setFont(f);
+        instructionText.setWrappingWidth(350);
+        textPane.getChildren().add(instructionText);
+    }
+
+    public HBox setTopBar() {
+        HBox topBar = new HBox();
+        Label text = setTopLabel();
+        Font f = null;
+        try {
+            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 14);
+        }
+        catch (FileNotFoundException e) {e.printStackTrace();}
+        text.setFont(f);
+        topBar.getChildren().clear();
+        topBar.getChildren().addAll(text);
+        topBar.setAlignment(Pos.CENTER);
+        HBox.setHgrow(text, Priority.ALWAYS);
+        return topBar;
+    }
+
+    protected abstract Label setTopLabel();
+
+    protected abstract void setInstructionText();
+
+    protected abstract void setButtons();
 
     protected abstract void setBoard();
-
-    protected abstract HBox setTopBar();
 
 }

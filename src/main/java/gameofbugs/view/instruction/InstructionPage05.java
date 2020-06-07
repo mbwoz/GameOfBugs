@@ -1,18 +1,8 @@
 package gameofbugs.view.instruction;
 
 import gameofbugs.model.Position;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class InstructionPage05 extends InstructionView {
     public InstructionPage05(HBox root) {
@@ -20,62 +10,24 @@ public class InstructionPage05 extends InstructionView {
     }
 
     @Override
-    protected void drawText() {
-        Font f = null;
-        try {
-            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 24);
-        }
-        catch (FileNotFoundException e) {e.printStackTrace();}
-        Text text = new Text();
-        text.setText(
+    protected void setInstructionText() {
+        instructionText.setText(
                 "OK is your most important piece. Because of that, it doesn`t move really well. OK can move only one space per turn.\n" +
-                "\n" +
-                "Try to move your OK!\n");
-        text.setFont(f);
-        text.setWrappingWidth(350);
-        textPane.getChildren().add(text);
+                        "\n" +
+                        "Try to move your OK!\n");
     }
 
     @Override
-    protected VBox setRightBox() {
-        VBox controlArea = new VBox();
-        Button nextPageButton = new Button("Next page");
-        nextPageButton.setOnMouseClicked(event -> instructionSceneController.triggerPage(6));
-
-        Button prevPageButton = new Button("Previous page");
-        prevPageButton.setOnMouseClicked(event -> instructionSceneController.triggerPage(4));
-
-        Button backToMenuButton = new Button("Back to menu");
-        backToMenuButton.setOnMouseClicked(event -> instructionSceneController.triggerMenu());
-
-        VBox buttons = new VBox();
-        VBox text = new VBox();
-        text.getChildren().addAll(textPane);
-
-        nextPageButton.setMinWidth(100);
-        prevPageButton.setMinWidth(100);
-        backToMenuButton.setMinWidth(100);
-
-        buttons.getChildren().addAll(nextPageButton, prevPageButton, backToMenuButton);
-
-        text.setMinHeight(650);
-        buttons.setMaxHeight(150);
-        buttons.setAlignment(Pos.CENTER);
-        controlArea.getChildren().addAll(text, buttons);
-        controlArea.setAlignment(Pos.TOP_CENTER);
-
-        return controlArea;
+    protected void setButtons() {
+        nextButton.setOnMouseClicked(event -> instructionSceneController.triggerPage(6));
+        backButton.setOnMouseClicked(event -> instructionSceneController.triggerMenu());
+        prevButton.setOnMouseClicked(event -> instructionSceneController.triggerPage(4));
     }
 
     @Override
-    protected HBox setTopBar() {
-        HBox topBar = new HBox();
+    protected Label setTopLabel(){
         Label text = new Label("OK Status");
-        topBar.getChildren().clear();
-        topBar.getChildren().addAll(text);
-        topBar.setAlignment(Pos.CENTER);
-        HBox.setHgrow(text, Priority.ALWAYS);
-        return topBar;
+        return text;
     }
 
     @Override

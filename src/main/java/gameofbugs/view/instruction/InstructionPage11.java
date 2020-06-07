@@ -1,18 +1,8 @@
 package gameofbugs.view.instruction;
 
 import gameofbugs.model.Position;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class InstructionPage11 extends InstructionView {
     public InstructionPage11(HBox root) {
@@ -20,65 +10,24 @@ public class InstructionPage11 extends InstructionView {
     }
 
     @Override
-    protected void drawText() {
-        Font f = null;
-        try {
-            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 24);
-        }
-        catch (FileNotFoundException e) {e.printStackTrace();}
-        Text text = new Text();
-        text.setText(
+    protected void setInstructionText() {
+        instructionText.setText(
                 "QUE doesn`t have its own moves. It copies moves from his neighbors. Additionally, when QUE is on top, it can move only like MEM and when the only neighbor of QUE is QUE it can`t move anywhere.\n" +
-                "\n" +
-                "Check how it works!\n");
-        text.setFont(f);
-        text.setWrappingWidth(350);
-        textPane.getChildren().add(text);
+                        "\n" +
+                        "Check how it works!\n");
     }
 
     @Override
-    protected VBox setRightBox() {
-        VBox controlArea = new VBox();
-
-        Button nextPageButton = new Button("Next Page");
-        nextPageButton.setDisable(true);
-
-
-
-        Button prevPageButton = new Button("Previous page");
-        prevPageButton.setOnMouseClicked(event -> instructionSceneController.triggerPage(10));
-
-        Button backToMenuButton = new Button("Back to menu");
-        backToMenuButton.setOnMouseClicked(event -> instructionSceneController.triggerMenu());
-
-        nextPageButton.setMinWidth(100);
-        prevPageButton.setMinWidth(100);
-        backToMenuButton.setMinWidth(100);
-
-        VBox buttons = new VBox();
-        VBox text = new VBox();
-        text.getChildren().addAll(textPane);
-
-        buttons.getChildren().addAll(nextPageButton, prevPageButton, backToMenuButton);
-
-        text.setMinHeight(650);
-        buttons.setMaxHeight(150);
-        buttons.setAlignment(Pos.CENTER);
-        controlArea.getChildren().addAll(text, buttons);
-        controlArea.setAlignment(Pos.TOP_CENTER);
-
-        return controlArea;
+    protected void setButtons() {
+        nextButton.setOnMouseClicked(event -> {});
+        backButton.setOnMouseClicked(event -> instructionSceneController.triggerMenu());
+        prevButton.setOnMouseClicked(event -> instructionSceneController.triggerPage(10));
     }
 
     @Override
-    protected HBox setTopBar() {
-        HBox topBar = new HBox();
+    protected Label setTopLabel(){
         Label text = new Label("QUE Status");
-        topBar.getChildren().clear();
-        topBar.getChildren().addAll(text);
-        topBar.setAlignment(Pos.CENTER);
-        HBox.setHgrow(text, Priority.ALWAYS);
-        return topBar;
+        return text;
     }
 
     @Override

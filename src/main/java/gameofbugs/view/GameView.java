@@ -17,7 +17,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -99,6 +101,15 @@ public class GameView {
             turnInfo += " - Place OK on board";
 
         Label labelInfo = new Label(turnInfo);
+        Font f = null;
+        try {
+            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 14);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        if(f != null)
+            labelInfo.setFont(f);
+
         StackPane infoPane = new StackPane(labelInfo);
         infoPane.setAlignment(Pos.CENTER);
 
@@ -112,6 +123,15 @@ public class GameView {
 
     void createExit() {
         Button topBarExitButton = new Button("Exit");
+        Font f = null;
+        try {
+            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 14);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        if(f != null)
+            topBarExitButton.setFont(f);
+
         topBarExitButton.setCursor(Cursor.HAND);
         topBarExitButton.setOnMouseClicked(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit the game?", ButtonType.YES, ButtonType.NO);

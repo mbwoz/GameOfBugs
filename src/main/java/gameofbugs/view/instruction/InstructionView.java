@@ -10,6 +10,7 @@ import gameofbugs.model.tiles.TileHex;
 import gameofbugs.model.tiles.TileModel;
 import gameofbugs.model.tiles.TilePlaceholder;
 import gameofbugs.view.TileView;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -24,18 +25,18 @@ public abstract class InstructionView {
     protected InstructionSceneController instructionSceneController;
 
     private ScrollPane whiteSideboard;
-    protected ScrollPane textPane;
+    protected VBox textPane;
     private ScrollPane boardLayout;
     private ScrollPane stackLayout;
     private HBox topBarLayout;
 
     public InstructionView(HBox root) {
         this.whiteSideboard = new ScrollPane();
-        this.textPane = new ScrollPane();
+        this.textPane = new VBox();
         whiteSideboard.setMinViewportWidth(300);
-        textPane.setMinViewportWidth(350);
+        textPane.setMinWidth(350);
         whiteSideboard.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        textPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        VBox.setMargin(textPane, new Insets(10, 10, 10, 10));
 
         this.boardLayout = new ScrollPane();
         boardLayout.setHvalue(0.5);

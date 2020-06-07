@@ -38,7 +38,7 @@ public class InstructionPage01 extends InstructionView {
 
         buttons.getChildren().addAll(nextPageButton, prevPageButton, backToMenuButton);
 
-        text.setMinHeight(600);
+        text.setMinHeight(650);
         buttons.setMaxHeight(150);
         buttons.setAlignment(Pos.CENTER);
         controlArea.getChildren().addAll(text, buttons);
@@ -72,7 +72,7 @@ public class InstructionPage01 extends InstructionView {
                 "Stack Bar – You can see here all pieces placed on one position (we will discuss it later)\n");
         text.setFont(f);
         text.setWrappingWidth(350);
-        textPane.setContent(text);
+        textPane.getChildren().add(text);
 
     }
 

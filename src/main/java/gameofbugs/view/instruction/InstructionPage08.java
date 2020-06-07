@@ -33,7 +33,7 @@ public class InstructionPage08 extends InstructionView {
                 "Check TLE moves!\n");
         text.setFont(f);
         text.setWrappingWidth(350);
-        textPane.setContent(text);
+        textPane.getChildren().add(text);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class InstructionPage08 extends InstructionView {
 
         buttons.getChildren().addAll(nextPageButton, prevPageButton, backToMenuButton);
 
-        text.setMinHeight(600);
+        text.setMinHeight(650);
         buttons.setMaxHeight(150);
         buttons.setAlignment(Pos.CENTER);
         controlArea.getChildren().addAll(text, buttons);

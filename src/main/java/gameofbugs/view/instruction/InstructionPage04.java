@@ -36,7 +36,7 @@ public class InstructionPage04 extends InstructionView {
                 "Try to move or place a piece. It`s not possible, because this is the last turn to place OK\n");
         text.setFont(f);
         text.setWrappingWidth(350);
-        textPane.setContent(text);
+        textPane.getChildren().add(text);
 
     }
 
@@ -62,7 +62,7 @@ public class InstructionPage04 extends InstructionView {
 
         buttons.getChildren().addAll(nextPageButton, prevPageButton, backToMenuButton);
 
-        text.setMinHeight(600);
+        text.setMinHeight(650);
         buttons.setMaxHeight(150);
         buttons.setAlignment(Pos.CENTER);
         controlArea.getChildren().addAll(text, buttons);

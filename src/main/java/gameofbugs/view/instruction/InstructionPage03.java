@@ -33,7 +33,7 @@ public class InstructionPage03 extends InstructionView {
                 "Try to move some of your pieces. Click on one of your piece and then choose one of the spotted places on the Board.\n");
         text.setFont(f);
         text.setWrappingWidth(350);
-        textPane.setContent(text);
+        textPane.getChildren().add(text);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class InstructionPage03 extends InstructionView {
 
         buttons.getChildren().addAll(nextPageButton, prevPageButton, backToMenuButton);
 
-        text.setMinHeight(600);
+        text.setMinHeight(650);
         buttons.setMaxHeight(150);
         buttons.setAlignment(Pos.CENTER);
         controlArea.getChildren().addAll(text, buttons);

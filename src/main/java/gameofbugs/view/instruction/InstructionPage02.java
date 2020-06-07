@@ -33,7 +33,7 @@ public class InstructionPage02 extends InstructionView {
                 "Try to place your OK from Sideboard. To do this, click on your OK from Sideboard and then choose one of the spotted places on board.\n");
         text.setFont(f);
         text.setWrappingWidth(350);
-        textPane.setContent(text);
+        textPane.getChildren().add(text);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class InstructionPage02 extends InstructionView {
 
         buttons.getChildren().addAll(nextPageButton, prevPageButton, backToMenuButton);
 
-        text.setMinHeight(600);
+        text.setMinHeight(650);
         buttons.setMaxHeight(150);
         buttons.setAlignment(Pos.CENTER);
         controlArea.getChildren().addAll(text, buttons);

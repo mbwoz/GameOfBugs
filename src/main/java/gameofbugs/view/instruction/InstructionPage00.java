@@ -1,6 +1,7 @@
 package gameofbugs.view.instruction;
 
 import gameofbugs.model.Position;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -32,13 +33,14 @@ public class InstructionPage00 extends InstructionView {
         VBox text = new VBox();
         text.getChildren().addAll(textPane);
 
+
         nextPageButton.setMinWidth(100);
         prevPageButton.setMinWidth(100);
         backToMenuButton.setMinWidth(100);
 
         buttons.getChildren().addAll(nextPageButton, prevPageButton, backToMenuButton);
 
-        text.setMinHeight(600);
+        text.setMinHeight(650);
         buttons.setMaxHeight(150);
         buttons.setAlignment(Pos.CENTER);
         controlArea.getChildren().addAll(text, buttons);
@@ -63,7 +65,7 @@ public class InstructionPage00 extends InstructionView {
                 "Look at the Board. Black player`s OK is surrounded so White Player wins!\n");
         text.setFont(f);
         text.setWrappingWidth(350);
-        textPane.setContent(text);
+        textPane.getChildren().add(text);
     }
 
     protected void setBoard() {

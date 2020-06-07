@@ -43,7 +43,7 @@ public abstract class InstructionView {
 
     protected Text instructionText;
 
-    public InstructionView(HBox root) {
+    public InstructionView(HBox root, int pageNumber) {
         this.whiteSideboard = new ScrollPane();
         this.textPane = new VBox();
         whiteSideboard.setMinViewportWidth(300);
@@ -76,7 +76,7 @@ public abstract class InstructionView {
         boardArea.getChildren().addAll(topBarLayout, boardLayout, stackLayout);
         VBox.setVgrow(boardLayout, Priority.ALWAYS);
 
-        VBox controlArea = setRightBox();
+        VBox controlArea = setRightBox(pageNumber);
         setButtons();
 
         root.getChildren().clear();
@@ -220,7 +220,7 @@ public abstract class InstructionView {
             whiteSideboard.setContent(vb);
     }
 
-    protected  VBox setRightBox() {
+    protected  VBox setRightBox(int pageNumber) {
         VBox controlArea = new VBox();
 
         Image image = new Image(getClass().getResourceAsStream("/InstructionNextButton.png"));
@@ -238,13 +238,26 @@ public abstract class InstructionView {
         backButton.setTranslateY(-220);
         backButton.setCursor(Cursor.HAND);
 
+        if(pageNumber == 0) {
+            backButton.setTranslateY(-130);
+        }
+
         backButton.setOnMouseClicked(event -> instructionSceneController.triggerMenu());
 
         VBox buttons = new VBox();
         VBox text = new VBox();
         text.getChildren().addAll(textPane);
 
-        buttons.getChildren().addAll(nextButton, prevButton, backButton);
+        if(pageNumber == 0) {
+            backButton.setTranslateY(-130);
+            buttons.getChildren().addAll(nextButton, backButton);
+        } else if(pageNumber == 11) {
+            prevButton.setTranslateY(-40);
+            backButton.setTranslateY(-130);
+            buttons.getChildren().addAll(prevButton, backButton);
+        } else  {
+            buttons.getChildren().addAll(nextButton, prevButton, backButton);
+        }
 
         text.setMinHeight(650);
         buttons.setMaxHeight(150);

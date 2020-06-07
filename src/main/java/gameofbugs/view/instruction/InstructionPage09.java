@@ -7,7 +7,7 @@ import javafx.scene.layout.HBox;
 
 public class InstructionPage09 extends InstructionView {
     public InstructionPage09(HBox root) {
-        super(root);
+        super(root, 9);
     }
 
     @Override

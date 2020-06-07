@@ -6,7 +6,7 @@ import javafx.scene.layout.HBox;
 
 public class InstructionPage06 extends InstructionView {
     public InstructionPage06(HBox root) {
-        super(root);
+        super(root, 6);
     }
 
     @Override

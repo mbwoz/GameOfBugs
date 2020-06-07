@@ -6,7 +6,7 @@ import javafx.scene.layout.HBox;
 
 
 public class InstructionPage01 extends InstructionView {
-    public InstructionPage01(HBox root) { super(root); }
+    public InstructionPage01(HBox root) { super(root, 1); }
 
     @Override
     protected void setButtons() {

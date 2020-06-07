@@ -25,11 +25,11 @@ public class InstructionDriver {
         this.instructionSceneController = new InstructionSceneController(this);
         this.sceneController = sceneController;
         this.settings = new Settings();
-        queBefore = settings.isQUE;
-        cmeBefore = settings.isCME;
+        queBefore = Settings.isQUE;
+        cmeBefore = Settings.isCME;
 
-        settings.isCME = true;
-        settings.isQUE = true;
+        Settings.isCME = true;
+        Settings.isQUE = true;
 
         //Pages to add!
         instructionPages = new ArrayList<>();
@@ -48,8 +48,8 @@ public class InstructionDriver {
     }
 
     public void launchMenu() {
-        settings.isCME = cmeBefore;
-        settings.isQUE = queBefore;
+        Settings.isCME = cmeBefore;
+        Settings.isQUE = queBefore;
 
         MenuView menuView = new MenuView(root, sceneController);
         menuView.displayGameStart();
@@ -61,7 +61,9 @@ public class InstructionDriver {
         try {
             instructionView = (InstructionView) instructionPages.get(pageNumber).getConstructor(HBox.class).newInstance(root);
         }
-        catch (Throwable e) { System.out.println("Changing instruction pages problem");}
+        catch (Throwable e) {
+            System.out.println("Changing instruction pages problem");
+        }
 
         InstructionModel instructionModel = new InstructionModel(instructionView);
         InstructionController instructionController = new InstructionController(instructionModel);

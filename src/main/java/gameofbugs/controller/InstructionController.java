@@ -1,6 +1,5 @@
 package gameofbugs.controller;
 
-import gameofbugs.model.GameModel;
 import gameofbugs.model.InstructionModel;
 import gameofbugs.model.Position;
 import javafx.scene.input.MouseButton;

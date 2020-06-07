@@ -28,5 +28,7 @@ public class SceneController {
         Platform.runLater(new Thread(() -> driver.launchGameEnd(winner)));
     }
 
-    public void triggerSettings() { Platform.runLater(new Thread(() -> driver.launchSettings()));}
+    public void triggerSettings() {
+        Platform.runLater(new Thread(() -> driver.launchSettings()));
+    }
 }

@@ -12,7 +12,6 @@ public class TileView {
     private TileModel tile;
 
     private double side;
-    private double height;
     private double centerX;
     private double centerY;
     private int stackSize;

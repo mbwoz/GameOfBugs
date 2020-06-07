@@ -15,19 +15,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class SettingsView {
     private HBox root;
     private SceneController sceneController;
-    private Settings settings;
 
     public SettingsView(HBox root, SceneController sceneController) {
         this.root = root;
         this.sceneController = sceneController;
-        this.settings = new Settings();
     }
 
     public void displaySettings() {
         Group group = new Group();
 
-        AtomicBoolean isCme = new AtomicBoolean(settings.isCME);
-        AtomicBoolean isQue = new AtomicBoolean(settings.isQUE);
+        AtomicBoolean isCme = new AtomicBoolean(Settings.isCME);
+        AtomicBoolean isQue = new AtomicBoolean(Settings.isQUE);
 
         Image background = null;
         Image backButton = null;
@@ -58,10 +56,8 @@ public class SettingsView {
 
         backButtonView.setOnMouseClicked(event -> {
 
-            if(isQue.get()) settings.isQUE = true;
-            else settings.isQUE = false;
-            if(isCme.get()) settings.isCME = true;
-            else settings.isCME = false;
+            Settings.isQUE = isQue.get();
+            Settings.isCME = isCme.get();
 
             sceneController.triggerMenu();
         }

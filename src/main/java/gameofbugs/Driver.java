@@ -1,11 +1,9 @@
 package gameofbugs;
 
 import gameofbugs.controller.GameController;
-import gameofbugs.controller.InstructionController;
 import gameofbugs.controller.SceneController;
 import gameofbugs.model.Color;
 import gameofbugs.model.GameModel;
-import gameofbugs.model.InstructionModel;
 import gameofbugs.view.*;
 import javafx.scene.layout.HBox;
 

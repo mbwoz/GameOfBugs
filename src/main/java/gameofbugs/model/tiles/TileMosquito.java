@@ -5,7 +5,6 @@ import gameofbugs.model.Color;
 import gameofbugs.model.Position;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -30,6 +29,9 @@ public class TileMosquito extends TileModel {
                 e.printStackTrace();
             }
 
+            if(nextTile == null)
+                return new HashSet<>();
+
             this.removeTop();
             board.addNewTile(nextTile);
 
@@ -50,11 +52,14 @@ public class TileMosquito extends TileModel {
             TileModel nextTile = null;
 
             try {
-                Constructor tileConstructor = tile.getClass().getConstructor(Color.class, Position.class);
-                nextTile = (TileModel) tileConstructor.newInstance(color, position);
+                Constructor<? extends TileModel> tileConstructor = tile.getClass().getConstructor(Color.class, Position.class);
+                nextTile = tileConstructor.newInstance(color, position);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            if(nextTile == null)
+                continue;
 
             this.removeTop();
             board.addNewTile(nextTile);

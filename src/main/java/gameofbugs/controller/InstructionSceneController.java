@@ -1,8 +1,6 @@
 package gameofbugs.controller;
 
-import gameofbugs.Driver;
 import gameofbugs.InstructionDriver;
-import gameofbugs.model.Color;
 import javafx.application.Platform;
 
 public class InstructionSceneController {
@@ -16,6 +14,7 @@ public class InstructionSceneController {
         Platform.runLater(new Thread(() -> instructionDriver.launchMenu()));
     }
 
-    public void triggerPage(int pageNumber) { Platform.runLater(new Thread(() -> instructionDriver.launchPage(pageNumber))); }
-
+    public void triggerPage(int pageNumber) {
+        Platform.runLater(new Thread(() -> instructionDriver.launchPage(pageNumber)));
+    }
 }

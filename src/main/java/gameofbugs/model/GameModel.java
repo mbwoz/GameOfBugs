@@ -76,10 +76,14 @@ public class GameModel {
             board.addNewTile(currentTile);
             sideboard.decrementAndGetTileCnt(lastPosition);
 
+            endGameCondition();
+
             // Update full
             gameView.updateBoardState(board, sideboard, currentPlayer);
         } else {
             board.moveTile(lastPosition, pos);
+
+            endGameCondition();
 
             // Update board
             gameView.updateBoardState(board);
@@ -91,7 +95,6 @@ public class GameModel {
             gameView.updateBoardState(board);
         }
 
-        endGameCondition();
         nextTurn();
     }
 

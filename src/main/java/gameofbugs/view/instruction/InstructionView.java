@@ -238,10 +238,6 @@ public abstract class InstructionView {
         backButton.setTranslateY(-220);
         backButton.setCursor(Cursor.HAND);
 
-        if(pageNumber == 0) {
-            backButton.setTranslateY(-130);
-        }
-
         backButton.setOnMouseClicked(event -> instructionSceneController.triggerMenu());
 
         VBox buttons = new VBox();

@@ -13,9 +13,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
 import javafx.scene.image.ImageView;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class GameView {
@@ -219,9 +223,19 @@ public class GameView {
             Group fullTile = new Group();
             fullTile.getChildren().add(hex);
 
-            Label label = new Label(String.valueOf(tile.getCnt()));
+            String tileCount = "src/main/resources/TileCount" + String.valueOf(tile.getCnt()) + ".png";
+            Image tileNumber = null;
+            try {
+                tileNumber = new Image(new FileInputStream(tileCount));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
 
-            hb.getChildren().addAll(fullTile, label);
+            ImageView tileNumberView = new ImageView(tileNumber);
+            tileNumberView.setFitHeight(side);
+            tileNumberView.setPreserveRatio(true);
+
+            hb.getChildren().addAll(fullTile, tileNumberView);
             vb.getChildren().add(hb);
         }
 

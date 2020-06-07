@@ -10,6 +10,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class InstructionPage00 extends InstructionView {
     public InstructionPage00(HBox root) { super(root); }
 
@@ -43,14 +47,21 @@ public class InstructionPage00 extends InstructionView {
         return controlArea;
     }
 
-    protected void drawText () {
+    protected void drawText ()  {
+        Font f = null;
+        try {
+            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 24);
+        }
+        catch (FileNotFoundException e) {e.printStackTrace();}
+
+        System.out.println("Font: " + f.toString());
         Text text = new Text();
         text.setText("What is GameOfBugs and how to win?\n" +
                 "\n" +
                 "GameOfBugs is a two player turn-based game. During the game Player controls hive of different kinds of bugs (our beloved Satori status). The game goal is to totally surround opponent`s OK. Once it is surrounded, game ends.\n" +
                 "\n" +
                 "Look at the Board. Black player`s OK is surrounded so White Player wins!\n");
-        text.setFont(new Font(24));
+        text.setFont(f);
         text.setWrappingWidth(350);
         textPane.setContent(text);
     }

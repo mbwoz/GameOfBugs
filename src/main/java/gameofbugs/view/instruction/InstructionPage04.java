@@ -10,6 +10,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class InstructionPage04 extends InstructionView {
     public InstructionPage04(HBox root) {
         super(root);
@@ -17,6 +21,11 @@ public class InstructionPage04 extends InstructionView {
 
     @Override
     protected void drawText() {
+        Font f = null;
+        try {
+            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 24);
+        }
+        catch (FileNotFoundException e) {e.printStackTrace();}
         Text text = new Text();
         text.setText(
                 "During placing or moving you have to remember about three important rules.\n\n" +
@@ -25,7 +34,7 @@ public class InstructionPage04 extends InstructionView {
                 "Rule no. 3: If a piece you want to move is the only connection between two parts of Hive, you cannot move it.\n" +
                 "\n" +
                 "Try to move or place a piece. It`s not possible, because this is the last turn to place OK\n");
-        text.setFont(new Font(24));
+        text.setFont(f);
         text.setWrappingWidth(350);
         textPane.setContent(text);
 

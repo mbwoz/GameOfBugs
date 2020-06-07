@@ -10,6 +10,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class InstructionPage11 extends InstructionView {
     public InstructionPage11(HBox root) {
         super(root);
@@ -17,12 +21,17 @@ public class InstructionPage11 extends InstructionView {
 
     @Override
     protected void drawText() {
+        Font f = null;
+        try {
+            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 24);
+        }
+        catch (FileNotFoundException e) {e.printStackTrace();}
         Text text = new Text();
         text.setText(
                 "QUE doesn`t have its own moves. It copies moves from his neighbors. Additionally, when QUE is on top, it can move only like MEM and when the only neighbor of QUE is QUE it can`t move anywhere.\n" +
                 "\n" +
                 "Check how it works!\n");
-        text.setFont(new Font(24));
+        text.setFont(f);
         text.setWrappingWidth(350);
         textPane.setContent(text);
     }
@@ -45,7 +54,7 @@ public class InstructionPage11 extends InstructionView {
         nextPageButton.setMinWidth(100);
         prevPageButton.setMinWidth(100);
         backToMenuButton.setMinWidth(100);
-        
+
         VBox buttons = new VBox();
         VBox text = new VBox();
         text.getChildren().addAll(textPane);

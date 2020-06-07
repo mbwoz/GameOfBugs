@@ -10,6 +10,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class InstructionPage01 extends InstructionView {
     public InstructionPage01(HBox root) { super(root); }
 
@@ -55,13 +59,18 @@ public class InstructionPage01 extends InstructionView {
     }
 
     protected void drawText () {
+        Font f = null;
+        try {
+            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 24);
+        }
+        catch (FileNotFoundException e) {e.printStackTrace();}
         Text text = new Text();
         text.setText(
                 "The game itself looks very similar to the instruction. You will be able to see four boxes: Board, Sideboards (for both players) and Stack Bar. \n" +
                 "Board – Here you will see all pieces used in the game\n" +
                 "Sideboard – Here are your pieces that haven`t been placed yet\n" +
                 "Stack Bar – You can see here all pieces placed on one position (we will discuss it later)\n");
-        text.setFont(new Font(24));
+        text.setFont(f);
         text.setWrappingWidth(350);
         textPane.setContent(text);
 

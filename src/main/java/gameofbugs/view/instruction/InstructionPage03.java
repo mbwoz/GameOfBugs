@@ -10,6 +10,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class InstructionPage03 extends InstructionView {
     public InstructionPage03(HBox root) {
         super(root);
@@ -17,12 +21,17 @@ public class InstructionPage03 extends InstructionView {
 
     @Override
     protected void drawText() {
+        Font f = null;
+        try {
+            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 24);
+        }
+        catch (FileNotFoundException e) {e.printStackTrace();}
         Text text = new Text();
         text.setText(
                 "Instead of putting out a new piece, the Player can decide to move one of his pieces on the Board. Each piece has a different move options – we will discuss it on the next pages.\n" +
                 "\n" +
                 "Try to move some of your pieces. Click on one of your piece and then choose one of the spotted places on the Board.\n");
-        text.setFont(new Font(24));
+        text.setFont(f);
         text.setWrappingWidth(350);
         textPane.setContent(text);
     }

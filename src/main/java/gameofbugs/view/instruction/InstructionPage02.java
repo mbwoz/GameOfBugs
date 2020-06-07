@@ -9,6 +9,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class InstructionPage02 extends InstructionView {
     public InstructionPage02(HBox root) {
         super(root);
@@ -16,13 +20,18 @@ public class InstructionPage02 extends InstructionView {
 
     @Override
     protected void drawText() {
+        Font f = null;
+        try {
+            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 24);
+        }
+        catch (FileNotFoundException e) {e.printStackTrace();}
         Text text = new Text();
         text.setText(
                 "During his turn, Player can place a new piece or move one on the Board.\n" +
                 "When Player decides to place a new piece from Sideboard, he can only choose such a place, that is connected only to his pieces. The only exception for this rule is the first turn, when for the first player the board is empty and for the second player the board has only opponent`s piece.\n" +
                 "\n" +
                 "Try to place your OK from Sideboard. To do this, click on your OK from Sideboard and then choose one of the spotted places on board.\n");
-        text.setFont(new Font(24));
+        text.setFont(f);
         text.setWrappingWidth(350);
         textPane.setContent(text);
     }

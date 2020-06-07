@@ -10,6 +10,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class InstructionPage07 extends InstructionView {
     public InstructionPage07(HBox root) {
         super(root);
@@ -17,12 +21,17 @@ public class InstructionPage07 extends InstructionView {
 
     @Override
     protected void drawText() {
+        Font f = null;
+        try {
+            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 24);
+        }
+        catch (FileNotFoundException e) {e.printStackTrace();}
         Text text = new Text();
         text.setText(
                 "RTE jumps from its position over any – but at least one! – number of pieces to the closest free place in a straight line. \n" +
                 "\n" +
                 "Check how your RTE jumps!\n");
-        text.setFont(new Font(24));
+        text.setFont(f);
         text.setWrappingWidth(350);
         textPane.setContent(text);
     }

@@ -10,6 +10,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class InstructionPage10 extends InstructionView {
     public InstructionPage10(HBox root) {
         super(root);
@@ -17,12 +21,17 @@ public class InstructionPage10 extends InstructionView {
 
     @Override
     protected void drawText() {
+        Font f = null;
+        try {
+            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 24);
+        }
+        catch (FileNotFoundException e) {e.printStackTrace();}
         Text text = new Text();
         text.setText(
                 "CME moves exactly three spaces like TLE but it can also move over Hive. Unlike MEM it`s not possible to end movement on top. CME has to move exactly two spaces on top and then one move down.\n" +
                 "\n" +
                 "Check how it works!\n");
-        text.setFont(new Font(24));
+        text.setFont(f);
         text.setWrappingWidth(350);
         textPane.setContent(text);
     }

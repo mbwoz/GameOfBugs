@@ -274,7 +274,8 @@ public abstract class InstructionView {
         instructionText = new Text();
         setInstructionText();
 
-        instructionText.setFont(f);
+        if(f != null) instructionText.setFont(f);
+        else instructionText.setFont(new Font(24));
         instructionText.setWrappingWidth(350);
         textPane.getChildren().add(instructionText);
     }
@@ -287,7 +288,7 @@ public abstract class InstructionView {
             f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 14);
         }
         catch (FileNotFoundException e) {e.printStackTrace();}
-        text.setFont(f);
+        if(f != null) text.setFont(f);
         topBar.getChildren().clear();
         topBar.getChildren().addAll(text);
         topBar.setAlignment(Pos.CENTER);

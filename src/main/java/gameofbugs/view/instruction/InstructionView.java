@@ -135,6 +135,7 @@ public abstract class InstructionView {
                 TileView tileView = new TileView(boardModel.getTopTile(pos), centerX, centerY, side, boardModel.getStackSize(pos));
                 ImageView hex = tileView.getHex();
                 hex.setOnMouseClicked(event -> instructionController.triggerBoardAction(pos, event));
+                hex.setCursor(Cursor.HAND);
 
                 Group fullTile = new Group();
                 if(boardModel.getTopTile(pos) instanceof TilePlaceholder && boardModel.getStackSize(pos) > 1) {
@@ -201,18 +202,12 @@ public abstract class InstructionView {
             TileView tileView = new TileView(tile, 100, 100, side, 1);
             ImageView hex = tileView.getHex();
             hex.setOnMouseClicked(event -> instructionController.triggerBoardAction(tile.getPosition(), event));
+            hex.setCursor(Cursor.HAND);
 
             Group fullTile = new Group();
             fullTile.getChildren().add(hex);
 
-            String tileCount = "src/main/resources/TileCount" + String.valueOf(tile.getCnt()) + ".png";
-            Image tileNumber = null;
-            try {
-                tileNumber = new Image(new FileInputStream(tileCount));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
+            Image tileNumber = new Image(getClass().getResourceAsStream("/TileCount" + String.valueOf(tile.getCnt()) + ".png"));
             ImageView tileNumberView = new ImageView(tileNumber);
             tileNumberView.setFitHeight(side);
             tileNumberView.setPreserveRatio(true);
@@ -227,41 +222,27 @@ public abstract class InstructionView {
 
     protected  VBox setRightBox() {
         VBox controlArea = new VBox();
-        Image image = null;
-        try {
-            image = new Image(new FileInputStream("src/main/resources/InstructionNextButton.png"));
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
+        Image image = new Image(getClass().getResourceAsStream("/InstructionNextButton.png"));
         nextButton = new ImageView(image);
         nextButton.setTranslateY(-40);
         nextButton.setCursor(Cursor.HAND);
 
-        try {
-            image = new Image(new FileInputStream("src/main/resources/InstructionPrevButton.png"));
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        image = new Image(getClass().getResourceAsStream("/InstructionPrevButton.png"));
         prevButton = new ImageView(image);
         prevButton.setTranslateY(-130);
         prevButton.setCursor(Cursor.HAND);
 
-        try {
-            image = new Image(new FileInputStream("src/main/resources/InstructionBackButton.png"));
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        image = new Image(getClass().getResourceAsStream("/InstructionBackButton.png"));
         backButton = new ImageView(image);
         backButton.setTranslateY(-220);
         backButton.setCursor(Cursor.HAND);
-
 
         backButton.setOnMouseClicked(event -> instructionSceneController.triggerMenu());
 
         VBox buttons = new VBox();
         VBox text = new VBox();
         text.getChildren().addAll(textPane);
-
 
         buttons.getChildren().addAll(nextButton, prevButton, backButton);
 
@@ -275,11 +256,7 @@ public abstract class InstructionView {
     }
 
     public void setTextPane() {
-        Font f = null;
-        try {
-            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 24);
-        }
-        catch (FileNotFoundException e) {e.printStackTrace();}
+        Font f = Font.loadFont(getClass().getResourceAsStream("/shareFont.ttf"), 24);
         instructionText = new Text();
         setInstructionText();
 
@@ -292,12 +269,9 @@ public abstract class InstructionView {
     public HBox setTopBar() {
         HBox topBar = new HBox();
         Label text = setTopLabel();
-        Font f = null;
-        try {
-            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 14);
-        }
-        catch (FileNotFoundException e) {e.printStackTrace();}
+        Font f = Font.loadFont(getClass().getResourceAsStream("/shareFont.ttf"), 14);
         if(f != null) text.setFont(f);
+
         topBar.getChildren().clear();
         topBar.getChildren().addAll(text);
         topBar.setAlignment(Pos.CENTER);

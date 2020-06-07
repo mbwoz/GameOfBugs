@@ -113,14 +113,8 @@ public class GameView {
             turnInfo += " - Place OK on board";
 
         Label labelInfo = new Label(turnInfo);
-        Font f = null;
-        try {
-            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 14);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        if(f != null)
-            labelInfo.setFont(f);
+        Font f = Font.loadFont(getClass().getResourceAsStream("/shareFont.ttf"), 14);
+        if(f != null) labelInfo.setFont(f);
 
         StackPane infoPane = new StackPane(labelInfo);
         infoPane.setAlignment(Pos.CENTER);
@@ -135,14 +129,8 @@ public class GameView {
 
     void createExit() {
         Button topBarExitButton = new Button("Exit");
-        Font f = null;
-        try {
-            f = Font.loadFont(new FileInputStream(new File("src/main/resources/shareFont.ttf")), 14);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        if(f != null)
-            topBarExitButton.setFont(f);
+        Font f = Font.loadFont(getClass().getResourceAsStream("/shareFont.ttf"), 14);
+        if(f != null) topBarExitButton.setFont(f);
 
         topBarExitButton.setCursor(Cursor.HAND);
         topBarExitButton.setOnMouseClicked(event -> {
@@ -255,14 +243,7 @@ public class GameView {
             Group fullTile = new Group();
             fullTile.getChildren().add(hex);
 
-            String tileCount = "src/main/resources/TileCount" + String.valueOf(tile.getCnt()) + ".png";
-            Image tileNumber = null;
-            try {
-                tileNumber = new Image(new FileInputStream(tileCount));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
+            Image tileNumber = new Image(getClass().getResourceAsStream("/TileCount" + String.valueOf(tile.getCnt()) + ".png"));
             ImageView tileNumberView = new ImageView(tileNumber);
             tileNumberView.setFitHeight(side);
             tileNumberView.setPreserveRatio(true);

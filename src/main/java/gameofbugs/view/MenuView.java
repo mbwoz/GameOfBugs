@@ -20,28 +20,17 @@ public class MenuView {
     }
 
     public void displayGameStart() {
-        Image background = null;
-        Image startButton = null;
-        Image tutorialButton = null;
-        Image optionsButton = null;
-        Image exitButton = null;
+        Image background = new Image(getClass().getResourceAsStream("/MenuBackground.png"));
+        Image startButton = new Image(getClass().getResourceAsStream("/MenuStart.png"));
+        Image tutorialButton = new Image(getClass().getResourceAsStream("/MenuTutorial.png"));
+        Image optionsButton = new Image(getClass().getResourceAsStream("/MenuOptions.png"));
+        Image exitButton = new Image(getClass().getResourceAsStream("/MenuExit.png"));
 
         ImageView backgroundView = null;
         ImageView startButtonView = null;
         ImageView tutorialButtonView = null;
         ImageView optionsButtonView = null;
         ImageView exitButtonView = null;
-
-        try {
-            background = new Image(new FileInputStream("src/main/resources/MenuBackground.png"));
-            startButton = new Image(new FileInputStream("src/main/resources/MenuStart.png"));
-            tutorialButton = new Image(new FileInputStream("src/main/resources/MenuTutorial.png"));
-            optionsButton = new Image(new FileInputStream("src/main/resources/MenuOptions.png"));
-            exitButton = new Image(new FileInputStream("src/main/resources/MenuExit.png"));
-        } catch(FileNotFoundException e) {
-            System.out.println("File not found!");
-            e.printStackTrace();
-        }
 
         backgroundView = new ImageView(background);
 

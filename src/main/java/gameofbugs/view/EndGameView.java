@@ -26,18 +26,9 @@ public class EndGameView {
     }
 
     public void displayGameEnd() {
-        Image background = null;
-        Image playButton = null;
-        Image menuButton = null;
-
-        try {
-            background = new Image(new FileInputStream("src/main/resources/Endgame" + winner.toString() + ".png"));
-            playButton = new Image(new FileInputStream("src/main/resources/EndgamePlay.png"));
-            menuButton = new Image(new FileInputStream("src/main/resources/EndgameMenu.png"));
-        } catch(FileNotFoundException e) {
-            System.out.println("File not found!");
-            e.printStackTrace();
-        }
+        Image background = new Image(getClass().getResourceAsStream("/Endgame" + winner.toString() + ".png"));
+        Image playButton = new Image(getClass().getResourceAsStream("/EndgamePlay.png"));
+        Image menuButton = new Image(getClass().getResourceAsStream("/EndgameMenu.png"));
 
         ImageView backgroundView = new ImageView(background);
         ImageView playButtonView = new ImageView(playButton);

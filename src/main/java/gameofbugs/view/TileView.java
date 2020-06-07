@@ -15,7 +15,7 @@ public class TileView {
     private double centerX;
     private double centerY;
     private int stackSize;
-    static private final String path = "src/main/resources/";
+    private static final String path = "/";
 
     public TileView(TileModel tile, double centerX, double centerY, double side, int stackSize) {
         this.tile = tile;
@@ -36,13 +36,7 @@ public class TileView {
         hexType += ".png";
 
         // loading image
-        Image image = null;
-        try {
-            image = new Image(new FileInputStream(hexType));
-        } catch(FileNotFoundException e) {
-            System.out.println("File not found!");
-            e.printStackTrace();
-        }
+        Image image = new Image(getClass().getResourceAsStream(hexType));
 
         //creating imageview
         ImageView imageView = new ImageView(image);

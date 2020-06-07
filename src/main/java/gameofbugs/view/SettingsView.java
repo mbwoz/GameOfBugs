@@ -27,24 +27,12 @@ public class SettingsView {
         AtomicBoolean isCme = new AtomicBoolean(Settings.isCME);
         AtomicBoolean isQue = new AtomicBoolean(Settings.isQUE);
 
-        Image background = null;
-        Image backButton = null;
-        Image que0Button = null;
-        Image que1Button = null;
-        Image cme0Button = null;
-        Image cme1Button = null;
-
-        try {
-            background = new Image(new FileInputStream("src/main/resources/SettingsBackground.png"));
-            backButton = new Image(new FileInputStream("src/main/resources/SettingsBack.png"));
-            que0Button = new Image(new FileInputStream("src/main/resources/SettingsQue0.png"));
-            que1Button = new Image(new FileInputStream("src/main/resources/SettingsQue1.png"));
-            cme0Button = new Image(new FileInputStream("src/main/resources/SettingsCme0.png"));
-            cme1Button = new Image(new FileInputStream("src/main/resources/SettingsCme1.png"));
-        } catch(FileNotFoundException e) {
-            System.out.println("File not found!");
-            e.printStackTrace();
-        }
+        Image background = new Image(getClass().getResourceAsStream("/SettingsBackground.png"));
+        Image backButton = new Image(getClass().getResourceAsStream("/SettingsBack.png"));
+        Image que0Button = new Image(getClass().getResourceAsStream("/SettingsQue0.png"));
+        Image que1Button = new Image(getClass().getResourceAsStream("/SettingsQue1.png"));
+        Image cme0Button = new Image(getClass().getResourceAsStream("/SettingsCme0.png"));
+        Image cme1Button = new Image(getClass().getResourceAsStream("/SettingsCme1.png"));
 
         ImageView backgroundView = new ImageView(background);
         ImageView backButtonView = new ImageView(backButton);
@@ -55,59 +43,48 @@ public class SettingsView {
 
 
         backButtonView.setOnMouseClicked(event -> {
-
             Settings.isQUE = isQue.get();
             Settings.isCME = isCme.get();
 
             sceneController.triggerMenu();
-        }
-        );
+        });
         backButtonView.setCursor(Cursor.HAND);
 
         que0ButtonView.setOnMouseClicked(event -> {
-
             isQue.set(true);
             group.getChildren().remove(que0ButtonView);
             group.getChildren().add(que1ButtonView);
             root.getChildren().clear();
             root.getChildren().add(group);
-        }
-        );
+        });
         que0ButtonView.setCursor(Cursor.HAND);
 
         que1ButtonView.setOnMouseClicked(event -> {
-
-                    isQue.set(false);
-                    group.getChildren().remove(que1ButtonView);
-                    group.getChildren().add(que0ButtonView);
-                    root.getChildren().clear();
-                    root.getChildren().add(group);
-                }
-        );
+            isQue.set(false);
+            group.getChildren().remove(que1ButtonView);
+            group.getChildren().add(que0ButtonView);
+            root.getChildren().clear();
+            root.getChildren().add(group);
+        });
         que1ButtonView.setCursor(Cursor.HAND);
 
         cme0ButtonView.setOnMouseClicked(event -> {
-
-                    isCme.set(true);
-                    group.getChildren().remove(cme0ButtonView);
-                    group.getChildren().add(cme1ButtonView);
-                    root.getChildren().clear();
-                    root.getChildren().add(group);
-                }
-        );
+            isCme.set(true);
+            group.getChildren().remove(cme0ButtonView);
+            group.getChildren().add(cme1ButtonView);
+            root.getChildren().clear();
+            root.getChildren().add(group);
+        });
         cme0ButtonView.setCursor(Cursor.HAND);
 
         cme1ButtonView.setOnMouseClicked(event -> {
-
-                    isCme.set(false);
-                    group.getChildren().remove(cme1ButtonView);
-                    group.getChildren().add(cme0ButtonView);
-                    root.getChildren().clear();
-                    root.getChildren().add(group);
-                }
-        );
+            isCme.set(false);
+            group.getChildren().remove(cme1ButtonView);
+            group.getChildren().add(cme0ButtonView);
+            root.getChildren().clear();
+            root.getChildren().add(group);
+        });
         cme1ButtonView.setCursor(Cursor.HAND);
-
 
         group.getChildren().addAll(backgroundView, backButtonView);
 

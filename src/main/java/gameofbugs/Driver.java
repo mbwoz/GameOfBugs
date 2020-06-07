@@ -44,4 +44,14 @@ public class Driver {
         SettingsView settingsView = new SettingsView(root, sceneController);
         settingsView.displaySettings();
     }
+
+    public void launchResumeGame(GameModel gameModel, GameView gameView) {
+        gameView.resumeGame(root);
+        gameModel.updateBoardState();
+    }
+
+    public void launchPauseMenu(GameModel gameModel, GameView gameView) {
+        PauseView pauseView = new PauseView(root, sceneController, gameView, gameModel);
+        pauseView.displayPauseMenu();
+    }
 }

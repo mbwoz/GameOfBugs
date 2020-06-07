@@ -77,6 +77,16 @@ public class GameView {
         HBox.setHgrow(boardArea, Priority.ALWAYS);
     }
 
+    public void resumeGame(HBox root) {
+        VBox boardArea = new VBox();
+        boardArea.getChildren().addAll(topBarLayout, boardLayout, stackLayout);
+        VBox.setVgrow(boardLayout, Priority.ALWAYS);
+
+        root.getChildren().clear();
+        root.getChildren().addAll(whiteSideboard, boardArea, blackSideboard);
+        HBox.setHgrow(boardArea, Priority.ALWAYS);
+    }
+
     public void addController(GameController gameController, SceneController sceneController) {
         this.gameController = gameController;
         this.sceneController = sceneController;
@@ -133,15 +143,7 @@ public class GameView {
         if(f != null) topBarExitButton.setFont(f);
 
         topBarExitButton.setCursor(Cursor.HAND);
-        topBarExitButton.setOnMouseClicked(event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit the game?", ButtonType.YES, ButtonType.NO);
-            alert.setHeaderText("Back to menu");
-            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-
-            alert.showAndWait();
-            if(alert.getResult() == ButtonType.YES)
-                sceneController.triggerMenu();
-        });
+        topBarExitButton.setOnMouseClicked(event ->  sceneController.triggerPauseMenu(gameController.getModel(), this));
 
         topBarExitPane = new StackPane(topBarExitButton);
         topBarExitPane.setMinWidth(70);

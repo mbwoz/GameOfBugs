@@ -17,5 +17,8 @@ public class GameController {
             gameModel.takeAction(pos);
         gameModel.showStack(pos);
     }
+    public GameModel getModel() {
+        return this.gameModel;
+    }
 
 }
